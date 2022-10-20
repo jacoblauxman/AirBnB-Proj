@@ -36,6 +36,7 @@ router.post(
 
 // backend/routes/api/session.js
 // ...
+
 // Log out
 router.delete(
   '/',
@@ -44,6 +45,7 @@ router.delete(
     return res.json({ message: 'success' });
   }
 );
+
 // ...
 
 
