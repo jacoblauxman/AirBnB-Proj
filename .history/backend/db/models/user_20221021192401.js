@@ -36,10 +36,10 @@ module.exports = (sequelize, DataTypes) => {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
         username,
-        email,
-        hashedPassword,
         firstName,
+        email,
         lastName,
+        hashedPassword,
       });
       return await User.scope('currentUser').findByPk(user.id);
     }

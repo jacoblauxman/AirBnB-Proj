@@ -37,9 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       const user = await User.create({
         username,
         email,
-        hashedPassword,
         firstName,
         lastName,
+        hashedPassword,
       });
       return await User.scope('currentUser').findByPk(user.id);
     }

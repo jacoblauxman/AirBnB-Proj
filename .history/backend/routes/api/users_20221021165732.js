@@ -12,7 +12,7 @@ const router = express.Router();
 
 
 //phase5
-const validateSignup = [
+const validateSignup = [ç
   check('email')
     .exists({ checkFalsy: true })
     .isEmail()
