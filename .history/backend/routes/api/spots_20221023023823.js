@@ -110,14 +110,6 @@ router.get('/current', async (req, res) => {
 
 
 
-router.get('/:spotId/bookings', async (req, res) => {
-
-  res.json()
-})
-
-
-
-
 router.get('/:spotId', async (req, res) => {
   const { spotId } = req.params;
 
@@ -147,7 +139,7 @@ router.get('/:spotId', async (req, res) => {
         model: Review,
         attributes: [],
         where: {
-          spotId
+
         }
       }
     ],
@@ -161,7 +153,6 @@ router.get('/:spotId', async (req, res) => {
           sequelize.fn('COUNT', sequelize.col('Reviews.spotId')),
           'numReviews'
         ]
-
       ]
     },
   })
@@ -175,7 +166,7 @@ router.get('/:spotId', async (req, res) => {
 
   // console.log(owner.dataValues)
 
-
+  console.log(spot.Reviews)
 
   const result = spot.dataValues
   // result.spot = spot;

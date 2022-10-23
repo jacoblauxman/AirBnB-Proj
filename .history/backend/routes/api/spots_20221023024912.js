@@ -158,7 +158,7 @@ router.get('/:spotId', async (req, res) => {
           'avgStarRating'
         ],
         [
-          sequelize.fn('COUNT', sequelize.col('Reviews.spotId')),
+          sequelize.fn('COUNT', sequelize.col('Spots.id')),
           'numReviews'
         ]
 
