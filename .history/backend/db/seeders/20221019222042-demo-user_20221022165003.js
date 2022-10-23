@@ -153,7 +153,7 @@ module.exports = {
 
     await queryInterface.bulkInsert('ReviewImages', [
       {
-        reviewId: 1,
+        reviewId: 2,
         url: 'http://supriseyourselfhere.com'
       },
       {
@@ -167,10 +167,7 @@ module.exports = {
       {
         reviewId: 4,
         url: 'https://thissiteissuresecure.org'
-      },
-      {
-        reviewId: 5,
-       url: 'http://www.GFY.com'}
+      }
     ])
 
   },

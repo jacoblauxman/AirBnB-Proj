@@ -168,9 +168,7 @@ module.exports = {
         reviewId: 4,
         url: 'https://thissiteissuresecure.org'
       },
-      {
-        reviewId: 5,
-       url: 'http://www.GFY.com'}
+      {reviewId: 5,}
     ])
 
   },
