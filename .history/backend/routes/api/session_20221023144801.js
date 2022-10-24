@@ -58,7 +58,7 @@ router.post(
     //
     return res.json({
       // user
-      ...result
+      result
     });
   }
 );

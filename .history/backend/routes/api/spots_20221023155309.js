@@ -150,8 +150,7 @@ router.get('/:spotId', async (req, res) => {
       },
       {
         model: User,
-        // attributes: ['id', 'firstName', 'lastName']
-        attributes: []
+        attributes: ['id', 'firstName', 'lastName']
       },
       {
         model: Review,
@@ -174,19 +173,17 @@ router.get('/:spotId', async (req, res) => {
 
       ]
     },
-    raw: true
   })
 
   // console.log(spot)
   // let daId = spot.ownerId
   // console.log("dadadadID", daId)
 
-  const Owner = await User.findOne({
+  const owner = await User.findOne({
     where: {
       id: spot.ownerId
     },
-    attributes: ['id', 'firstName', 'lastName'],
-    raw: true
+    attributes: ['id', 'firstName', 'lastName']
   })
 
   // console.log(owner.dataValues)
@@ -197,64 +194,14 @@ router.get('/:spotId', async (req, res) => {
   // result.Owner = owner;
 
   // console.log(spot)
-  spot.Owner = Owner
-  // console.log(owner, "OWNEROWNER")
-  // console.log(spot.Owner)
-  let result = {}
-  result.spot = spot
-  result.Owner = Owner
+  spot.Owner = owner
   res.json({
     // { spot, Owner: owner }
     // result
-    // spot, owner
-    ...result
+    spot, owner
   })
 })
 
-
-// router.get('/:spotId', async (req, res) => {
-//   const spotId = req.params.spotId
-
-//   const spot = await Spot.findByPk(spotId, {
-//     include: [
-//       {
-//         model: SpotImage,
-//         where: {
-//           spotId
-//         },
-//         attributes:
-//           ['id', 'url', 'preview']
-
-//       },
-//       {
-//         model: User,
-//         // attributes: ['id', 'firstName', 'lastName']
-//         attributes: []
-//       },
-//       {
-//         model: Review,
-//         attributes: [],
-//         where: {
-//           spotId
-//         }
-//       }
-//     ],
-//     attributes: {
-//       include: [
-//         [
-//           sequelize.fn('AVG', sequelize.col('Reviews.stars')),
-//           'avgStarRating'
-//         ],
-//         [
-//           sequelize.fn('COUNT', sequelize.col('Reviews.spotId')),
-//           'numReviews'
-//         ]
-
-//       ]
-//     },
-//     raw: true
-//   })
-// })
 
 
 

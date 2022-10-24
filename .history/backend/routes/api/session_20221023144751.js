@@ -57,8 +57,7 @@ router.post(
     result.token = ''
     //
     return res.json({
-      // user
-      ...result
+      user
     });
   }
 );

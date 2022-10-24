@@ -197,7 +197,7 @@ router.get('/:spotId', async (req, res) => {
   // result.Owner = owner;
 
   // console.log(spot)
-  spot.Owner = Owner
+  spot.Owner = owner
   // console.log(owner, "OWNEROWNER")
   // console.log(spot.Owner)
   let result = {}
@@ -211,50 +211,6 @@ router.get('/:spotId', async (req, res) => {
   })
 })
 
-
-// router.get('/:spotId', async (req, res) => {
-//   const spotId = req.params.spotId
-
-//   const spot = await Spot.findByPk(spotId, {
-//     include: [
-//       {
-//         model: SpotImage,
-//         where: {
-//           spotId
-//         },
-//         attributes:
-//           ['id', 'url', 'preview']
-
-//       },
-//       {
-//         model: User,
-//         // attributes: ['id', 'firstName', 'lastName']
-//         attributes: []
-//       },
-//       {
-//         model: Review,
-//         attributes: [],
-//         where: {
-//           spotId
-//         }
-//       }
-//     ],
-//     attributes: {
-//       include: [
-//         [
-//           sequelize.fn('AVG', sequelize.col('Reviews.stars')),
-//           'avgStarRating'
-//         ],
-//         [
-//           sequelize.fn('COUNT', sequelize.col('Reviews.spotId')),
-//           'numReviews'
-//         ]
-
-//       ]
-//     },
-//     raw: true
-//   })
-// })
 
 
 
