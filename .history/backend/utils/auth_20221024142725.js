@@ -81,7 +81,7 @@ const restoreUser = (req, res, next) => {
 
 
 
-//duplicated from above, using example plus wording from Alec -- array with restoreUser in it
+//duplicated, using example plus wording from Alec -- array with restoreUser in it
 
 const requireAuth = [
   restoreUser,
