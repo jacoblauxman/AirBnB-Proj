@@ -1,7 +1,7 @@
 // backend/routes/api/session.js
 const express = require('express')
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 //phase5
@@ -84,12 +84,13 @@ router.delete(
 // Restore session user
 router.get(
   '/',
-  restoreUser,
+  requireAuth,
   (req, res) => {
     const { user } = req;
     if (user) {
+      let result = user.toSafeObject()
       return res.json({
-        user: user.toSafeObject()
+        ...result
       });
     } else return res.json({});
   }

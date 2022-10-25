@@ -48,8 +48,17 @@ router.post(
 
     await setTokenCookie(res, user);
 
+    //my edit:
+    let result = user.toJSON();
+
+    delete result.createdAt
+    delete result.updatedAt
+    result.token = ''
+
     return res.json({
-      user,
+      // user,
+      //my other edit
+      ...result
     });
   }
 );

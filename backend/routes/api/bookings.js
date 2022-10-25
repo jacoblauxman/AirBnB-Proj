@@ -5,7 +5,7 @@ const { User, Spot, Booking, SpotImage, Review, ReviewImage, sequelize } = requi
 //phase5
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { response } = require('express');
+const { response, urlencoded } = require('express');
 //
 
 const router = express.Router();
@@ -34,31 +34,91 @@ const validateSignup = [
 
 
 
-router.get('/current', async (req, res) => {
 
+router.get('/current', requireAuth, async (req, res) => {
 
-  let Bookings
-  const currId = req.user.id;
-  const currBookings = await Booking.findAll({
+  const userId = req.user.id
+
+  const bookings = await Booking.findAll({
     where: {
-      userId: currId
+      userId
     },
-    include:
-      [
-        {
-          model: Spot
-        }
-      ]
-
   })
 
-  
+  let currBookings = []
+
+  bookings.forEach(booking => {
+    currBookings.push(booking.toJSON())
+  })
+
+
+  for (let booking of currBookings) {
+    const spot = await Spot.findOne({
+      where: {
+        id: booking.spotId
+      },
+      include: [
+        {
+          model: SpotImage,
+          where: {
+            preview: true
+          },
+          attributes: []
+        }
+      ],
+      attributes: {
+        include: [
+          [sequelize.col('SpotImages.url'), 'previewImage']
+        ],
+        exclude: ['createdAt', 'updatedAt']
+      },
+      raw: true
+    })
+    booking.Spot = spot
+  }
 
 
   res.json({
     Bookings: currBookings
   });
 })
+
+
+
+
+router.put('/:bookingId', requireAuth, async (req, res) => {
+  const bookingId = req.params.bookingId
+  const userId = req.user.id
+
+  const { startDate, endDate } = req.body
+
+  let editedBooking = await Booking.findByPk(bookingId)
+
+  editedBooking.set({
+    startDate, endDate
+  })
+
+  res.json(editedBooking)
+})
+
+
+
+router.delete('/:bookingId', requireAuth, async (req, res) => {
+  const userId = req.user.id
+  const { bookingId } = req.params
+
+  console.log('userId::', userId)
+  console.log('bookingId::', bookingId)
+
+  const booking = await Booking.findByPk(bookingId)
+
+  if (booking.userId === userId) {
+    booking.destroy()
+
+  }
+  res.status(200).json({ message: 'Successfully deleted' })
+})
+
 
 
 router.get('/', async (req, res) => {

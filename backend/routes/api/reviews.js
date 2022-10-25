@@ -33,7 +33,7 @@ const validateSignup = [
 
 
 
-router.get('/current', async (req, res) => {
+router.get('/current', requireAuth, async (req, res) => {
   // const user = await
 
   const currId = req.user.id;
@@ -57,9 +57,7 @@ router.get('/current', async (req, res) => {
         model: Spot,
         attributes: {
           exclude: ['createdAt', 'updatedAt'],
-          // include: [
-          //   [sequelize.col('SpotImages.url'), 'previewImage']
-          // ]
+
         },
         include: [
           {
@@ -75,23 +73,6 @@ router.get('/current', async (req, res) => {
         ]
       },
 
-      // {
-      //   model: Spot,
-      //   include: [
-      //     {
-      //       model: SpotImage,
-      //       attributes: {
-      //         include: [
-      //           sequelize.col('SpotImages.url'),
-      //           'previewImage'
-      //         ]
-      //       },
-      //       where: {
-      //         preview: true
-      //       }
-      //     }
-      //   ]
-      // },
       {
         model: ReviewImage,
         attributes: ['id', 'url']
@@ -101,8 +82,72 @@ router.get('/current', async (req, res) => {
 
 
   res.json({
-    Reviews: currReviews})
+    Reviews: currReviews
+  })
 })
+
+
+
+
+router.post('/:reviewId/images', requireAuth, async (req, res) => {
+  const reviewId = req.params.reviewId
+  const userId = req.user.id
+  const url = req.body.url
+
+  // console.log(url)
+
+  const review = await Review.findByPk(reviewId)
+
+  //error handling
+  // if (review.userId !== userId) {
+
+  // }
+
+  const newReviewImage = await ReviewImage.create({
+    url, reviewId
+  })
+
+  newReviewImage.save()
+  res.json(newReviewImage)
+})
+
+
+//update review
+router.put('/:reviewId', requireAuth, async (req, res) => {
+  const reviewId = req.params.reviewId
+  const userId = req.user.id
+  console.log(userId)
+  const { review, stars } = req.body;
+
+  let editedReview = await Review.findByPk(reviewId)
+  editedReview.set({
+    review, stars, userId
+    //may not need userId, for time being
+  })
+
+  editedReview.save()
+  res.json(editedReview)
+})
+
+
+//delete review
+router.delete('/:reviewId', requireAuth, async (req, res) => {
+  const reviewId = req.params.reviewId
+  const userId = req.user.id
+
+  const toDelete = await Review.findByPk(reviewId)
+
+  //error handling
+  // if (toDelete.userId !== userId) {
+
+  // }
+
+  await toDelete.destroy()
+
+  res.status(200).json({ message: 'Successfully deleted' })
+})
+
+
 
 
 router.get('/', async (req, res) => {
@@ -118,9 +163,3 @@ router.get('/', async (req, res) => {
 
 
 module.exports = router;
-
-
-
-
-
-
