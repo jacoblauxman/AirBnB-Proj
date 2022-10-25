@@ -529,7 +529,7 @@ router.get('/', requireAuth, async (req, res) => {
         ]
       ]
     },
-    group: ['Spot.id', 'SpotImages.url'],
+    group: ['Spot.id', ''],
     where,
     // limit,
     // offset
