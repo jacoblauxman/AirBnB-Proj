@@ -74,7 +74,7 @@ router.get('/current', requireAuth, async (req, res) => {
         ]
       ]
     },
-    group: ['Spot.id', 'previewImage']
+    group: ['Spot.id', '']
   })
 
   console.log(req.user.id)
