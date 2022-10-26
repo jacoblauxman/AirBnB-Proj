@@ -86,7 +86,6 @@ router.get('/current', requireAuth, async (req, res) => {
 
 
 
-
 router.put('/:bookingId', requireAuth, async (req, res) => {
   const bookingId = req.params.bookingId
   const userId = req.user.id
@@ -102,9 +101,6 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
       statusCode: 404
     })
   }
-
-
-  //error handling for if booking past endDate: 403
 
   editedBooking.set({
     startDate, endDate

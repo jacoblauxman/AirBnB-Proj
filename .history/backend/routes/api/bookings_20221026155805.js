@@ -86,7 +86,6 @@ router.get('/current', requireAuth, async (req, res) => {
 
 
 
-
 router.put('/:bookingId', requireAuth, async (req, res) => {
   const bookingId = req.params.bookingId
   const userId = req.user.id
@@ -96,15 +95,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
   let editedBooking = await Booking.findByPk(bookingId)
 
   //error handling if booking doesn't exist
-  if (!editedBooking) {
-    res.status(404).json({
-      message: `Booking couldn't be found`,
-      statusCode: 404
-    })
-  }
-
-
-  //error handling for if booking past endDate: 403
+  
 
   editedBooking.set({
     startDate, endDate

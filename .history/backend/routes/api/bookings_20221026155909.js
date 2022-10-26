@@ -86,7 +86,6 @@ router.get('/current', requireAuth, async (req, res) => {
 
 
 
-
 router.put('/:bookingId', requireAuth, async (req, res) => {
   const bookingId = req.params.bookingId
   const userId = req.user.id

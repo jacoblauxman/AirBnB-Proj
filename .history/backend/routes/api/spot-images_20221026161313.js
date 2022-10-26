@@ -8,53 +8,46 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { response } = require('express');
 //
 
+
 const router = express.Router();
 
 
 
 router.delete('/:imageId', requireAuth, async (req, res) => {
-  const userId = req.user.id
   const imageId = req.params.imageId
+  const userId = req.user.id
 
-  let image = await ReviewImage.findByPk(imageId)
+  let image = await SpotImage.findByPk(imageId)
 
   //error handling if image doesn't exist
   if (!image) {
     res.status(404).json({
-      message: `Review Image couldn't be found`,
+      message: `Spot Image couldn't be found`,
       statusCode: 404
     })
   }
 
-  // image = image.toJSON()
-
-  const review = await Review.findOne({
+  //error handling if spot ownerId doesn't match userId
+  const spot = await Spot.findOne({
     where: {
-      id: image.reviewId
+      id: image.spotId
     }
   })
 
-  // console.log(spot.ownerId)
-  // console.log(userId)
-
-
-  //error handling if userId doesn't match review owner id
-  if (review.userId !== userId) {
+  if (userId !== spot.ownerId) {
     res.status(403).json({
       message: 'Forbidden',
       statusCode: 403
     })
   }
 
-  await image.destroy()
 
-  res.status(200).json({
-    message: 'Successfully deleted',
-    statusCode: 200
-  })
+    await image.destroy()
 
+    res.status(200).json({
+      message: 'Successfully deleted',
+     })
 })
-
 
 
 

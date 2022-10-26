@@ -204,10 +204,11 @@ router.get('/:spotId/bookings',
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
   const spotId = req.params.spotId
   const userId = req.user.id
+
   const { startDate, endDate } = req.body
 
   let spot = await Spot.findByPk(spotId)
-
+  
   //error handling if spot doesn't exist
   if (!spot) {
     res.status(404).json({
@@ -216,7 +217,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     })
   }
 
-  // spot = spot.toJSON()
+  spot = spot.toJSON()
 
   //error handling - userId cannot match ownerId
   // if (spot.ownerId === userId) {
@@ -225,8 +226,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
   //     statusCode: 403
   //   })
   // }
-
-  //error handling if booking conflict :
 
   let newBooking = await Booking.create({
     spotId: spot.id,
@@ -246,6 +245,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
 
 
+//still struggling
 router.post('/:spotId/images',
   requireAuth,
   async (req, res) => {
@@ -260,6 +260,7 @@ router.post('/:spotId/images',
     // console.log(spot)
     if (!spot) {
       const err = new Error()
+      err.title = 'Reference Error'
       err.message = `Spot couldn't be found`
       res.status(404)
       err.statusCode = 404
@@ -572,10 +573,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 
   await spot.destroy();
 
-  res.status(200).json({
-    message: 'Successfully deleted',
-    statusCode: 200
-  })
+  res.status(200).json({ message: 'Successfully deleted' })
 })
 
 

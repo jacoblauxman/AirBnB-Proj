@@ -246,9 +246,7 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
   await toDelete.destroy()
 
   res.status(200).json({
-    message: 'Successfully deleted',
-    statusCode: 200
-  })
+    message: 'Successfully deleted' })
 })
 
 

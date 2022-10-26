@@ -86,7 +86,6 @@ router.get('/current', requireAuth, async (req, res) => {
 
 
 
-
 router.put('/:bookingId', requireAuth, async (req, res) => {
   const bookingId = req.params.bookingId
   const userId = req.user.id
@@ -94,17 +93,6 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
   const { startDate, endDate } = req.body
 
   let editedBooking = await Booking.findByPk(bookingId)
-
-  //error handling if booking doesn't exist
-  if (!editedBooking) {
-    res.status(404).json({
-      message: `Booking couldn't be found`,
-      statusCode: 404
-    })
-  }
-
-
-  //error handling for if booking past endDate: 403
 
   editedBooking.set({
     startDate, endDate
@@ -115,15 +103,16 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
 
 
-
-
 router.delete('/:bookingId', requireAuth, async (req, res) => {
   const userId = req.user.id
   const { bookingId } = req.params
 
+
+
   const booking = await Booking.findByPk(bookingId)
 
-  //error handling if booking doesn't exist
+  const spot = await Spot.findOne()
+
   if (!booking) {
     res.status(404).json({
       message: `Booking couldn't be found`,
@@ -131,14 +120,6 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     })
   }
 
-  const spot = await Spot.findOne({
-    where: {
-      id: booking.spotId
-    }
-  })
-
-
-  //error handling if booking doesn't belong to user or owner
   if (booking.userId !== userId && userId !== spot.ownerId) {
     res.status(403).json({
       message: 'Forbidden',
@@ -146,10 +127,11 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     })
   }
 
-  await booking.destroy()
+  if (booking.userId === userId) {
+   await booking.destroy()
 
-  res.status(200).json({ message: 'Successfully deleted' })
-
+   res.status(200).json({ message: 'Successfully deleted' })
+  }
 })
 
 
