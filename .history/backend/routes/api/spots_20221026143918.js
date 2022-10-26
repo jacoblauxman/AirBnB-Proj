@@ -54,13 +54,14 @@ const validateSpot = [
 
 router.get('/current', requireAuth, async (req, res) => {
 
-  const currId = +req.user.id
+  const currId = req.user.id
 
   const allSpots = await Spot.findAll({
     where: {
       ownerId: currId
     },
     include: [
+
       {
         model: Review,
         attributes: [],
@@ -74,6 +75,7 @@ router.get('/current', requireAuth, async (req, res) => {
         required: false
       }
     ],
+
     attributes: {
       include: [
         [
@@ -86,10 +88,10 @@ router.get('/current', requireAuth, async (req, res) => {
         ]
       ]
     },
-    group: ['Spot.ownerId', 'Spot.id', 'SpotImages.url']
+    group: ['Spot.id', 'SpotImages.url']
   })
 
-  // console.log(req.user.id)
+  console.log(req.user.id)
   res.json({
     Spots: allSpots
   })
@@ -639,7 +641,7 @@ router.get('/', async (req, res) => {
       ]
     },
     group: ['Spot.id', 'SpotImages.url'],
-    // where,
+    where,
     // limit,
     // offset
   })

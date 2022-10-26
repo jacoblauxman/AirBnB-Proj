@@ -54,13 +54,14 @@ const validateSpot = [
 
 router.get('/current', requireAuth, async (req, res) => {
 
-  const currId = +req.user.id
+  const currId = req.user.id
 
   const allSpots = await Spot.findAll({
     where: {
       ownerId: currId
     },
     include: [
+
       {
         model: Review,
         attributes: [],
@@ -70,10 +71,10 @@ router.get('/current', requireAuth, async (req, res) => {
         attributes: [],
         where: {
           preview: true
-        },
-        required: false
+        }
       }
     ],
+
     attributes: {
       include: [
         [
@@ -86,10 +87,10 @@ router.get('/current', requireAuth, async (req, res) => {
         ]
       ]
     },
-    group: ['Spot.ownerId', 'Spot.id', 'SpotImages.url']
+    group: ['Spot.id', 'SpotImages.url']
   })
 
-  // console.log(req.user.id)
+  console.log(req.user.id)
   res.json({
     Spots: allSpots
   })
@@ -146,26 +147,26 @@ router.get('/:spotId/reviews', async (req, res) => {
 router.get('/:spotId/bookings',
   requireAuth,
   async (req, res) => {
-
     const spotId = +req.params.spotId
     const userId = req.user.id
 
-    let spot = await Spot.findByPk(spotId)
+    let spot = await Spot.findByPk(spotId, {
+      raw: true
+    })
 
     //error handling if spot doesn't exist for bookings
     if (!spot) {
       res.status(404).json({
-        message: `Spot couldn't be found`,
-        statusCode: 404
+        message: ``
       })
     }
 
 
-    //if userId !== ownerId display:
+    //not owner for now
     if (userId !== spot.ownerId) {
       const bookings = await Booking.findAll({
         where: {
-          spotId
+          spotId: spot.id
         },
         attributes: ['spotId', 'startDate', 'endDate']
       })
@@ -186,17 +187,11 @@ router.get('/:spotId/bookings',
               id: bookings.userId
             }
           }]
-      })
+      },
 
+      )
       res.json({ Bookings: bookings })
     }
-
-    // //error handling if spot doesn't have any reviews
-    // let noBookings = await Booking.findAll({ where: { spotId } })
-    // if (!noBookings) {
-
-    //   res.status(404).json({ message: 'No bookings found!', statusCode: 404 })
-    // }
   })
 
 
@@ -208,13 +203,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
   const { startDate, endDate } = req.body
 
   const spot = await Spot.findByPk(spotId)
-  //error handling if spot doesn't exist
-  if (!spot) {
-    res.status(404).json({
-      message: `Spot couldn't be found`,
-      statusCode: 404
-    })
-  }
+  console.log(userId)
+  console.log(spot.ownerId)
 
   if (spot.ownerId !== userId) {
 
@@ -224,8 +214,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
       startDate,
       endDate
     })
-
-    await newBooking.save()
 
     newBooking = newBooking.toJSON()
 
@@ -639,7 +627,7 @@ router.get('/', async (req, res) => {
       ]
     },
     group: ['Spot.id', 'SpotImages.url'],
-    // where,
+    where,
     // limit,
     // offset
   })
