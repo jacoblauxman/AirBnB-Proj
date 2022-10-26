@@ -153,12 +153,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
   }
 
   //error handling if userId doesn't match review userId
-  if (userId !== review.userId) {
-    res.status(403).json({
-      message: 'Forbidden',
-      statusCode: 403
-    })
-  }
+  if (userId !== review.userId) 
 
 
   let newReviewImage = await ReviewImage.create({

@@ -38,7 +38,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
   const currId = req.user.id;
 
-  let currReviews = await Review.findAll({
+  const currReviews = await Review.findAll({
     where: {
       userId: currId
     },
@@ -53,32 +53,26 @@ router.get('/current', requireAuth, async (req, res) => {
         ]
       },
 
-      // {
-      //   model: Spot,
-      //   include: [
-      //     {
-      //       model: SpotImage,
-      //       // as: 'previewImage',
-      //       attributes: ['url'],
+      {
+        model: Spot,
+        attributes: {
+          exclude: ['createdAt', 'updatedAt'],
+
+        },
+        include: [
+          {
+            model: SpotImage,
+            // as: 'previewImage',
+            attributes: ['url'],
 
 
-      //       where: {
-      //         preview: true
-      //       },
-      //       required: false,
-      //       attributes: {
-      //         exclude: ['createdAt', 'updatedAt'],
-      //         include: [
-      //           [
-      //             sequelize.col('SpotImages.url'),
-      //             'previewImage'
-      //           ]
-      //         ]
-
-      //       },
-      //     },
-      //   ]
-      // },
+            where: {
+              preview: true
+            },
+            req
+          },
+        ]
+      },
 
       {
         model: ReviewImage,
@@ -87,45 +81,9 @@ router.get('/current', requireAuth, async (req, res) => {
     ]
   })
 
-  //get spot info with previewImage to attach
-
-  // currReviews = currReviews.toJSON()
-
-  let result = []
-  for (let review of currReviews) {
-    review = review.toJSON()
-    const spotInfo = await Spot.findOne({
-      where: { id: review.spotId },
-      include: [
-        {
-          model: SpotImage,
-          attributes: [],
-          where: {
-            preview: true
-          },
-          //from mikeM
-          required: false
-        }
-      ],
-      attributes: {
-        include: [
-          [
-            sequelize.col('SpotImages.url'),
-            'previewImage'
-          ]
-        ],
-        exclude: ['description', 'createdAt', 'updatedAt']
-      },
-      group: ['Spot.id', 'SpotImages.url'],
-    })
-    review.Spot = spotInfo
-    result.push(review)
-  }
-
-
 
   res.json({
-    Reviews: result
+    Reviews: currReviews
   })
 })
 
@@ -135,6 +93,8 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
   const reviewId = req.params.reviewId
   const userId = req.user.id
   const url = req.body.url
+
+  // console.log(url)
 
   const review = await Review.findByPk(reviewId)
   //for EC -- need to ensure review's reviewImage array is < 10
@@ -149,14 +109,6 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     res.status(404).json({
       message: `Review couldn't be found`,
       statusCode: 404
-    })
-  }
-
-  //error handling if userId doesn't match review userId
-  if (userId !== review.userId) {
-    res.status(403).json({
-      message: 'Forbidden',
-      statusCode: 403
     })
   }
 

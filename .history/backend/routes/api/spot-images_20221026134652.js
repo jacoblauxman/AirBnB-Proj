@@ -17,6 +17,7 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
   const imageId = req.params.imageId
   const userId = req.user.id
 
+
   let image = await SpotImage.findByPk(imageId)
 
   //error handling if image doesn't exist
@@ -35,16 +36,19 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
   })
 
   if (userId !== spot.ownerId) {
-    res.status(403).json({
-      message: 'Forbidden',
-      statusCode: 403
-    })
+    
   }
 
+  console.log(spot.ownerId)
+  console.log(userId)
 
+
+  //checking for spot ownership before deleting
+  if (spot.ownerId === userId) {
     await image.destroy()
 
     res.status(200).json({ message: 'Successfully deleted' })
+  }
 })
 
 
