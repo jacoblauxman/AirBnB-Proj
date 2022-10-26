@@ -515,8 +515,7 @@ router.get('/', requireAuth, async (req, res) => {
         where: {
           preview: true
         },
-        //from mikeM
-        required: false
+        require: false
       }
     ],
     attributes: {
