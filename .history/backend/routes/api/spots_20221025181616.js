@@ -306,12 +306,11 @@ router.get('/:spotId', async (req, res) => {
           ]
         ]
       },
-      group: ['Spot.id', 'Reviews.spotId', 'Reviews.stars'],
       //needed because of aggregates -- toJSON otherwise w/ new variable
       raw: true
     });
 
-  console.log(spot.id)
+  console.log(spot)
   if (!spot.id) {
     const err = new Error("Spot couldn't be found")
     err.title = 'Invalid Spot id'
@@ -430,7 +429,7 @@ router.put('/:spotId', requireAuth, async (req, res) => {
     lat, lng, name, description, price
   })
 
-
+  
   await updatedSpot.save()
   res.json(updatedSpot)
 })

@@ -306,7 +306,6 @@ router.get('/:spotId', async (req, res) => {
           ]
         ]
       },
-      group: ['Spot.id', 'Reviews.spotId', 'Reviews.stars'],
       //needed because of aggregates -- toJSON otherwise w/ new variable
       raw: true
     });
