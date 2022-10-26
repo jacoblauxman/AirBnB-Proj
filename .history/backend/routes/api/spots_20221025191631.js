@@ -263,64 +263,31 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 // })
 
 
-router.post('/:spotId/reviews',
-  requireAuth,
-  async (req, res) => {
-    const spotId = req.params.spotId
-    const userId = req.user.id
-    const { review, stars } = req.body
+router.post('/:spotId/reviews', requireAuth, async (req, res) => {
+  const spotId = +req.params.spotId
+  const userId = req.user.id
+  const { review, stars } = req.body
 
-
-    if (!review || !stars) {
-      const err = new Error('Validation error')
-      err.status = 400
-      err.title = 'Validation Error'
-      err.message = 'Validation Error'
-      err.errors = {
-        review: 'Review text is required',
-        stars: 'Stars must be an integer from 1 to 5',
-      }
-
-      throw err
+  if (!review || !stars) {
+    const err = new Error('Validation error')
+    err.status = 400
+    err.title = 'Validation Error'
+    err.errors = {
+      "review": "Review text is required",
+      "stars": "Stars must be an integer from 1 to 5",
     }
+  }
 
-    // console.log(spotId)
-    // let spot = await Spot.findOne({
-    //   where: { id: spotId }
-    // })
-    //issue of trying to await null thing
-    console.log(Object.values(spot))
-    if (!Object.values(spot).length) {
-      const err = new Error(`Spot couldn't be found`)
-      err.title = 'Reference Error'
-      err.status = 404
-      err.message = `Spot couldn't be found`
-
-      throw err
-    }
+  const spot = await Spot.findByPk(spotId);
 
 
-    //error handling if user already has review
-    const reviewCheck = await Review.findOne({
-      where: {
-        userId
-      }
-    })
 
-    if (Object.values(reviewCheck).length) {
-      const err = new Error('User already has a review for this spot')
-      err.status = 403
-      err.title = 'Review Exists'
-
-      throw err
-    }
-
-    const newReview = await Review.create({
-      review, stars, spotId, userId
-    })
-
-    res.json(newReview)
+  const newReview = await Review.create({
+    review, stars, spotId, userId
   })
+
+  res.json(newReview)
+})
 
 
 

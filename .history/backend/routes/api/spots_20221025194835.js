@@ -266,7 +266,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 router.post('/:spotId/reviews',
   requireAuth,
   async (req, res) => {
-    const spotId = req.params.spotId
+    const spotId = +req.params.spotId
     const userId = req.user.id
     const { review, stars } = req.body
 
@@ -284,13 +284,10 @@ router.post('/:spotId/reviews',
       throw err
     }
 
-    // console.log(spotId)
-    // let spot = await Spot.findOne({
-    //   where: { id: spotId }
-    // })
+    console.log(spotId)
+    let spot = await Spot.findByPk(spotId)
     //issue of trying to await null thing
-    console.log(Object.values(spot))
-    if (!Object.values(spot).length) {
+     if (!Object.values(spot).length) {
       const err = new Error(`Spot couldn't be found`)
       err.title = 'Reference Error'
       err.status = 404

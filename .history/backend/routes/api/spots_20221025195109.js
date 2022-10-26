@@ -284,10 +284,10 @@ router.post('/:spotId/reviews',
       throw err
     }
 
-    // console.log(spotId)
-    // let spot = await Spot.findOne({
-    //   where: { id: spotId }
-    // })
+    console.log(spotId)
+    let spot = await Spot.findOne({
+      where: { id: spotId }
+    })
     //issue of trying to await null thing
     console.log(Object.values(spot))
     if (!Object.values(spot).length) {
