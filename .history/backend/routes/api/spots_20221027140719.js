@@ -207,16 +207,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
   const userId = req.user.id
   const { startDate, endDate } = req.body
 
-  //error handling if spot doesn't exist
-  let spot = await Spot.findByPk(spotId)
-
-  if (!spot) {
-    res.status(404).json({
-      message: `Spot couldn't be found`,
-      statusCode: 404
-    })
-  }
-
   //error handling for req body validation - need start and end
   if (!startDate || !endDate) {
     res.status(400).json({
@@ -229,7 +219,15 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     })
   }
 
+  let spot = await Spot.findByPk(spotId)
 
+  //error handling if spot doesn't exist
+  if (!spot) {
+    res.status(404).json({
+      message: `Spot couldn't be found`,
+      statusCode: 404
+    })
+  }
 
   //error handling - userId cannot match ownerId of booking spot
   if (spot.ownerId == userId) {
@@ -250,8 +248,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     })
   }
 
-
-  //error handling if booking conflict:
   let bookingConflicts = await Booking.findAll({
     where: {
       spotId
@@ -259,12 +255,12 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
   })
 
 
+  //error handling if booking conflict:
   for (let conflict of bookingConflicts) {
     conflict = conflict.toJSON()
-    // console.log(conflict, typeof conflict.startDate, '<--- startDATE')
     if ((startDate >= conflict.startDate && startDate <= conflict.endDate) ||
       (endDate >= conflict.startDate && endDate <= conflict.endDate)) {
-      return res.status(403).json({
+      res.status(403).json({
         message: 'Sorry, this spot is already booked for the specified dates',
         statusCode: 403,
         errors: {
@@ -274,19 +270,19 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
       })
     }
   }
-  //moved into to try and catch before creating
-  let newBooking = await Booking.create({
-    spotId: spot.id,
-    userId,
-    startDate,
-    endDate
-  })
+    //moved into to try and catch before creating
+    let newBooking = await Booking.create({
+      spotId: spot.id,
+      userId,
+      startDate,
+      endDate
+    })
 
-  await newBooking.save()
+    await newBooking.save()
 
-  newBooking = newBooking.toJSON()
+    newBooking = newBooking.toJSON()
 
-  res.json(newBooking)
+    res.json(newBooking)
 
 })
 

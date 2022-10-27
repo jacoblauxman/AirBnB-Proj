@@ -261,7 +261,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
   for (let conflict of bookingConflicts) {
     conflict = conflict.toJSON()
-    // console.log(conflict, typeof conflict.startDate, '<--- startDATE')
+    console.log(conflict, typeof conflict.startDate, '<--- startDATE')
     if ((startDate >= conflict.startDate && startDate <= conflict.endDate) ||
       (endDate >= conflict.startDate && endDate <= conflict.endDate)) {
       return res.status(403).json({
