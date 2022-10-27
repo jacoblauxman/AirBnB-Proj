@@ -66,6 +66,7 @@ router.post(
 
     let token = await setTokenCookie(res, user);
 
+    console.log
 
     //edit attempt, my stuff --
     let result = {}

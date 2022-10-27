@@ -64,7 +64,7 @@ router.post(
 
     }
 
-    let token = await setTokenCookie(res, user);
+    await setTokenCookie(res, user);
 
 
     //edit attempt, my stuff --
@@ -74,7 +74,7 @@ router.post(
     result.lastName = user.lastName
     result.email = user.email
     result.username = user.username
-    result.token = token
+    result.token = user.token
     //
     return res.json({
       // user

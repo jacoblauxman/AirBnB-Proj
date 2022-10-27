@@ -128,7 +128,7 @@ router.post(
 
     delete result.createdAt
     delete result.updatedAt
-    result.token = token
+    result.token = ''
 
     return res.json({
       // user,
