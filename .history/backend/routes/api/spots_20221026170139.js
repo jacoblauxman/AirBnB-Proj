@@ -7,7 +7,6 @@ const { User, Spot, SpotImage, Review, ReviewImage, Booking, sequelize } = requi
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { response } = require('express');
-const { parse } = require('pg-protocol');
 //
 
 const router = express.Router();
@@ -207,14 +206,12 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
   const userId = req.user.id
   const { startDate, endDate } = req.body
 
-  //error handling for req body validation - need start and end
   if (!startDate || !endDate) {
     res.status(400).json({
       message: 'Validation error',
       statusCode: 400,
       errors: {
-        startDate: 'startDate must be provided',
-        endDate: 'endDate must be provided'
+        end
       }
     })
   }
@@ -229,7 +226,10 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     })
   }
 
-  //error handling - userId cannot match ownerId of booking spot
+
+
+
+  //error handling - userId cannot match ownerId
   if (spot.ownerId == userId) {
     res.status(403).json({
       message: 'Forbidden',
@@ -237,40 +237,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     })
   }
 
-  //error handling - validation : end can't come before start
-  if (startDate >= endDate) {
-    res.status(400).json({
-      message: 'Validation error',
-      statusCode: 400,
-      errors: {
-        endDate: 'endDate cannot be on or before startDate'
-      }
-    })
-  }
-
-  let bookingConflicts = await Booking.findAll({
-    where: {
-      spotId
-    }
-  })
-
-
-  //error handling if booking conflict:
-  for (let conflict of bookingConflicts) {
-    conflict = conflict.toJSON()
-    if ((startDate >= conflict.startDate && startDate <= conflict.endDate) ||
-      (endDate >= conflict.startDate && endDate <= conflict.endDate)) {
-      res.status(403).json({
-        message: 'Sorry, this spot is already booked for the specified dates',
-        statusCode: 403,
-        errors: {
-          startDate: 'Start date conflicts with an existing booking',
-          endDate: 'End date conflicts with an existing booking'
-        }
-      })
-    }
-  }
-
+  //error handling if booking conflict :
 
   let newBooking = await Booking.create({
     spotId: spot.id,

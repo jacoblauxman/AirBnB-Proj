@@ -207,7 +207,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
   const userId = req.user.id
   const { startDate, endDate } = req.body
 
-  //error handling for req body validation - need start and end
   if (!startDate || !endDate) {
     res.status(400).json({
       message: 'Validation error',
@@ -243,7 +242,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
       message: 'Validation error',
       statusCode: 400,
       errors: {
-        endDate: 'endDate cannot be on or before startDate'
+        endDate: 'endDate cannot be on or before sta'
       }
     })
   }
@@ -255,7 +254,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
   })
 
 
-  //error handling if booking conflict:
+  //error handling if booking conflict :
   for (let conflict of bookingConflicts) {
     conflict = conflict.toJSON()
     if ((startDate >= conflict.startDate && startDate <= conflict.endDate) ||

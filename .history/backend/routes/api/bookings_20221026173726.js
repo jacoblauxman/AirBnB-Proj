@@ -108,6 +108,10 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
 
   let editedBooking = await Booking.findByPk(bookingId)
+  let 
+  let spot = await Spot.findByPk({
+    where: { id: editedBooking.spotId }
+  })
 
   //error handling if booking doesn't exist
   if (!editedBooking) {
@@ -116,8 +120,6 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
       statusCode: 404
     })
   }
-
-
 
   if (startDate >= endDate) {
     res.status(400).json({
@@ -129,17 +131,13 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     })
   }
 
-  //error handling if trying to edit booking past end date (current date)
+  //error handling if trying to edit booking past end date
   if (new Date() >= endDate) {
     res.status(403).json({
       message: `Past bookings can't be modified`,
       statusCode: 403
     })
   }
-
-  //pull in spot to grab all potential bookings
-  let editedJSON = editedBooking.toJSON()
-  let spot = await Spot.findByPk(editedJSON.spotId)
 
 
   let bookingConflicts = await Booking.findAll({

@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     startDate: DataTypes.DATEONLY,
-    endDate: DataTypes.DATEONLY
+    endDate: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Booking',

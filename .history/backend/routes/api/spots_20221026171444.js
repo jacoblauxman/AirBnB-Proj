@@ -207,7 +207,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
   const userId = req.user.id
   const { startDate, endDate } = req.body
 
-  //error handling for req body validation - need start and end
   if (!startDate || !endDate) {
     res.status(400).json({
       message: 'Validation error',
@@ -243,7 +242,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
       message: 'Validation error',
       statusCode: 400,
       errors: {
-        endDate: 'endDate cannot be on or before startDate'
+        endDate: 'endDate cannot be on or before sta'
       }
     })
   }
@@ -254,23 +253,16 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     }
   })
 
-
-  //error handling if booking conflict:
   for (let conflict of bookingConflicts) {
-    conflict = conflict.toJSON()
+      conflict = conflict.toJSON()
     if ((startDate >= conflict.startDate && startDate <= conflict.endDate) ||
-      (endDate >= conflict.startDate && endDate <= conflict.endDate)) {
-      res.status(403).json({
-        message: 'Sorry, this spot is already booked for the specified dates',
-        statusCode: 403,
-        errors: {
-          startDate: 'Start date conflicts with an existing booking',
-          endDate: 'End date conflicts with an existing booking'
+        (endDate >= conflict.startDate && endDate <= conflict.endDate)) {
+
         }
-      })
-    }
   }
 
+
+  //error handling if booking conflict :
 
   let newBooking = await Booking.create({
     spotId: spot.id,
