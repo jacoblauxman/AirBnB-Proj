@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     review: DataTypes.STRING,
-    stars: DataTypes.FLOAT(2, 1)
+    stars: {DataTypes.FLOAT}
   }, {
     sequelize,
     modelName: 'Review',
