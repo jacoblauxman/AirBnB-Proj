@@ -693,20 +693,11 @@ router.get('/', async (req, res) => {
     })
 
     for (let spot of allSpots) {
-      let previewImgs = await SpotImage.findOne({
-        where: {
-          // preview: true,
-          spotId: spot.id
-        },
-        required: false,
-        raw: true,
+      const previewImage = await SpotImage.findAll({
+        where: { preview: true, spotId: spot.id }, required: false, raw: true,
       })
-      console.log(previewImgs)
-      if (!previewImgs) {
-        spot.previewImage = ''
-      } else {
-        spot.previewImage = previewImgs.url
-      }
+      console.log(previewImage)
+      spot.previewImage = previewImage.url
     }
     res.json({ Spots: allSpots, page, size })
 
@@ -799,3 +790,15 @@ router.get('/', async (req, res) => {
 module.exports = router;
 
 
+// const allSpots = await Spot.findAll({
+//   where, ...pagination, raw: true
+// })
+
+// for (let spot of allSpots) {
+//   const previewImage = await SpotImage.findAll({
+//     where: { preview: true, spotId: spot.id }, required: false, raw: true,
+//   })
+//   console.log(previewImage)
+//   spot.previewImage = previewImage
+// }
+// res.json({Spots: allSpots, page, size})

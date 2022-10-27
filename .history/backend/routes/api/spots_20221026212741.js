@@ -647,9 +647,10 @@ router.get('/', async (req, res) => {
 
   if (Object.keys(req.query).length) {
 
+    page = +page
+    size = +size
 
     if (page) {
-      page = +page
       if (isNaN(page) || page < 1) {
         page = 1
       } else if (page > 10) {
@@ -660,7 +661,6 @@ router.get('/', async (req, res) => {
     }
 
     if (size) {
-      size = +size
       if (isNaN(size) || size < 1) {
         size = 1
       } else if (size > 20) {
@@ -675,10 +675,10 @@ router.get('/', async (req, res) => {
 
     let pagination = {}
     let limit = size
-    let offset = size * (page - 1)
+    let offset = (limit * (page - 1))
 
     pagination.limit = size
-    pagination.offset = page * (page - 1)
+    pagination.offset = (limit * (page - 1))
 
 
     if (minLat) where.minLat = minLat
@@ -689,68 +689,42 @@ router.get('/', async (req, res) => {
     if (maxPrice) where.maxPrice = maxPrice
 
     const allSpots = await Spot.findAll({
-      where, ...pagination, raw: true
+      include: [
+        {
+          model: Review,
+          attributes: []
+        },
+        {
+          model: SpotImage,
+          attributes: [],
+          where: {
+            preview: true
+          },
+          //from mikeM
+          // required: false
+        }
+      ],
+      attributes: {
+        include: [
+          [
+            sequelize.fn("AVG", sequelize.col('Reviews.stars')),
+            'avgRating'
+          ],
+          [
+            sequelize.col('SpotImages.url'),
+            'previewImage'
+          ]
+        ]
+      },
+      // offset: offset,
+      offset,
+      limit,
+      // ...pagination,
+      subQuery: false,
+      group: ['id', 'SpotImages.url'],
     })
 
-    for (let spot of allSpots) {
-      let previewImgs = await SpotImage.findOne({
-        where: {
-          // preview: true,
-          spotId: spot.id
-        },
-        required: false,
-        raw: true,
-      })
-      console.log(previewImgs)
-      if (!previewImgs) {
-        spot.previewImage = ''
-      } else {
-        spot.previewImage = previewImgs.url
-      }
-    }
     res.json({ Spots: allSpots, page, size })
-
-
-
-    // const allSpots = await Spot.findAll({
-    //   // raw: true,
-    //   include: [
-    //     // {
-    //     //   model: Review,
-    //     //   attributes: []
-    //     // },
-    //     {
-    //       model: SpotImage,
-    //       attributes: [],
-    //       where: {
-    //         preview: true
-    //       },
-    //       //from mikeM
-    //       // required: false
-    //     }
-    //   ],
-    //   attributes: {
-    //     include: [
-    //       // [
-    //       //   sequelize.fn("AVG", sequelize.col('Reviews.stars')),
-    //       //   'avgRating'
-    //       // ],
-    //       [
-    //         sequelize.col('SpotImages.url'),
-    //         'previewImage'
-    //       ]
-    //     ]
-    //   },
-    //   // raw: true,
-    //   // offset: offset,
-    //   offset,
-    //   limit,
-    //   ...pagination,
-    //   subQuery: false,
-    //   group: ['Spot.id', 'SpotImages.url'],
-    // })
-
-    // res.json({ Spots: allSpots, page, size })
 
   } else {
     //put OG allSpots here
@@ -797,5 +771,3 @@ router.get('/', async (req, res) => {
 
 
 module.exports = router;
-
-
