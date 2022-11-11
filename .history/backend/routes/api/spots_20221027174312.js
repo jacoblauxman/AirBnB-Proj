@@ -410,6 +410,8 @@ router.post('/:spotId/reviews',
 
 
 
+
+
 router.get('/:spotId', async (req, res) => {
   const spotId = req.params.spotId
   const spot = await Spot.findByPk(spotId,
@@ -533,8 +535,6 @@ router.post('/', requireAuth, async (req, res) => {
 
   res.status(201).json(newSpot)
 })
-
-
 
 
 

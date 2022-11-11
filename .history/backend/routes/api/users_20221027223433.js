@@ -51,6 +51,7 @@ router.post(
   async (req, res) => {
     const { email, password, username, firstName, lastName } = req.body;
 
+
     const userNameExists = await User.findOne({ where: { username } })
     const userEmailExists = await User.findOne({ where: { email } })
 

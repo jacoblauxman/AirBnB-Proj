@@ -410,6 +410,8 @@ router.post('/:spotId/reviews',
 
 
 
+
+
 router.get('/:spotId', async (req, res) => {
   const spotId = req.params.spotId
   const spot = await Spot.findByPk(spotId,
@@ -533,8 +535,6 @@ router.post('/', requireAuth, async (req, res) => {
 
   res.status(201).json(newSpot)
 })
-
-
 
 
 
@@ -712,6 +712,46 @@ router.get('/', async (req, res) => {
     res.json({ Spots: allSpots, page, size })
 
 
+
+    // const allSpots = await Spot.findAll({
+    //   // raw: true,
+    //   include: [
+    //     // {
+    //     //   model: Review,
+    //     //   attributes: []
+    //     // },
+    //     {
+    //       model: SpotImage,
+    //       attributes: [],
+    //       where: {
+    //         preview: true
+    //       },
+    //       //from mikeM
+    //       // required: false
+    //     }
+    //   ],
+    //   attributes: {
+    //     include: [
+    //       // [
+    //       //   sequelize.fn("AVG", sequelize.col('Reviews.stars')),
+    //       //   'avgRating'
+    //       // ],
+    //       [
+    //         sequelize.col('SpotImages.url'),
+    //         'previewImage'
+    //       ]
+    //     ]
+    //   },
+    //   // raw: true,
+    //   // offset: offset,
+    //   offset,
+    //   limit,
+    //   ...pagination,
+    //   subQuery: false,
+    //   group: ['Spot.id', 'SpotImages.url'],
+    // })
+
+    // res.json({ Spots: allSpots, page, size })
 
   } else {
     //put OG allSpots here
