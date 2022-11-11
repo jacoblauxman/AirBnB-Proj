@@ -257,6 +257,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
   for (let conflict of bookingConflicts) {
     conflict = conflict.toJSON()
+    // console.log(conflict, typeof conflict.startDate, '<--- startDATE')
     if ((startDate >= conflict.startDate && startDate <= conflict.endDate) ||
       (endDate >= conflict.startDate && endDate <= conflict.endDate)) {
       return res.status(403).json({
@@ -298,6 +299,7 @@ router.post('/:spotId/images',
     //may break -- testing
     let spot = await Spot.findByPk(spotId)
 
+    // console.log(spot)
     if (!spot) {
       const err = new Error()
       err.message = `Spot couldn't be found`

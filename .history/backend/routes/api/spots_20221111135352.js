@@ -257,6 +257,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
   for (let conflict of bookingConflicts) {
     conflict = conflict.toJSON()
+    // console.log(conflict, typeof conflict.startDate, '<--- startDATE')
     if ((startDate >= conflict.startDate && startDate <= conflict.endDate) ||
       (endDate >= conflict.startDate && endDate <= conflict.endDate)) {
       return res.status(403).json({
@@ -298,6 +299,7 @@ router.post('/:spotId/images',
     //may break -- testing
     let spot = await Spot.findByPk(spotId)
 
+    // console.log(spot)
     if (!spot) {
       const err = new Error()
       err.message = `Spot couldn't be found`
@@ -432,6 +434,7 @@ router.get('/:spotId', async (req, res) => {
       raw: true
     });
 
+  // console.log(spot.id)
   if (!spot) {
     const err = new Error("Spot couldn't be found")
     err.title = 'Invalid Spot id'
@@ -485,6 +488,7 @@ router.post('/', requireAuth, async (req, res) => {
   const currId = req.user.id
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
+  // console.log(address, city, state, country, lat)
   if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
 
     // const err = new Error('Validation Error')
@@ -519,6 +523,7 @@ router.post('/', requireAuth, async (req, res) => {
       }
     })
   }
+  // console.log(currId)
   const newSpot = await Spot.create({
     ownerId: currId,
     address, city, state, country,
@@ -665,7 +670,8 @@ router.get('/', async (req, res) => {
       }
     }
 
-
+    console.log('PAGE ->', page)
+    console.log('SIZE ->', size)
 
     let pagination = {}
     let limit = size
@@ -695,6 +701,7 @@ router.get('/', async (req, res) => {
         required: false,
         raw: true,
       })
+      console.log(previewImgs)
       if (!previewImgs) {
         spot.previewImage = ''
       } else {
