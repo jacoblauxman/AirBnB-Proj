@@ -97,6 +97,7 @@ This is a fullstack clone project bringing together the backend and frontend to 
 * [![React][React.js]][React-url]
 * ExpressJS: https://expressjs.com/
 * Sequelize: https://sequelize.org/
+* Redux: https://redux.js.org/
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
