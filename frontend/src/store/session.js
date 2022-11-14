@@ -70,6 +70,7 @@ export const logout = () => async (dispatch) => {
 };
 // ...
 
+export const getCurrUser = (state) => state.session.user
 
 
 // --- INITIAL STATE --- //

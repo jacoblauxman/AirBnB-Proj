@@ -1,0 +1,53 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { NavLink, Switch, Route } from 'react-router-dom'
+import { fetchSpots, getAllSpots } from "../../store/spots"
+// import { Route }
+import SpotShow from '../SpotShow'
+
+
+
+const SpotsList = () => {
+  const dispatch = useDispatch()
+
+  // const spots = useSelector(state => state.spots.Spots)
+  const spots = useSelector(getAllSpots)
+  console.log(spots, 'HERE IS SPOTS')
+
+
+  useEffect(() => {
+    dispatch(fetchSpots())
+  }, [dispatch])
+
+  if (!spots) return null
+
+  return (
+    <div>
+      <h1>Spots List</h1>
+      <ul>
+        {/* {spots.map(spot => ( */}
+        {Object.values(spots).map(spot => (
+          <li key={spot.id}>
+            <NavLink to={`/spot/${spot.id}`}>
+              <img src={spot.previewImage} alt='previewImage' />
+              {/* {console.log(spot.previewImage)} */}
+              <h3>
+                {spot.name}
+              </h3>
+              <div>{spot.city}, {spot.state} <span>::starSymbolHERE:: {spot.avgRating}</span></div>
+              <div>"{spot.description}"</div>
+              <div>${spot.price} <span>night</span></div>
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+      <Switch>
+        <Route path='/spots/:spotId'>
+          <SpotShow spots={spots} />
+        </Route>
+      </Switch>
+    </div>
+  )
+}
+
+export default SpotsList

@@ -130,12 +130,12 @@ module.exports = {
     await queryInterface.bulkInsert('SpotImages', [
       {
         spotId: 1,
-        url: 'http://www.woopie.com',
+        url: 'https://whatifgaming.com/wp-content/uploads/2021/08/7-Wooden-Modern-House-1024x576.png',
         preview: true
       },
       {
         spotId: 2,
-        url: 'http://notherenothere.org',
+        url: 'https://whatifgaming.com/wp-content/uploads/2021/08/4-Aquarium-House-1024x576.png',
         preview: true
       },
       {
