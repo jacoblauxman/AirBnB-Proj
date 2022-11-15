@@ -55,63 +55,46 @@ router.post(
     const userEmailExists = await User.findOne({ where: { email } })
 
     if (userNameExists) {
-      const err = new Error('User already exists')
-      // err.title = 'Validation Error'
-      // err.status = 403
-      err.statusCode = 403
-      err.errors = { email: 'User with that username already exists' }
-      message = 'User with that username already exists'
 
-      // res.status(403).json(err)
-      // throw err
+      const err = new Error('User already exists')
+      err.statusCode = 403
+      err.errors = ['User with that username already exists']
+      err.message = 'User with that username already exists'
+
       res.status(403).json({
-        message: 'User already exists',
+        title: 'User already exists',
+        message: 'Username already exists',
         statusCode: 403,
-        errors: {
-          username: 'User with that username already exists'
-        }
+        errors: err.errors
       })
 
     } else if (userEmailExists) {
       const err = new Error('User already exists')
-      // err.title = 'Validation Error'
-      // err.status = 403
-      err.statusCode = 403
-      err.errors = { email: 'User with that email already exists' }
-      message = 'User with that email already exists'
 
-      // // throw err
-      // res.status(403).json(err)
+      err.statusCode = 403
+      err.errors = ['User with that email already exists']
+      err.message = 'Email already exists'
+
       res.status(403).json({
-        message: 'User already exists',
+        title: 'User already exists',
+        message: 'Email already exists',
         statusCode: 403,
-        errors: {
-          username: 'User with that email already exists'
-        }
+        errors: err.errors
       })
     }
 
     // needs help - modify
     else if (!email || !password || !username || !firstName || !lastName) {
-      // const err = new Error('Validation error')
-      // err.status = 400,
-      //   err.errors = {
-      //     email: "Invalid email",
-      //     username: "Username is required",
-      //     firstName: "First Name is required",
-      //     lastName: "Last Name is required"
-      //   }
 
-      //   throw err
       res.status(400).json({
         message: 'Validation error',
         statusCode: 400,
-        errors: {
-          email: 'Invalid email',
-          username: 'Username is required',
-          firstName: 'First Name is required',
-          lastName: 'Last Name is required'
-        }
+        errors: [
+          'Invalid email',
+          'Username is required',
+          'First Name is required',
+          'Last Name is required'
+        ]
       })
     }
 
@@ -120,7 +103,6 @@ router.post(
 
     let token = await setTokenCookie(res, user);
 
-    //my edit:
     let result = user.toJSON();
 
     delete result.createdAt
@@ -129,8 +111,6 @@ router.post(
     // result.token = token
 
     return res.json({
-      // user,
-      //my other edit
       user: { ...result }
     });
   }

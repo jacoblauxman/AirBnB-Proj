@@ -16,11 +16,9 @@ const validateLogin = [
   check('credential')
     .exists({ checkFalsy: true })
     .notEmpty()
-    // .withMessage('Please provide a valid email or username.'),
     .withMessage('Email or username is required'),
   check('password')
     .exists({ checkFalsy: true })
-    // .withMessage('Please provide a password.'),
     .withMessage('Password is required'),
   // handleValidationErrors
 ];
@@ -30,9 +28,7 @@ const validateLogin = [
 // Log in
 router.post(
   '/',
-  //phase5
   validateLogin,
-  //
   async (req, res, next) => {
     const { credential, password } = req.body;
 
@@ -40,25 +36,31 @@ router.post(
     if (!credential || !password) {
       const err = new Error('Validation error')
       err.status = 400
-      err.errors = [{
-        "credential": "Email or username is required",
-        "password": "Password is required"
-      }]
+      err.errors = [
+        "Email or username is required",
+        "Password is required"
+      ]
+      res.json({
+        title: 'Login Failed',
+        message: 'Email or username is required',
+        statusCode: 400,
+        errors: err.errors
+      })
     }
     const user = await User.login({ credential, password });
 
     if (!user) {
       const err = new Error('Invalid Credentials');
       err.status = 401;
-      err.title = 'Login failed';
+      err.title = 'Login Failed';
       err.errors = ['The provided credentials were invalid.'];
-      //mine
       err.message = 'Invalid credentials'
-      // return next(err);
 
       res.status(401).json({
+        title: err.title,
         message: 'Invalid credentials',
-        statusCode: 401
+        statusCode: 401,
+        errors: err.errors
       })
 
     }
@@ -66,7 +68,7 @@ router.post(
     let token = await setTokenCookie(res, user);
 
 
-    //edit attempt, my stuff --
+
     let result = {}
     result.id = user.id
     result.firstName = user.firstName
@@ -74,9 +76,8 @@ router.post(
     result.email = user.email
     result.username = user.username
     // result.token = token
-    //
+
     return res.json({
-      // user
       user: { ...result }
     });
   }
@@ -93,10 +94,6 @@ router.delete(
     return res.json({ message: 'success' });
   }
 );
-// ...
-
-
-// backend/routes/api/session.js
 // ...
 
 

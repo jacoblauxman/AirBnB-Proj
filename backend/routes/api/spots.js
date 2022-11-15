@@ -102,18 +102,14 @@ router.get('/:spotId/reviews', async (req, res) => {
   const spotId = req.params.spotId;
 
   const spot = await Spot.findByPk(spotId)
-
   //error handling if spot doesn't exist
   if (!spot) {
-    // const err = new Error(`Spot couldn't be found`)
-    // err.title = 'Reference Error'
-    // err.status = 404
-    // err.message = `Spot couldn't be found`
 
-    // throw err
     res.status(404).json({
+      title: 'Not Found',
       message: `Spot couldn't be found`,
-      statusCode: 404
+      statusCode: 404,
+      errors: [`Spot couldn't be found`]
     })
   }
 
@@ -155,8 +151,10 @@ router.get('/:spotId/bookings',
     //error handling if spot doesn't exist for bookings
     if (!spot) {
       res.status(404).json({
+        title: 'Not Found',
         message: `Spot couldn't be found`,
-        statusCode: 404
+        statusCode: 404,
+        errors: [`Spot couldn't be found`]
       })
     }
 
@@ -211,39 +209,46 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
   if (!spot) {
     res.status(404).json({
+      title: 'Not Found',
       message: `Spot couldn't be found`,
-      statusCode: 404
+      statusCode: 404,
+      errors: [`Spot couldn't be found`]
     })
   }
 
   //error handling for req body validation - need start and end
   if (!startDate || !endDate) {
     res.status(400).json({
+      title: 'Validation Error',
       message: 'Validation error',
       statusCode: 400,
-      errors: {
-        startDate: 'startDate must be provided',
-        endDate: 'endDate must be provided'
-      }
+      errors: [
+        'startDate must be provided',
+        'endDate must be provided'
+      ]
     })
   }
 
   //error handling - userId cannot match ownerId of booking spot
   if (spot.ownerId == userId) {
     res.status(403).json({
+      title: 'Unauthorized',
       message: 'Forbidden',
-      statusCode: 403
+      statusCode: 403,
+      errors: ['User booking cannot be owner of Spot']
     })
   }
 
   //error handling - validation : end can't come before start
   if (startDate >= endDate) {
     res.status(400).json({
+      title: 'Validation Error',
       message: 'Validation error',
       statusCode: 400,
-      errors: {
-        endDate: 'endDate cannot be on or before startDate'
-      }
+      errors: [
+        'endDate cannot be on or before startDate'
+      ]
+
     })
   }
 
@@ -260,12 +265,14 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     if ((startDate >= conflict.startDate && startDate <= conflict.endDate) ||
       (endDate >= conflict.startDate && endDate <= conflict.endDate)) {
       return res.status(403).json({
+        title: 'Validation Error',
         message: 'Sorry, this spot is already booked for the specified dates',
         statusCode: 403,
-        errors: {
-          startDate: 'Start date conflicts with an existing booking',
-          endDate: 'End date conflicts with an existing booking'
-        }
+        errors: [
+          'Start date conflicts with an existing booking',
+          'End date conflicts with an existing booking'
+        ]
+
       })
     }
   }
@@ -300,12 +307,14 @@ router.post('/:spotId/images',
 
     if (!spot) {
       const err = new Error()
+      err.title = 'Not Found'
       err.message = `Spot couldn't be found`
       res.status(404)
       err.statusCode = 404
+      err.errors = [`Spot couldn't be found`]
 
       // throw err
-      res.json(err)
+      res.status(404).json(err)
     }
 
     if (spot.ownerId !== userId) {
@@ -313,6 +322,7 @@ router.post('/:spotId/images',
       err.title = 'Authorization Error'
       err.message = 'Forbidden'
       err.statusCode = 403
+      err.errors = [`User must be owner of spot to add an image`]
 
       res.status(403).json(err)
     } else {
@@ -332,10 +342,8 @@ router.post('/:spotId/images',
 
       res.json(newSpotImage)
     }
-
-    // }
-
   })
+
 
 
 
@@ -353,10 +361,10 @@ router.post('/:spotId/reviews',
       err.status = 400
       err.title = 'Validation Error'
       err.message = 'Validation Error'
-      err.errors = {
-        review: 'Review text is required',
-        stars: 'Stars must be an integer from 1 to 5',
-      }
+      err.errors = [
+        'Review text is required',
+        'Stars must be an integer from 1 to 5',
+      ]
 
       throw err
     }
@@ -364,15 +372,11 @@ router.post('/:spotId/reviews',
     //error handling if spot doesn't exist
     let spot = await Spot.findByPk(spotId)
     if (!spot) {
-      // const err = new Error(`Spot couldn't be found`)
-      // err.title = 'Reference Error'
-      // err.status = 404
-      // err.message = `Spot couldn't be found`
-
-      // // throw err
       res.status(404).json({
+        title: 'Not Found',
         message: `Spot couldn't be found`,
-        statusCode: 404
+        statusCode: 404,
+        errors: [`Spot couldn't be found`]
       })
     }
 
@@ -384,16 +388,13 @@ router.post('/:spotId/reviews',
     })
 
     if (reviewCheck) {
-      // const err = new Error('User already has a review for this spot')
-      // err.status = 403
-      // err.title = 'Review Exists'
-      // throw err
       res.status(403).json({
+        title: 'Validation Error',
         message: 'User already has a review for this spot',
-        statusCode: 403
+        statusCode: 403,
+        errors: ['User already has a review for this spot']
       })
     } else {
-
       const newReview = await Review.create({
         review, stars, spotId, userId
       })
@@ -487,36 +488,22 @@ router.post('/', requireAuth, async (req, res) => {
 
   if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
 
-    // const err = new Error('Validation Error')
-    // err.status = 400
-    // err.title = 'Validation Error'
-    // err.errors = {
-    //   "address": "Street address is required",
-    //   "city": "City is required",
-    //   "state": "State is required",
-    //   "country": "Country is required",
-    //   "lat": "Latitude is not valid",
-    //   "lng": "Longitude is not valid",
-    //   "name": "Name must be less than 50 characters",
-    //   "description": "Description is required",
-    //   "price": "Price per day is required"
-    // }
-    // throw err
-
     res.status(400).json({
+      title: 'Validation Error',
       message: 'Validation Error',
       statusCode: 400,
-      errors: {
-        address: 'Street address is required',
-        city: 'City is required',
-        state: 'State is required',
-        country: 'Country is required',
-        lat: 'Latitude is not valid',
-        lng: 'Longitude is not valid',
-        name: 'Name must be less than 50 characters',
-        description: 'Description is required',
-        price: 'Price per day is required'
-      }
+      errors:
+        [
+          'Street address is required',
+          'City is required',
+          'State is required',
+          'Country is required',
+          'Latitude is not valid',
+          'Longitude is not valid',
+          'Name must be less than 50 characters',
+          'Description is required',
+          'Price per day is required'
+        ]
     })
   }
   const newSpot = await Spot.create({
@@ -580,7 +567,8 @@ router.put('/:spotId', requireAuth, async (req, res) => {
   if (userId !== updatedSpot.ownerId) {
     res.status(403).json({
       message: 'Forbidden',
-      statusCode: 403
+      statusCode: 403,
+      errors: [`Unauthorized Action`]
     })
   }
 
@@ -606,14 +594,11 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
   const spot = await Spot.findByPk(spotId);
 
   if (!spot) {
-    // const err = new Error("Spot couldn't be found")
-    // err.title = 'Reference Error'
-    // err.status = 404
-
-    // throw err
     res.status(404).json({
+      title: 'Not Found',
       message: `Spot couldn't be found`,
-      statusCode: 404
+      statusCode: 404,
+      errors: [`Spot couldn't be found`]
     })
   }
 
@@ -621,7 +606,8 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
   if (spot.ownerId !== userId) {
     res.status(403).json({
       message: 'Forbidden',
-      statusCode: 403
+      statusCode: 403,
+      errors: [`Unauthorized action`]
     })
   }
 
