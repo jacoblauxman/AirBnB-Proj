@@ -30,21 +30,18 @@ const SpotsList = () => {
         {Object.values(spots).map(spot => (
           <NavLink key={spot.id} to={`/spots/${spot.id}`} spot={spot}>
             <img src={spot.previewImage} alt='previewImage' />
-            {/* {console.log(spot.previewImage)} */}
             <h3>
               {spot.name}
             </h3>
-            <div>{spot.city}, {spot.state} <span>::starSymbolHERE:: {spot.avgRating}</span></div>
+            <div>{spot.city}, {spot.state} <span>★ {spot.avgRating}</span></div>
             <div>"{spot.description}"</div>
             <div>${spot.price} <span>night</span></div>
           </NavLink>
         ))}
       </ul>
-      {/* <Switch>
-        <Route path='/spots/:spotId'>
-          <SpotShow spots={spots} />
-        </Route>
-      </Switch> */}
+      <Route path="/spots/:spotId">
+        <SpotShow />
+      </Route>
     </div>
   )
 }

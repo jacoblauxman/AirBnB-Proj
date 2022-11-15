@@ -1,15 +1,9 @@
 
-// let preloadedState = {}
-
-
-
-
 // --- STRING LITERALS - for ACTIONS --- //
 
 const LOAD_SPOTS = 'spots/LOAD_SPOTS'
-const CREATE_SPOT = 'spots/CREATE_SPOT'
+const ADD_SPOT = 'spots/ADD_SPOT'
 const DELETE_SPOT = 'spots/DELETE_SPOT'
-const LOAD_ONE = 'spots/LOAD_ONE'
 
 
 
@@ -24,10 +18,11 @@ export const loadSpots = (spots) => {
   }
 }
 
-//create spot
+//create spot / add spot to 'oneSpot' / edit spot
 export const addSpot = (spot) => {
+  console.log('in adSpot creator:', spot)
   return {
-    type: CREATE_SPOT,
+    type: ADD_SPOT,
     spot
   }
 }
@@ -40,10 +35,6 @@ export const deleteSpot = (spotId) => {
   }
 }
 
-const loadOneSpot = spot => ({
-  type: LOAD_ONE,
-  spot
-})
 
 
 
@@ -64,11 +55,12 @@ export const fetchSpots = () => async (dispatch) => {
 // get one spot
 export const fetchOneSpot = (spotId) => async dispatch => {
   const response = await fetch(`/api/spots/${spotId}`);
+  console.log('here in fetch one')
 
   if (response.ok) {
     const spot = await response.json();
     console.log('here in thunk for spot ok', spot)
-    dispatch(loadOneSpot)
+    dispatch(addSpot(spot))
     return spot
   }
 }
@@ -88,23 +80,24 @@ export const createSpot = (spot) => async (dispatch) => {
   }
 }
 
-//remove/delete a spot
-// export const removeSpot =(spot)
-
 
 
 
 // ---- SELECTORS ---- //
 
-// export const getAllSpots = (state) => state.spots.Spots
+//for all spots -- array
 export const getAllSpots = (state) => Object.values(state.spots.Spots)
+// export const getAllSpots = (state) => state.spots.Spots
+
+// for one spot -- object
+export const getOneSpot = (state) => state.spots.oneSpot
 
 
 
 
 // ---- INITIAL STATE ---- //
 
-const initialState = { Spots: {} }
+const initialState = { Spots: {}, oneSpot: {} }
 
 
 
@@ -118,16 +111,37 @@ const spotsReducer = (state = initialState, action) => {
       const loadState = { ...state, Spots: { ...state.Spots } }
       action.spots.forEach((spot) => (loadState.Spots[spot.id] = spot))
       return loadState;
-    // create a spot:
-    case CREATE_SPOT:
-      const createState = { ...state, Spots: { ...state.Spots } }
-      createState.Spots[action.spot.id] = action.spot
-      return createState;
+
+    case ADD_SPOT:
+      //checking whether exists, if so update our Spots with new spot! -- attempt at create, read (single), update
+      if (!state.Spots[action.spot.id]) {
+        const addState = {
+          ...state,
+          Spots: { ...state.Spots, [action.spot.id]: action.spot },
+          oneSpot: { ...state.oneSpot }
+        }
+        //setting new spot to our oneSpot, then returning
+        addState.oneSpot = action.spot
+        return addState
+      } // else - ish: if we have the spot already, set as our 'oneSpot' - can pull in via selector then!
+      const newState = {
+        ...state,
+        // this line especially intended for UPDATE spreading, as well as setting 'oneSpot'
+        Spots: { ...state.Spots, [action.spot.id]: { ...state.Spots[action.spot.id], ...action.spot } },
+        oneSpot: { ...state.oneSpot }
+      }
+      // sets our one spot, and returns
+      newState.oneSpot = action.spot;
+      return newState;
+
     // delete a spot:
     case DELETE_SPOT:
-      const deleteState = { ...state, Spots: { ...state.Spots } }
+      const deleteState = { ...state, Spots: { ...state.Spots }, oneSpot: { ...state.oneSpot } }
       delete deleteState.Spots[action.spotId]
+      //making sure oneSpot is set to empty obj by default -> hoping to redirect user home after deletion
+      deleteState.oneSpot = {}
       return deleteState;
+
     default:
       return state
   }
