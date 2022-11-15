@@ -9,7 +9,7 @@
 const LOAD_SPOTS = 'spots/LOAD_SPOTS'
 const CREATE_SPOT = 'spots/CREATE_SPOT'
 const DELETE_SPOT = 'spots/DELETE_SPOT'
-
+const LOAD_ONE = 'spots/LOAD_ONE'
 
 
 
@@ -40,6 +40,11 @@ export const deleteSpot = (spotId) => {
   }
 }
 
+const loadOneSpot = spot => ({
+  type: LOAD_ONE,
+  spot
+})
+
 
 
 
@@ -56,9 +61,21 @@ export const fetchSpots = () => async (dispatch) => {
   }
 }
 
+// get one spot
+export const fetchOneSpot = (spotId) => async dispatch => {
+  const response = await fetch(`/api/spots/${spotId}`);
+
+  if (response.ok) {
+    const spot = await response.json();
+    console.log('here in thunk for spot ok', spot)
+    dispatch(loadOneSpot)
+    return spot
+  }
+}
+
 //create a spot
 export const createSpot = (spot) => async (dispatch) => {
-  const response = await fetch('/api/spots', {
+  const response = await fetch('/api/spots', { //CSRF FETCH when you get in trouble
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(spot)
@@ -67,6 +84,7 @@ export const createSpot = (spot) => async (dispatch) => {
   if (response.ok) {
     const spot = await response.json()
     dispatch(addSpot(spot))
+    // return spot
   }
 }
 

@@ -110,7 +110,7 @@ router.get(
     if (user) {
       let result = user.toSafeObject()
       return res.json({
-        ...result
+        user: { ...result }
       });
       //edit from backend Check 'BEFORE' you start
     } else return res.json({ 'user': null });

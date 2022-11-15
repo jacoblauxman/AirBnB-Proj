@@ -1,8 +1,14 @@
 // frontend/src/store/session.js
 import { csrfFetch } from './csrf';
 
+// ---- STRING LITERALS ---- //
+
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+
+
+
+// ---- ACTIONS / CREATORS ---- //
 
 const setUser = (user) => {
   return {
@@ -17,6 +23,10 @@ const removeUser = () => {
   };
 };
 
+
+
+
+
 // --- THUNKS --- //
 
 export const login = (user) => async (dispatch) => {
@@ -29,7 +39,7 @@ export const login = (user) => async (dispatch) => {
     }),
   });
   const data = await response.json();
-  dispatch(setUser(data));
+  dispatch(setUser(data.user));
   return response;
 };
 
@@ -37,7 +47,7 @@ export const login = (user) => async (dispatch) => {
 export const restoreUser = () => async dispatch => {
   const response = await csrfFetch('/api/session');
   const data = await response.json();
-  dispatch(setUser(data));
+  dispatch(setUser(data.user));
   return response;
 };
 // ...
@@ -56,7 +66,7 @@ export const signup = (user) => async (dispatch) => {
   });
   const data = await response.json();
 
-  dispatch(setUser(data));
+  dispatch(setUser(data.user));
   return response;
 };
 // ...
@@ -70,12 +80,20 @@ export const logout = () => async (dispatch) => {
 };
 // ...
 
+
+
+// ---- SELECTORS ---- //
+
 export const getCurrUser = (state) => state.session.user
+
+
 
 
 // --- INITIAL STATE --- //
 
 const initialState = { user: null };
+
+
 
 
 // --- REDUCER --- //

@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 
-function LoginForm() {
+function LoginForm({ setShowModal }) {
+  //passed in setter of modal
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -12,12 +13,21 @@ function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.login({ credential, password })).catch(
-      async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      }
-    );
+    return dispatch(sessionActions.login({ credential, password }))
+      // adding our then in before the catch -- any below 400
+      // if it's successful do the 'then' --> set our showModal slice of state to false
+      // .then(setShowModal(false))
+      .then(() => {
+        console.log('.then in loginForm')
+        setShowModal(false)
+      })
+      .catch(
+        async (res) => {
+          console.log('.catch for loginForm')
+          const data = await res.json();
+          if (data && data.errors) setErrors(data.errors);
+        }
+      );
   };
 
   return (

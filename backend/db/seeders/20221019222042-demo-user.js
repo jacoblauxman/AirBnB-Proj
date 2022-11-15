@@ -34,40 +34,149 @@ module.exports = {
     await queryInterface.bulkInsert('Spots', [
       {
         ownerId: 1,
-        address: '123GoodDay2You Rd',
+        address: '123 Good Day2You Rd',
         city: 'Somewherez',
         state: 'Overz',
         country: 'daRainbowz',
         lat: 111.1234567,
         lng: -111.1234567,
-        name: 'FIRSTSPOTSTOP',
+        name: 'FIRST SPOT STOP',
         description: 'A first spot to stop and plop',
         price: 100.00
       },
       {
         ownerId: 2,
-        address: '234BadDayAhead St',
+        address: '234 Bad DayAhead St',
         city: 'Elsewherez',
         state: 'Behindz',
         country: 'daMoon',
-        lat: 20.76543321,
-        lng: -20.7654321,
-        name: 'SECONDPLACE',
+        lat: 12.76543321,
+        lng: -12.7654321,
+        name: 'SECOND PLACE',
         description: 'A second place to waste ya days',
-        price: 32.10
+        price: 32.00
       },
       {
         ownerId: 1,
-        address: '456IsItEnough Dr',
+        address: '456 IsItEnough Dr',
         city: 'Buh',
         state: 'Buu',
         country: 'Bruuuh',
         lat: 666.1111111,
         lng: -666.1111111,
-        name: 'THIRDTURD',
-        description: 'A third turd of words for durv',
-        price: 666.66
-      }
+        name: 'THIRD TIME',
+        description: 'A third place of words for durv',
+        price: 123.99
+      },
+      {
+        ownerId: 2,
+        address: '678 Ok WeWillSee Rd',
+        city: 'Another',
+        state: 'Cool',
+        country: 'Place',
+        lat: 21.76543321,
+        lng: -21.7654321,
+        name: 'ANOTHER ONE ! YES',
+        description: 'Could this be THE spot?',
+        price: 148.00
+      },
+      {
+        ownerId: 3,
+        address: '789 Hmm NotBad Ln',
+        city: 'Go',
+        state: 'Here',
+        country: 'Someday?',
+        lat: 22.76543321,
+        lng: -22.7654321,
+        name: 'CHECK OUT THE SPOT',
+        description: 'Another fun thing would be to visit here',
+        price: 222.00
+      },
+      {
+        ownerId: 3,
+        address: '890 Well HereWeGo Cir',
+        city: 'Some',
+        state: 'Time',
+        country: 'Sooooon',
+        lat: 23.76543321,
+        lng: -23.7654321,
+        name: 'ONE MORE AMAZING PLACE',
+        description: 'Cool spot for cool times',
+        price: 123.00
+      },
+      {
+        ownerId: 2,
+        address: '1112 Some WhereClose ALY',
+        city: 'Greatest',
+        state: 'Place',
+        country: 'Ever',
+        lat: 23.76543321,
+        lng: -23.7654321,
+        name: 'TRY AND FIND A BETTER SPOT',
+        description: 'Here is one more description',
+        price: 186.00
+      },
+      {
+        ownerId: 1,
+        address: '2221 Imaginary Road Dr',
+        city: 'Here',
+        state: 'IsAnother',
+        country: 'Location',
+        lat: 23.76543321,
+        lng: -23.7654321,
+        name: 'TITLE HERE',
+        description: 'Description here',
+        price: 254.00
+      },
+      {
+        ownerId: 1,
+        address: '890 Well HereWeGo Cir',
+        city: 'Some',
+        state: 'Time',
+        country: 'Sooooon',
+        lat: 23.76543321,
+        lng: -23.7654321,
+        name: 'TITLE HERE',
+        description: 'Description Here',
+        price: 89.00
+      },
+      {
+        ownerId: 3,
+        address: '890 Well HereWeGo Cir',
+        city: 'Some',
+        state: 'Time',
+        country: 'Sooooon',
+        lat: 23.76543321,
+        lng: -23.7654321,
+        name: 'TITLE HERE',
+        description: 'Description Here',
+        price: 122.00
+      },
+      {
+        ownerId: 2,
+        address: '890 Well HereWeGo Cir',
+        city: 'Some',
+        state: 'Time',
+        country: 'Sooooon',
+        lat: 23.76543321,
+        lng: -23.7654321,
+        name: 'TITLE HERE',
+        description: 'Description Here',
+        price: 201.00
+      },
+      {
+        ownerId: 1,
+        address: '4423 AnotherAddress Please Ln',
+        city: 'Some',
+        state: 'Time',
+        country: 'Sooooon',
+        lat: 23.76543321,
+        lng: -23.7654321,
+        name: 'TITLE HERE',
+        description: 'Description Here',
+        price: 175.00
+      },
+
     ], {})
 
 
@@ -85,7 +194,7 @@ module.exports = {
         stars: 2
       },
       {
-        spotId: 3,
+        spotId: 2,
         userId: 3,
         review: 'oh yeah cant wait to come back',
         stars: 5
@@ -140,12 +249,47 @@ module.exports = {
       },
       {
         spotId: 3,
-        url: 'https://yeayeayea.com',
+        url: 'https://whatifgaming.com/wp-content/uploads/2021/08/37-Large-Modern-House-1024x576.png',
         preview: true
       },
       {
-        spotId: 1,
-        url: 'http://somewhereElsedotCom.com',
+        spotId: 4,
+        url: 'https://whatifgaming.com/wp-content/uploads/2021/08/21-Epic-Modern-House-House-1024x576.png',
+        preview: true
+      },
+      {
+        spotId: 5,
+        url: 'https://whatifgaming.com/wp-content/uploads/2021/08/21-Epic-Modern-House-House-1024x576.png',
+        preview: true
+      },
+      {
+        spotId: 6,
+        url: 'https://whatifgaming.com/wp-content/uploads/2021/08/21-Epic-Modern-House-House-1024x576.png',
+        preview: true
+      },
+      {
+        spotId: 7,
+        url: 'https://whatifgaming.com/wp-content/uploads/2021/08/21-Epic-Modern-House-House-1024x576.png',
+        preview: true
+      },
+      {
+        spotId: 8,
+        url: 'https://whatifgaming.com/wp-content/uploads/2021/08/21-Epic-Modern-House-House-1024x576.png',
+        preview: true
+      },
+      {
+        spotId: 9,
+        url: 'https://whatifgaming.com/wp-content/uploads/2021/08/21-Epic-Modern-House-House-1024x576.png',
+        preview: true
+      },
+      {
+        spotId: 10,
+        url: 'https://whatifgaming.com/wp-content/uploads/2021/08/21-Epic-Modern-House-House-1024x576.png',
+        preview: true
+      },
+      {
+        spotId: 11,
+        url: 'https://whatifgaming.com/wp-content/uploads/2021/08/21-Epic-Modern-House-House-1024x576.png',
         preview: true
       }
     ])
