@@ -11,8 +11,7 @@ const SpotsList = () => {
   const dispatch = useDispatch()
 
   const spots = useSelector(state => state.spots.Spots)
-  // const spots = useSelector(getAllSpots)
-  // const spotsArr = Object.values(spots)
+
   console.log(spots, 'HERE IS SPOTS')
 
 
@@ -29,7 +28,7 @@ const SpotsList = () => {
         {/* {spots.map(spot => ( */}
         {Object.values(spots).map(spot => (
           <NavLink key={spot.id} to={`/spots/${spot.id}`} spot={spot}>
-            <img src={spot.previewImage} alt='previewImage' />
+            <img src={spot?.previewImage} alt='previewImage' />
             <h3>
               {spot.name}
             </h3>

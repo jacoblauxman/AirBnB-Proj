@@ -526,38 +526,35 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 
 
   //error handling - Validation on req.body
-  if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
+  // if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
 
 
-    res.status(400).json({
-      message: 'Validation Error',
-      statusCode: 400,
-      errors: {
-        address: 'Street address is required',
-        city: 'City is required',
-        state: 'State is required',
-        country: 'Country is required',
-        lat: 'Latitude is not valid',
-        lng: 'Longitude is not valid',
-        name: 'Name must be less than 50 characters',
-        description: 'Description is required',
-        price: 'Price per day is required'
-      }
-    })
+  //   res.status(400).json({
+  //     message: 'Validation Error',
+  //     statusCode: 400,
+  //     errors: {
+  //       address: 'Street address is required',
+  //       city: 'City is required',
+  //       state: 'State is required',
+  //       country: 'Country is required',
+  //       lat: 'Latitude is not valid',
+  //       lng: 'Longitude is not valid',
+  //       name: 'Name must be less than 50 characters',
+  //       description: 'Description is required',
+  //       price: 'Price per day is required'
+  //     }
+  //   })
 
-  }
+  // }
 
   let updatedSpot = await Spot.findByPk(spotId)
 
 
   //error handling if spot doesn't exist
   if (!updatedSpot) {
-    // const err = new Error("Spot couldn't be found")
-    // err.title = 'Reference Error'
-    // err.status = 404
-
-    // throw err
     res.status(404).json({
+      title: 'Not Found',
+      errors: [`Spot couldn't be found`],
       message: `Spot couldn't be found`,
       statusCode: 404
     })
@@ -574,7 +571,9 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 
 
   //ELSE
+
   updatedSpot.set({
+    ...updatedSpot,
     address, city, state, country,
     lat, lng, name, description, price
   })

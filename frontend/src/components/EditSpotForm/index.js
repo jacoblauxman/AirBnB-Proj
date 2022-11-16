@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { createSpot } from '../../store/spots';
+import { updateSpot, fetchOneSpot } from '../../store/spots';
 import { getCurrUser } from '../../store/session';
 
 
 
-const CreateSpotForm = () => {
+
+const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
   const [name, setName] = useState('')
   const [address, setAddress] = useState('')
   const [city, setCity] = useState('')
@@ -19,6 +20,8 @@ const CreateSpotForm = () => {
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
 
+  const spot = useSelector(state => state.spots.oneSpot)
+  console.log(spot, 'here is SPOT in EDITSPOTFORM')
   //adding error handling
   const [errors, setErrors] = useState([])
 
@@ -30,7 +33,8 @@ const CreateSpotForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newSpot = {
+    const updatedSpot = {
+      ...spot,
       name,
       address,
       city,
@@ -42,12 +46,12 @@ const CreateSpotForm = () => {
       price
     }
 
-    const response = await dispatch(createSpot(newSpot))
+    const response = await dispatch(updateSpot(updatedSpot))
     if (response.ok) {
-      console.log('inside of response ok should push history to home')
+      console.log('in response ok of editspotform response', updatedSpot)
       //trying to send user to updated created spot location
-      history.push(`/spots/${response.id}`)
-      // history.push('/')
+      // history.push(`/spots/${response.id}`)
+      history.push('/')
       //hideForm()
     }
   }
@@ -70,72 +74,72 @@ const CreateSpotForm = () => {
 
   return (
     <div>
-      <h1>Host a Spot (Create a Spot)</h1>
+      <h1>Edit Spot</h1>
       <form onSubmit={handleSubmit}>
         <input
           type='text'
           onChange={e => setName(e.target.value)}
           value={name}
-          placeholder='Name Here'
+          placeholder={spot.name}
           name='title'
         />
         <input
           type='text'
           value={address}
           onChange={e => setAddress(e.target.value)}
-          placeholder='Address'
+          placeholder={spot.address}
           name='address'
         />
         <input
           type='text'
           value={city}
           onChange={e => setCity(e.target.value)}
-          placeholder='City'
+          placeholder={spot.city}
           name='city'
         />
         <input
           type='text'
           value={state}
           onChange={e => setState(e.target.value)}
-          placeholder='State'
+          placeholder={spot.state}
           name='state'
         />
         <input
           type='text'
           value={country}
           onChange={e => setCountry(e.target.value)}
-          placeholder='Country'
+          placeholder={spot.country}
           name='country'
         />
         <input
           type='text'
           value={lat}
           onChange={e => setLat(e.target.value)}
-          placeholder='latitude'
+          placeholder={spot.lat}
           name='latitude'
         />
         <input
           type='text'
           value={lng}
           onChange={e => setLng(e.target.value)}
-          placeholder='longitude'
+          placeholder={spot.lng}
           name='longitude'
         />
         <input
           type='text'
           value={price}
           onChange={e => setPrice(e.target.value)}
-          placeholder='Price'
+          placeholder={spot.price}
           name='price'
         />
         <textarea
           value={description}
           onChange={e => setDescription(e.target.value)}
           name='description'
-          placeholder='Spot Description'
+          placeholder={spot.description}
           rows='10'
         ></textarea>
-        <button type="submit">Create new Spot</button>
+        <button type="submit">Update Spot</button>
         <button type="button" onClick={handleCancel}>Cancel</button>
       </form>
     </div>
@@ -143,4 +147,4 @@ const CreateSpotForm = () => {
 }
 
 
-export default CreateSpotForm
+export default EditSpotForm

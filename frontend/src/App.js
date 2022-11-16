@@ -7,6 +7,8 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotsList from "./components/Spots";
 import SpotShow from "./components/SpotShow";
+import CreateSpotForm from "./components/CreateSpotForm";
+import EditSpotForm from "./components/EditSpotForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -15,21 +17,25 @@ function App() {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  
+
 
   return (
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
+
           <Route exact path="/">
             <SpotsList />
           </Route>
           <Route path="/spots/:spotId">
             <SpotShow />
+          </Route>
+          <Route path='/spots'>
+            <CreateSpotForm />
+          </Route>
+          <Route path='/editSpot'>
+            <EditSpotForm />
           </Route>
         </Switch>
       )}

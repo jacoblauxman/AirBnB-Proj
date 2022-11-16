@@ -11,6 +11,7 @@ import { Modal } from '../../context/Modal';
 // bring in forms to apply with modal
 import LoginForm from '../LoginFormModal/LoginForm';
 import SignupFormPage from '../SignupFormPage'
+// import CreateSpotForm from '../CreateSpotForm';
 
 
 
@@ -20,19 +21,7 @@ function Navigation({ isLoaded }) {
   // this setter can be passed to prof button to show modal!
   const [login, setLogin] = useState(true)
 
-  // let sessionLinks;
-  // if (sessionUser) {
-  //   sessionLinks = (
-  //     <ProfileButton user={sessionUser} />
-  //   );
-  // } else {
-  //   sessionLinks = (
-  //     <>
-  //       <LoginFormModal />
-  //       <NavLink to="/signup">Sign Up</NavLink>
-  //     </>
-  //   );
-  // }
+
 
   return (
     <ul>
@@ -48,6 +37,13 @@ function Navigation({ isLoaded }) {
           />
         )}
       </li>
+      {sessionUser && (<li>
+        <NavLink to="/spots">
+          <button>
+            Host a Spot
+          </button>
+        </NavLink>
+      </li>)}
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           {login ?
