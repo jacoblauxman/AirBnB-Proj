@@ -10,18 +10,18 @@ import { getCurrUser } from '../../store/session';
 
 
 const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
-  const [name, setName] = useState('')
-  const [address, setAddress] = useState('')
-  const [city, setCity] = useState('')
-  const [state, setState] = useState('')
-  const [country, setCountry] = useState('')
-  const [lat, setLat] = useState('')
-  const [lng, setLng] = useState('')
-  const [description, setDescription] = useState('')
-  const [price, setPrice] = useState('')
+  const [name, setName] = useState(spot.name)
+  const [address, setAddress] = useState(spot.address)
+  const [city, setCity] = useState(spot.city)
+  const [state, setState] = useState(spot.state)
+  const [country, setCountry] = useState(spot.country)
+  const [lat, setLat] = useState(spot.lat)
+  const [lng, setLng] = useState(spot.lng)
+  const [description, setDescription] = useState(spot.description)
+  const [price, setPrice] = useState(spot.price)
 
-  const spot = useSelector(state => state.spots.oneSpot)
-  console.log(spot, 'here is SPOT in EDITSPOTFORM')
+  // const spot = useSelector(state => state.spots.oneSpot)
+  console.log(spot.spotImages, 'SPOT IMAGES, in edit form')
   //adding error handling
   const [errors, setErrors] = useState([])
 
@@ -43,12 +43,15 @@ const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
       lat,
       lng,
       description,
-      price
+      price,
+      spotImages: spot.spotImages
     }
+
+    console.log('IN HANDLE SUBMIT:', updatedSpot.spotImages)
 
     const response = await dispatch(updateSpot(updatedSpot))
     if (response.ok) {
-      console.log('in response ok of editspotform response', updatedSpot)
+      // console.log('in response ok of editspotform response', updatedSpot)
       //trying to send user to updated created spot location
       // history.push(`/spots/${response.id}`)
       history.push('/')
@@ -64,7 +67,7 @@ const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
 
   //testing - going to make conditional to render/return null if not logged in
   const currUser = useSelector(getCurrUser)
-  console.log('HERE IS USER', currUser)
+  // console.log('HERE IS USER', currUser)
 
   if (!currUser) {
     history.push('/')
@@ -80,49 +83,49 @@ const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
           type='text'
           onChange={e => setName(e.target.value)}
           value={name}
-          placeholder={spot.name}
+          placeholder="Spot Name"
           name='title'
         />
         <input
           type='text'
           value={address}
           onChange={e => setAddress(e.target.value)}
-          placeholder={spot.address}
+          placeholder="Address"
           name='address'
         />
         <input
           type='text'
           value={city}
           onChange={e => setCity(e.target.value)}
-          placeholder={spot.city}
+          placeholder="City"
           name='city'
         />
         <input
           type='text'
           value={state}
           onChange={e => setState(e.target.value)}
-          placeholder={spot.state}
+          placeholder="State"
           name='state'
         />
         <input
           type='text'
           value={country}
           onChange={e => setCountry(e.target.value)}
-          placeholder={spot.country}
+          placeholder="Country"
           name='country'
         />
         <input
           type='text'
           value={lat}
           onChange={e => setLat(e.target.value)}
-          placeholder={spot.lat}
+          placeholder="Latitude"
           name='latitude'
         />
         <input
           type='text'
           value={lng}
           onChange={e => setLng(e.target.value)}
-          placeholder={spot.lng}
+          placeholder="Longitude"
           name='longitude'
         />
         <input
@@ -136,7 +139,7 @@ const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
           value={description}
           onChange={e => setDescription(e.target.value)}
           name='description'
-          placeholder={spot.description}
+          placeholder="Spot Description Here"
           rows='10'
         ></textarea>
         <button type="submit">Update Spot</button>

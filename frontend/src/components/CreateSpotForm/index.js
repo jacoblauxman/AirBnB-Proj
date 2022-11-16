@@ -24,9 +24,9 @@ const CreateSpotForm = () => {
 
 
   const dispatch = useDispatch()
-
   const history = useHistory()
 
+  //form submission click
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,12 +46,13 @@ const CreateSpotForm = () => {
     if (response.ok) {
       console.log('inside of response ok should push history to home')
       //trying to send user to updated created spot location
-      history.push(`/spots/${response.id}`)
-      // history.push('/')
+      // history.push(`/spots/${response.id}`)
+      history.push('/')
       //hideForm()
     }
   }
 
+  //cancel button click
   const handleCancel = (e) => {
     e.preventDefault();
     //hideForm()
@@ -64,7 +65,6 @@ const CreateSpotForm = () => {
 
   if (!currUser) {
     history.push('/')
-    // return null;
   }
 
 

@@ -21,14 +21,15 @@ const SpotShow = () => {
   const dispatch = useDispatch()
 
   const spot = useSelector(state => state.spots.oneSpot)
-  console.log(spot, 'here is SPOT in SpotShow')
+  console.log(spot, 'in SpotShow, here is SPOT')
 
   const currUser = useSelector(getCurrUser)
-  console.log(currUser, 'HERE IS current USER')
+  // console.log(currUser, 'HERE IS current USER')
 
 
   useEffect(() => {
     dispatch(fetchOneSpot(spotId))
+    console.log('in useEffect spotShow')
   }, [dispatch, spotId])
 
 
@@ -46,13 +47,13 @@ const SpotShow = () => {
 
 
     let response;
-    try {
-      response = await dispatch(removeSpot(spot))
-    } catch (error) {
-      throw new Error('Not Found - Resource Not Found')
-    }
+    // try {
+    response = await dispatch(removeSpot(spot))
+    // } catch (error) {
+    //   throw new Error('Not Found - Resource Not Found')
+    // }
     if (response.message === 'Successfully deleted') {
-      console.log('in here after response message succesfully deleted')
+      console.log('in here after response message successfully deleted')
       // history.go('/')
       history.push('/')
     }
@@ -80,14 +81,14 @@ const SpotShow = () => {
           currUser.id === spot.ownerId && (
             <>
               <div>
-                <NavLink exact to='/editSpot'>
-                  <button
-                    type="button"
-                    onClick={handleEdit}>Edit Spot</button>
-                  <div style={{ visibility: displayForm ? 'visible' : 'hidden' }} >
-                    <EditSpotForm spot={spot} displayForm={displayForm} setDisplayForm={setDisplayForm} />
-                  </div>
-                </NavLink>
+                {/* <NavLink exact to='/editSpot'> */}
+                <button
+                  type="button"
+                  onClick={handleEdit}>Edit Spot</button>
+                <div style={{ visibility: displayForm ? 'visible' : 'hidden' }} >
+                  <EditSpotForm spot={spot} displayForm={displayForm} setDisplayForm={setDisplayForm} />
+                </div>
+                {/* </NavLink> */}
               </div>
               <div>
                 <button

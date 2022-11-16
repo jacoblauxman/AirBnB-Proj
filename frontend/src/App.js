@@ -34,9 +34,9 @@ function App() {
           <Route path='/spots'>
             <CreateSpotForm />
           </Route>
-          <Route path='/editSpot'>
+          {/* <Route path='/editSpot'>
             <EditSpotForm />
-          </Route>
+          </Route> */}
         </Switch>
       )}
     </>

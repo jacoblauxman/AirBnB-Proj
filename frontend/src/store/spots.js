@@ -50,7 +50,7 @@ export const fetchSpots = () => async (dispatch) => {
 
   if (response.ok) {
     const spots = await response.json()
-    console.log('here in thunk ok', spots.Spots)
+    console.log('here in get thunk ok', spots.Spots)
     dispatch(loadSpots(spots.Spots))
   }
 }
@@ -87,7 +87,8 @@ export const createSpot = (spot) => async (dispatch) => {
 
 // update a spot
 export const updateSpot = spot => async dispatch => {
-  const response = await csrfFetch(`api/spots/${spot.id}`, {
+  console.log('in update thunk fetch', spot)
+  const response = await csrfFetch(`/api/spots/${spot.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -97,6 +98,7 @@ export const updateSpot = spot => async dispatch => {
 
   if (response.ok) {
     const updatedSpot = await response.json()
+    console.log('in update response ok thunk', updatedSpot)
     dispatch(addSpot(updatedSpot))
     return updatedSpot
   }
