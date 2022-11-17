@@ -8,6 +8,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { response } = require('express');
 const { parse } = require('pg-protocol');
+const e = require('express');
 //
 
 const router = express.Router();
@@ -505,14 +506,16 @@ router.post('/', requireAuth, async (req, res) => {
           'Price per day is required'
         ]
     })
-  }
-  const newSpot = await Spot.create({
-    ownerId: currId,
-    address, city, state, country,
-    lat, lng, name, description, price
-  })
+  } else {
 
-  res.status(201).json(newSpot)
+    const newSpot = await Spot.create({
+      ownerId: currId,
+      address, city, state, country,
+      lat, lng, name, description, price
+    })
+
+    res.status(201).json(newSpot)
+  }
 })
 
 
@@ -526,33 +529,33 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 
 
   //error handling - Validation on req.body
-  // if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
+  if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
 
-
-  //   res.status(400).json({
-  //     message: 'Validation Error',
-  //     statusCode: 400,
-  //     errors: {
-  //       address: 'Street address is required',
-  //       city: 'City is required',
-  //       state: 'State is required',
-  //       country: 'Country is required',
-  //       lat: 'Latitude is not valid',
-  //       lng: 'Longitude is not valid',
-  //       name: 'Name must be less than 50 characters',
-  //       description: 'Description is required',
-  //       price: 'Price per day is required'
-  //     }
-  //   })
-
-  // }
+    return res.status(400).json({
+      title: 'Validation Error',
+      message: 'Validation Error',
+      statusCode: 400,
+      errors:
+        [
+          'Street address is required',
+          'City is required',
+          'State is required',
+          'Country is required',
+          'Latitude is not valid',
+          'Longitude is not valid',
+          'Name must be less than 50 characters',
+          'Description is required',
+          'Price per day is required'
+        ]
+    })
+  }
 
   let updatedSpot = await Spot.findByPk(spotId)
 
 
   //error handling if spot doesn't exist
   if (!updatedSpot) {
-    res.status(404).json({
+    return res.status(404).json({
       title: 'Not Found',
       errors: [`Spot couldn't be found`],
       message: `Spot couldn't be found`,
@@ -562,7 +565,7 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 
   //error handling if userId isn't ownerId
   if (userId !== updatedSpot.ownerId) {
-    res.status(403).json({
+    return res.status(403).json({
       message: 'Forbidden',
       statusCode: 403,
       errors: [`Unauthorized Action`]
@@ -571,16 +574,19 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 
 
   //ELSE
+  else {
 
-  updatedSpot.set({
-    ...updatedSpot,
-    address, city, state, country,
-    lat, lng, name, description, price
-  })
+    updatedSpot.set({
+      ...updatedSpot,
+      address, city, state, country,
+      lat, lng, name, description, price
+    })
+    
+    await updatedSpot.save()
+    res.json(updatedSpot)
 
+  }
 
-  await updatedSpot.save()
-  res.json(updatedSpot)
 })
 
 

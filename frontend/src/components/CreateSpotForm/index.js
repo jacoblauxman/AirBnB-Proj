@@ -18,6 +18,8 @@ const CreateSpotForm = () => {
   const [lng, setLng] = useState('')
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
+  //additional,frontend previewImage
+  const [previewImage, setPreviewImage] = useState('')
 
   //adding error handling
   const [errors, setErrors] = useState([])
@@ -25,6 +27,7 @@ const CreateSpotForm = () => {
 
   const dispatch = useDispatch()
   const history = useHistory()
+
 
   //form submission click
   const handleSubmit = async (e) => {
@@ -39,18 +42,20 @@ const CreateSpotForm = () => {
       lat,
       lng,
       description,
-      price
+      price,
+      previewImage
     }
 
+    console.log(newSpot, 'IN CREATE SUBMIT, HERE IS NEW SPOT')
+
     const response = await dispatch(createSpot(newSpot))
-    if (response.ok) {
-      console.log('inside of response ok should push history to home')
-      //trying to send user to updated created spot location
-      // history.push(`/spots/${response.id}`)
-      history.push('/')
-      //hideForm()
-    }
+      .catch(async res => {
+        const data = await res.json()
+        if (data && data.errors) setErrors(data.errors)
+        if (data && !data.errors.length) response && history.push('/')
+      }).then(history.push("/"))
   }
+
 
   //cancel button click
   const handleCancel = (e) => {
@@ -58,6 +63,7 @@ const CreateSpotForm = () => {
     //hideForm()
     history.push('/')
   }
+
 
   //testing - going to make conditional to render/return null if not logged in
   const currUser = useSelector(getCurrUser)
@@ -72,6 +78,10 @@ const CreateSpotForm = () => {
     <div>
       <h1>Host a Spot (Create a Spot)</h1>
       <form onSubmit={handleSubmit}>
+        {errors.length > 0 && <div>Error !</div>}
+        {errors.map(error => (
+          <li key={error}>{error}</li>
+        ))}
         <input
           type='text'
           onChange={e => setName(e.target.value)}
@@ -135,7 +145,17 @@ const CreateSpotForm = () => {
           placeholder='Spot Description'
           rows='10'
         ></textarea>
-        <button type="submit">Create new Spot</button>
+        <input
+          type='text'
+          value={previewImage}
+          onChange={e => setPreviewImage(e.target.value)}
+          placeholder='Preview Image URL'
+          name='previewImage'
+        />
+        <button type="submit"
+        // disabled={errors.length > 0}
+        >Create new Spot
+        </button>
         <button type="button" onClick={handleCancel}>Cancel</button>
       </form>
     </div>

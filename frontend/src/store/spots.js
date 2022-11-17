@@ -76,12 +76,36 @@ export const createSpot = (spot) => async (dispatch) => {
     body: JSON.stringify(spot)
   })
 
+  //edit trying to make it all in one - get images to attach too
   if (response.ok) {
-    const spot = await response.json()
-    console.log('here in thunk for createSpot ok', spot)
-    dispatch(addSpot(spot))
-    return spot
+    const addedSpot = await response.json()
+    console.log('here in thunk for createSpot ok', addedSpot, spot.previewImage)
+    //adding our image to nex step
+    const imageResponse = await csrfFetch(`/api/spots/${addedSpot.id}/images`, {
+      method: 'POST',
+      body: JSON.stringify({
+        preview: true,
+        url: spot.previewImage
+      })
+    })
+
+    if (imageResponse.ok) {
+      const addedSpotImage = await imageResponse.json()
+      console.log('here in imageResponse createThunk ok', addedSpotImage)
+      //putting our addedSpotImage in as the previewImage (via url key) in addedSpot -- THEN dispatch action!
+      addedSpot.previewImage = addedSpotImage.url
+      //addedSpot.avgRating = 0 // do we need to set or will null work?
+      dispatch(addSpot(addedSpot))
+      return
+    }
   }
+
+  // if (response.ok) {
+  //   const spot = await response.json()
+  //   console.log('here in thunk for createSpot ok', spot)
+  //   dispatch(addSpot(spot))
+  //   return spot
+  // }
 }
 
 
@@ -98,9 +122,17 @@ export const updateSpot = spot => async dispatch => {
 
   if (response.ok) {
     const updatedSpot = await response.json()
-    console.log('in update response ok thunk', updatedSpot)
-    dispatch(addSpot(updatedSpot))
-    return updatedSpot
+    console.log('in update thunk response ok UPDATED SPOT', updatedSpot)
+    //add our images back to edited spot:
+    const imagesResponse = await csrfFetch(`/api/spots/${updatedSpot.id}`)
+
+    if (imagesResponse.ok) {
+      const updatedSpotImages = await imagesResponse.json()
+      console.log('here in update thunk imageResponse ok, UPDATEDSPOTIMAGES', updatedSpotImages.SpotImages)
+      updatedSpot.SpotImages = updatedSpotImages.SpotImages
+      dispatch(addSpot(updatedSpot))
+      return updatedSpot
+    }
   }
 }
 

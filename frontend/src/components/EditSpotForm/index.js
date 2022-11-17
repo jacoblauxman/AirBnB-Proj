@@ -21,7 +21,8 @@ const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
   const [price, setPrice] = useState(spot.price)
 
   // const spot = useSelector(state => state.spots.oneSpot)
-  console.log(spot.spotImages, 'SPOT IMAGES, in edit form')
+  // console.log(spot.SpotImages, 'SPOTIMAGES, in edit form')
+
   //adding error handling
   const [errors, setErrors] = useState([])
 
@@ -33,6 +34,7 @@ const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log('in submit BEFORE update spot made', spot.SpotImages)
     const updatedSpot = {
       ...spot,
       name,
@@ -44,25 +46,26 @@ const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
       lng,
       description,
       price,
-      spotImages: spot.spotImages
     }
 
-    console.log('IN HANDLE SUBMIT:', updatedSpot.spotImages)
+    console.log('IN HANDLE SUBMIT:', updatedSpot)
 
     const response = await dispatch(updateSpot(updatedSpot))
-    if (response.ok) {
-      // console.log('in response ok of editspotform response', updatedSpot)
-      //trying to send user to updated created spot location
-      // history.push(`/spots/${response.id}`)
-      history.push('/')
-      //hideForm()
-    }
+      .catch(async res => {
+        const data = await res.json()
+        if (data && data.errors) setErrors(data.errors)
+        if (data && !data.errors.length) updatedSpot && history.push(`/spots/${spot.id}`)
+      }).then(history.push(`/spots/${spot.id}`))
+
+    // updatedSpot && history.push(`/spots/${spot.id}`)
+    // or history.push('/') if causing issues
   }
 
   const handleCancel = (e) => {
     e.preventDefault();
     //hideForm()
-    history.push('/')
+    setDisplayForm(false)
+    history.push(`/spots/${spot.id}`)
   }
 
   //testing - going to make conditional to render/return null if not logged in
@@ -79,6 +82,10 @@ const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
     <div>
       <h1>Edit Spot</h1>
       <form onSubmit={handleSubmit}>
+        {errors.length > 0 && <div>Error !</div>}
+        {errors.map(error => (
+          <li key={error}>{error}</li>
+        ))}
         <input
           type='text'
           onChange={e => setName(e.target.value)}
