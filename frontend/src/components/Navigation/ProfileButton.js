@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
+import LoginFormModal from "../LoginFormModal";
 
 function ProfileButton({ user, setLogin, setShowModal }) {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
 
   return (
     <>
+    {/* <LoginFormModal /> */}
       <div className='profile-container'>
         <div className='profile-button-container'>
           <button onClick={openMenu} className='profile-button'>

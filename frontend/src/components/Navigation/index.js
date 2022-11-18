@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-// import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
 import logo from './logo.png'
 
@@ -11,6 +10,7 @@ import logo from './logo.png'
 import { Modal } from '../../context/Modal';
 // bring in forms to apply with modal
 import LoginForm from '../LoginFormModal/LoginForm';
+import LoginFormModal from '../LoginFormModal';
 import SignupFormPage from '../SignupFormPage'
 // import CreateSpotForm from '../CreateSpotForm';
 
@@ -26,6 +26,7 @@ function Navigation({ isLoaded }) {
 
   return (
     <div className='navigation-container'>
+      {/* <LoginFormModal /> */}
       {/* <div className='navigation-subcontainer'> */}
 
       <div>
