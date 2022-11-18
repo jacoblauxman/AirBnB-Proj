@@ -26,22 +26,20 @@ const SpotsList = () => {
     <div className='spots-grid-container'>
 
       <div className='spots-grid'>
-        {/* <h1>Spots List</h1> */}
-        {/* <ul> */}
-        {/* {spots.map(spot => ( */}
         {Object.values(spots).map(spot => (
           <div className='spots-spot-item' style={{ textDecoration: 'none' }}>
-            <NavLink key={spot.id} to={`/spots/${spot.id}`} spot={spot} className='spots-spot-link'>
-              <div className='spots-spot-item-image'>
+            <NavLink key={spot.id} to={`/spots/${spot.id}`} spot={spot} className='spots-spot-link' style={{ textDecoration: 'none' }}>
+              <div className='spots-spot-image-container'>
                 <img src={spot?.previewImage} alt='previewImage' className='spots-spot-preview-image' />
               </div>
-              <div>
-
+              {/* <h3 className='spots-spot-item-name'>
                 {spot.name}
-              </div>
-              <div>{spot.city}, {spot.state} <span>★ {spot.avgRating}</span></div>
-              <div>"{spot.description}"</div>
-              <div>${spot.price} <span>night</span></div>
+              </h3> */}
+              <div className='spot-location-avgRating'><span className='spot-location'>{spot.city}, {spot.state}</span><span className='spot-avgRating'>★ {spot?.avgRating}</span></div>
+              <div className='spot-description'
+              // style={{ fontWeight: '175', padding: '1rem', color: 'black' }}
+              >"{spot.description}"</div>
+              <div className='spot-price' style={{ fontWeight: 'bold', color: 'black' }}>${spot.price} <span style={{ fontWeight: '250', color: 'black' }}> night</span></div>
             </NavLink>
           </div>
         ))}

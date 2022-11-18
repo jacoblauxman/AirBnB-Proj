@@ -44,40 +44,43 @@ function ProfileButton({ user, setLogin, setShowModal }) {
         </div>
 
         {showMenu && (user ?
-          <div className='profile-dropdown-container'>
-            (<ul className="profile-dropdown">
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li>
-                <button onClick={logout}>Log Out</button>
+          (
+            <div className='profile-dropdown-container'>
+              <div className="profile-dropdown">
+                <div>{user.username}</div>
+                <div>{user.email}</div>
+                <div>
+                  <button onClick={logout}>Log Out</button>
 
-              </li>
-            </ul>)
-          </div>
+                </div>
+              </div>
+            </div>
+          )
           :
-          <div className='profile-dropdown-container'>
-
-            (<ul className="profile-dropdown">
-              <li>
-                <button onClick={() => {
-                  setLogin(true)
-                  setShowModal(true)
-                  //if someone clicks log in button - login is true, open up modal
-                }}>
-                  Log In
-                </button>
-              </li>
-              <li>
-                <button onClick={() => {
-                  setLogin(false)
-                  setShowModal(true)
-                  // need to hardcode to true to make sure when they click elsewhere in modal it closes!
-                }}>
-                  Sign Up
-                </button>
-              </li>
-            </ul>)
-          </div>
+          (
+            <div className='profile-dropdown-container'>
+              <div className="profile-dropdown">
+                <div>
+                  <button onClick={() => {
+                    setLogin(true)
+                    setShowModal(true)
+                    //if someone clicks log in button - login is true, open up modal
+                  }}>
+                    Log In
+                  </button>
+                </div>
+                <div>
+                  <button onClick={() => {
+                    setLogin(false)
+                    setShowModal(true)
+                    // need to hardcode to true to make sure when they click elsewhere in modal it closes!
+                  }}>
+                    Sign Up
+                  </button>
+                </div>
+              </div>
+            </div>
+          )
         )}
       </div>
     </>

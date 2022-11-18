@@ -40,28 +40,30 @@ function Navigation({ isLoaded }) {
           </div>
         </NavLink >
       </div>
-      {
-        sessionUser && (
-          <div className='hosting-container'>
-            <NavLink to="/create-spot" style={{ textDecoration: 'none' }}>
-              <button className='host-button'>
-                Host a buh
-              </button>
-            </NavLink>
-          </div>
-        )
-      }
-      <div>
-        {isLoaded && (
-          <div className='profile-button'>
-            {/* <i class="fa-solid fa-bars"></i> */}
-            <ProfileButton
-              user={sessionUser}
-              setLogin={setLogin}
-              setShowModal={setShowModal}
-            />
-          </div>
-        )}
+      <div className='hosting-profile-container'>
+        {
+          sessionUser && (
+            <div className='hosting-container'>
+              <NavLink to="/create-spot" style={{ textDecoration: 'none' }}>
+                <button className='host-button'>
+                  Host a buh
+                </button>
+              </NavLink>
+            </div>
+          )
+        }
+        <div>
+          {isLoaded && (
+            <div className='profile-button'>
+              {/* <i class="fa-solid fa-bars"></i> */}
+              <ProfileButton
+                user={sessionUser}
+                setLogin={setLogin}
+                setShowModal={setShowModal}
+              />
+            </div>
+          )}
+        </div>
       </div>
       {
         showModal && (

@@ -75,12 +75,12 @@ const CreateSpotForm = () => {
 
 
   return (
-    <div>
+    <div className='create-spot-container'>
       <h1>Host a Spot (Create a Spot)</h1>
       <form onSubmit={handleSubmit}>
-        {errors.length > 0 && <div>Error !</div>}
+        {errors.length > 0 && <div className='create-error-title'>Error !</div>}
         {errors.map(error => (
-          <li key={error}>{error}</li>
+          <div className='create-error-container' key={error}>{error}</div>
         ))}
         <input
           type='text'

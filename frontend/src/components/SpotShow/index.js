@@ -68,15 +68,15 @@ const SpotShow = () => {
     <>
       {isLoaded && (
         <div className='single-spot-container'>
-          <div>
-            <h1>SINGLE SPOT</h1>
+          <div className='single-spot'>
+            {/* <h1>SINGLE SPOT</h1> */}
             <h2>{spot?.name}</h2>
-            <div><span>★ {spot?.avgStarRating}</span><span>{spot?.city}, {spot?.state}, {spot?.country}</span></div>
-            <ul>{spot.SpotImages?.map(image => (
-              <li key={image.id}>
-                <img src={image.url} alt='Spot Preview' />
-              </li>
-            ))}</ul>
+            <div><span className='spot-avg-rating'>★ {spot?.avgStarRating ? spot?.avgStarRating : 'New'} · </span><span className='reviews-count'>{reviewsArr.length} reviews · </span><span className='spot-location-info'>{spot?.city}, {spot?.state}, {spot?.country}</span></div>
+            <div className='single-spot-images-container'>{spot.SpotImages?.map(image => (
+              <div key={image.id} className='single-spot-image'>
+                <img src={image.url} alt='Spot Preview' className='spot-image-url'/>
+              </div>
+            ))}</div>
             <div>{spot?.description}</div>
           </div>
           <div>
