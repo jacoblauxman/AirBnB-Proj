@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react'
-
 import { useHistory } from 'react-router-dom'
-
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getCurrUser } from '../../store/session';
-import { createReview } from '../../store/reviews';
+import { createReview, getReviews } from '../../store/reviews';
+import { fetchOneSpot, getOneSpot } from '../../store/spots';
 
 
-const CreateReviewForm = () => {
+const CreateReviewForm = ({ spot, displayForm, setDisplayForm }) => {
   const [review, setReview] = useState('')
   const [stars, setStars] = useState('')
   const [errors, setErrors] = useState([])
@@ -16,31 +15,51 @@ const CreateReviewForm = () => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  //to get current spot - maybe use props instead?
   const reviewSpot = useSelector(getOneSpot)
+  const currUser = useSelector(getCurrUser)
+  // console.log(currUser, 'current user in create review!')
+
+  // const reviews = useSelector(state => state.reviews.oneSpot)
+  // console.log(reviews, 'REVIEWS in CREATE REVIEW FORM')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     const newReview = {
       review,
-      stars,
+      stars: +stars,
     }
-    console.log(newReview, 'in createReviewSubmit handle, here is newReview')
 
-    const response = await dispatch(createReview(newReview, reviewSpot.id))
+    const res = await dispatch(createReview(newReview, reviewSpot.id))
       .catch(async res => {
         const data = await res.json()
         if (data && data.errors) setErrors(data.errors)
-        if (data && !data.errors.length) response && history.push(`/spots/${reviewSpot.id}`)
+        // if (data && data.errors.length === 0) history.push(`/spots/${reviewSpot.id}`)
       })
+      // .then(dispatch(fetchOneSpot(reviewSpot?.id)))
+      .then(setDisplayForm(false))
+    setReview('')
+    setStars('')
+    // .then(history.push(`/spots/${reviewSpot?.id}`))
   }
 
 
   const handleCancel = async (e) => {
     e.preventDefault()
-    history.push()
+    setStars('')
+    setReview('')
+    setDisplayForm(false)
+    history.push(`/spots/${reviewSpot?.id}`)
   }
+
+  useEffect(() => {
+    console.log('in UseEFFECT for review form creatioN!', reviewSpot.id)
+    dispatch(fetchOneSpot(reviewSpot.id))
+    dispatch(getReviews(reviewSpot.id))
+      .then(history.push(`/spots/${reviewSpot.id}`))
+    // .then(dispatch(getOneSpot(reviewSpot.id)))
+
+  }, [dispatch, history, reviewSpot.id])
 
 
   return (
@@ -75,3 +94,6 @@ const CreateReviewForm = () => {
   )
 
 }
+
+
+export default CreateReviewForm

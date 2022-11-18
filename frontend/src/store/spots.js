@@ -23,7 +23,7 @@ export const loadSpots = (spots) => {
 
 //create spot / add spot to 'oneSpot' / edit spot
 export const addSpot = (spot) => {
-  console.log('in addSpot creator:', spot)
+  // console.log('in addSpot creator:', spot)
   return {
     type: ADD_SPOT,
     spot
@@ -50,19 +50,18 @@ export const fetchSpots = () => async (dispatch) => {
 
   if (response.ok) {
     const spots = await response.json()
-    console.log('here in get thunk ok', spots.Spots)
     dispatch(loadSpots(spots.Spots))
+    return spots
   }
 }
 
 // get one spot
 export const fetchOneSpot = (spotId) => async dispatch => {
   const response = await csrfFetch(`/api/spots/${spotId}`);
-  console.log('here in fetch one')
 
   if (response.ok) {
     const spot = await response.json();
-    console.log('here in thunk for spot ok', spot)
+    console.log('fetchOneSpot Thunk RES ok', spot)
     dispatch(addSpot(spot))
     return spot
   }
@@ -76,10 +75,9 @@ export const createSpot = (spot) => async (dispatch) => {
     body: JSON.stringify(spot)
   })
 
-  //edit trying to make it all in one - get images to attach too
+  //add provided image to our new spot:
   if (response.ok) {
     const addedSpot = await response.json()
-    console.log('here in thunk for createSpot ok', addedSpot, spot.previewImage)
     //adding our image to nex step
     const imageResponse = await csrfFetch(`/api/spots/${addedSpot.id}/images`, {
       method: 'POST',
@@ -91,7 +89,6 @@ export const createSpot = (spot) => async (dispatch) => {
 
     if (imageResponse.ok) {
       const addedSpotImage = await imageResponse.json()
-      console.log('here in imageResponse createThunk ok', addedSpotImage)
       //putting our addedSpotImage in as the previewImage (via url key) in addedSpot -- THEN dispatch action!
       addedSpot.previewImage = addedSpotImage.url
       //addedSpot.avgRating = 0 // do we need to set or will null work?
@@ -99,19 +96,11 @@ export const createSpot = (spot) => async (dispatch) => {
       return
     }
   }
-
-  // if (response.ok) {
-  //   const spot = await response.json()
-  //   console.log('here in thunk for createSpot ok', spot)
-  //   dispatch(addSpot(spot))
-  //   return spot
-  // }
 }
 
 
 // update a spot
 export const updateSpot = spot => async dispatch => {
-  console.log('in update thunk fetch', spot)
   const response = await csrfFetch(`/api/spots/${spot.id}`, {
     method: 'PUT',
     headers: {
@@ -122,13 +111,11 @@ export const updateSpot = spot => async dispatch => {
 
   if (response.ok) {
     const updatedSpot = await response.json()
-    console.log('in update thunk response ok UPDATED SPOT', updatedSpot)
     //add our images back to edited spot:
     const imagesResponse = await csrfFetch(`/api/spots/${updatedSpot.id}`)
 
     if (imagesResponse.ok) {
       const updatedSpotImages = await imagesResponse.json()
-      console.log('here in update thunk imageResponse ok, UPDATEDSPOTIMAGES', updatedSpotImages.SpotImages)
       updatedSpot.SpotImages = updatedSpotImages.SpotImages
       dispatch(addSpot(updatedSpot))
       return updatedSpot
@@ -139,14 +126,12 @@ export const updateSpot = spot => async dispatch => {
 
 //delete a spot
 export const removeSpot = spot => async dispatch => {
-  console.log('inside fetch delete Spot fetch')
   const response = await csrfFetch(`/api/spots/${spot.id}`, {
     method: 'DELETE'
   })
 
   if (response.ok) {
     dispatch(deleteSpot(spot.id))
-    console.log('inside response ok delete thunk:', spot.id)
     return spot
   }
 }
@@ -169,16 +154,13 @@ export const getOneSpot = (state) => state.spots.oneSpot
 
 const initialState = { Spots: {}, oneSpot: {} }
 
-
-
-
 // ---- REDUCER ---- //
 
 const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
     // load all spots:
     case LOAD_SPOTS:
-      const loadState = { ...state, Spots: { ...state.Spots } }
+      const loadState = { ...state, Spots: { ...state.Spots }, }
       action.spots.forEach((spot) => (loadState.Spots[spot.id] = spot))
       return loadState;
 

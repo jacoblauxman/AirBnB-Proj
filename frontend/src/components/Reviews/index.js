@@ -1,82 +1,114 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, Switch, Route } from 'react-router-dom'
+// import { NavLink, Switch, Route } from 'react-router-dom'
 import { getReviews, removeReview } from '../../store/reviews'
 import { getCurrUser } from '../../store/session'
-import { fetchSpots, getOneSpot } from "../../store/spots"
+import {  getOneSpot } from "../../store/spots"
+import CreateReviewForm from '../CreateReviewForm'
 
 
 const ReviewsList = ({ spotId }) => {
+
+  //for displaying create review form
+  const [displayForm, setDisplayForm] = useState(false)
+  // for confirming reviews are loaded - testing
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  const [errors, setErrors] = useState([])
   const dispatch = useDispatch()
 
   // get current user for conditionals
   const currUser = useSelector(getCurrUser)
 
+  //listening in on current spot
   const spot = useSelector(getOneSpot)
-  // console.log(spot, 'HERE IN REVIEWS LIST - A SPOT')
 
   //grabbing reviews and converting to array
-  const reviews = useSelector(state => state.reviews)
-  const reviewsArr = Object.values(reviews).filter(review => review.spotId === spotId)
-  // console.log(reviewsArr, 'HERE IN REVIEWS LIST - REVIEWS!!!')
+  const reviews = useSelector(state => state.reviews.oneSpot)
+  const reviewsArr = Object?.values(reviews).filter(review => review?.spotId === spotId)
 
   //check for if user has already reviewed spot
-  const reviewedCheck = reviewsArr.filter(review => review.userId !== currUser.id).length
-  // console.log(reviewedCheck, 'here is REVIEWEDCHECK!')
+  const reviewedCheck = reviewsArr?.filter(review => review?.User?.id !== currUser?.id)
 
 
+  //listening and getting the reviews of spot!
   useEffect(() => {
     dispatch(getReviews(spotId))
+    .then(() => setIsLoaded(true))
   }, [dispatch, spotId])
 
-  //delete button handling
-  const handleDelete = async (e) => {
+
+  //delete button handling -- not used && needs refactoring
+  // const handleDelete = (e) => {
+  //   e.preventDefault()
+
+  //   const response = dispatch(removeReview())
+  //     .catch(async res => {
+  //       const data = await res.json()
+  //       if (data && data.errors) setErrors(data.errors)
+  //       // if (data && !data.errors.length) history.push('/')
+  //     })
+  //   // .then(history.push(`/spots/${spotId}`))
+  // }
+
+  //create button handling
+  const handleCreate = async (e) => {
     e.preventDefault()
 
-    console.log('inside handleDelete ReviewSUBMIT res await')
-
-    // const response = await dispatch(removeReview(review.id))
-
+    setDisplayForm(prevDisplay => !prevDisplay)
   }
 
+
+  //testing for null initial return
   if (!spotId) return null;
-  if (!reviews) return null
 
   return (
-    <div>
-      <div>
-        <h1>Here are {spot.name}'s {reviewsArr.length} Reviews</h1>
-        {reviewsArr.map(review => (
-          <div key={review.id}>
-            <div>
-              {review.User.firstName} {review.User.lastName}
-            </div>
-            <div>
-              ★ {review.stars}
-            </div>
-            <div>
-              {review.review}
-            </div>
-            {currUser.id === review.userId && (
+    <>
+      {isLoaded &&
+        <div>
+          <div>
+            <h1>Here are {spot?.name}'s {reviewsArr?.length} Reviews</h1>
+            {errors.length > 0 && <div>Error !</div>}
+            {errors.map(error => (
+              <li key={error}>{error}</li>
+            ))}
+
+            {reviewsArr?.map(review => (
+              <div key={review?.id}>
+                <div>
+                  {review?.User?.firstName} {review?.User?.lastName}
+                </div>
+                <div>
+                  ★ {review?.stars}
+                </div>
+                <div>
+                  {review?.review}
+                </div>
+                {currUser &&
+                  currUser?.id === review?.userId && (
+                    <div>
+                      <button type='button'
+                        onClick={() => dispatch(removeReview(review.id))}>Delete Review</button>
+                    </div>
+                  )}
+              </div>
+            ))}
+          </div>
+          {currUser && (
+            currUser?.id !== spot?.ownerId && (reviewedCheck && (
               <div>
                 <button type='button'
-                  onClick={handleDelete}>Delete Review</button>
+                  onClick={handleCreate}>Add a Review</button>
+                <div style={{ visibility: displayForm ? 'visible' : 'hidden' }}>
+                  <CreateReviewForm spot={spot} displayForm={displayForm} setDisplayForm={setDisplayForm} />
+                </div>
               </div>
-            )}
-          </div>
-        ))}
-      </div>
-      {currUser.id !== spot.ownerId && !reviewedCheck && (
-
-        <div>
-          <button type='button'>Test for Not Owner / No Review Yet</button>
-
+            )))
+          }
         </div>
-      )
       }
-    </div>
+    </>
   )
 }
-
 
 export default ReviewsList

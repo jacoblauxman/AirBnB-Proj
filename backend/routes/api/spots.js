@@ -408,7 +408,7 @@ router.post('/:spotId/reviews',
 
 
 
-
+// GET SPOT BY ID
 router.get('/:spotId', async (req, res) => {
   const spotId = req.params.spotId
   const spot = await Spot.findByPk(spotId,
@@ -429,7 +429,7 @@ router.get('/:spotId', async (req, res) => {
           ]
         ]
       },
-      group: ['Spot.id', 'Reviews.spotId', 'Reviews.stars'],
+      group: ['Spot.id', 'Reviews.spotId',],
       //needed because of aggregates -- toJSON otherwise w/ new variable
       raw: true
     });
@@ -581,7 +581,7 @@ router.put('/:spotId', requireAuth, async (req, res) => {
       address, city, state, country,
       lat, lng, name, description, price
     })
-    
+
     await updatedSpot.save()
     res.json(updatedSpot)
 

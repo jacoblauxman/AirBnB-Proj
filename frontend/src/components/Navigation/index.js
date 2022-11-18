@@ -38,7 +38,7 @@ function Navigation({ isLoaded }) {
         )}
       </li>
       {sessionUser && (<li>
-        <NavLink to="/spots">
+        <NavLink to="/create-spot">
           <button>
             Host a Spot
           </button>

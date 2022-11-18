@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-// import { getAllSpots } from '../../store/spots';
 import { useHistory } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { updateSpot, fetchOneSpot } from '../../store/spots';
+import { updateSpot } from '../../store/spots';
 import { getCurrUser } from '../../store/session';
 
 
@@ -20,9 +19,6 @@ const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
   const [description, setDescription] = useState(spot.description)
   const [price, setPrice] = useState(spot.price)
 
-  // const spot = useSelector(state => state.spots.oneSpot)
-  // console.log(spot.SpotImages, 'SPOTIMAGES, in edit form')
-
   //adding error handling
   const [errors, setErrors] = useState([])
 
@@ -34,7 +30,6 @@ const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('in submit BEFORE update spot made', spot.SpotImages)
     const updatedSpot = {
       ...spot,
       name,
@@ -54,8 +49,12 @@ const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
       .catch(async res => {
         const data = await res.json()
         if (data && data.errors) setErrors(data.errors)
-        if (data && !data.errors.length) updatedSpot && history.push(`/spots/${spot.id}`)
-      }).then(history.push(`/spots/${spot.id}`))
+        if (data && !data.errors.length) {
+          setDisplayForm(false)
+          updatedSpot && history.push(`/spots/${spot.id}`)
+        }
+      }).then(setDisplayForm(false))
+    // .then(history.push(`/spots/${spot.id}`))
 
     // updatedSpot && history.push(`/spots/${spot.id}`)
     // or history.push('/') if causing issues
@@ -63,19 +62,20 @@ const EditSpotForm = ({ spot, displayForm, setDisplayForm }) => {
 
   const handleCancel = (e) => {
     e.preventDefault();
-    //hideForm()
     setDisplayForm(false)
     history.push(`/spots/${spot.id}`)
   }
 
   //testing - going to make conditional to render/return null if not logged in
   const currUser = useSelector(getCurrUser)
-  // console.log('HERE IS USER', currUser)
-
   if (!currUser) {
     history.push('/')
-    // return null;
   }
+
+  useEffect(() => {
+    setDisplayForm(false)
+
+  }, [dispatch, setDisplayForm])
 
 
   return (

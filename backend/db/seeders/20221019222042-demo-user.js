@@ -10,22 +10,36 @@ module.exports = {
         email: 'demo@user.io',
         username: 'Jaboc',
         hashedPassword: bcrypt.hashSync('password'),
-        firstName: 'Uno',
-        lastName: 'OneOne'
+        firstName: 'Cobe',
+        lastName: 'Laux'
       },
       {
         email: 'user1@user.io',
         username: 'Dorkster',
         hashedPassword: bcrypt.hashSync('password2'),
-        firstName: 'Dos',
-        lastName: 'TwoTwo'
+        firstName: 'Dex',
+        lastName: 'DaBoss'
       },
       {
         email: 'user2@user.io',
         username: 'jadO',
         hashedPassword: bcrypt.hashSync('password3'),
-        firstName: 'Tres',
-        lastName: 'ThreeThree'
+        firstName: 'Jad0',
+        lastName: 'T'
+      },
+      {
+        email: 'deeeemo@user.io',
+        username: 'DemoUser',
+        hashedPassword: bcrypt.hashSync('password'),
+        firstName: 'Demo',
+        lastName: 'User'
+      },
+      {
+        email: 'demo123@user.io',
+        username: 'SpotVisiter',
+        hashedPassword: bcrypt.hashSync('password'),
+        firstName: 'Friendly',
+        lastName: 'Person'
       }
     ], {});
 
@@ -81,7 +95,7 @@ module.exports = {
         price: 148.00
       },
       {
-        ownerId: 3,
+        ownerId: 2,
         address: '789 Hmm NotBad Ln',
         city: 'Go',
         state: 'Here',
@@ -141,7 +155,7 @@ module.exports = {
         price: 89.00
       },
       {
-        ownerId: 3,
+        ownerId: 4,
         address: '890 Well HereWeGo Cir',
         city: 'Some',
         state: 'Time',
@@ -165,7 +179,7 @@ module.exports = {
         price: 201.00
       },
       {
-        ownerId: 1,
+        ownerId: 4,
         address: '4423 AnotherAddress Please Ln',
         city: 'Some',
         state: 'Time',
@@ -183,13 +197,13 @@ module.exports = {
     await queryInterface.bulkInsert('Reviews', [
       {
         spotId: 1,
-        userId: 2,
+        userId: 5,
         review: 'wow, whaddaSpot!! love it',
         stars: 4
       },
       {
         spotId: 2,
-        userId: 1,
+        userId: 5,
         review: 'how do you not have a toilet',
         stars: 2
       },
@@ -207,10 +221,46 @@ module.exports = {
       },
       {
         spotId: 3,
-        userId: 1,
-        review: 'nah nah nah this aint it',
+        userId: 5,
+        review: 'nah nah nah, this aint it',
         stars: 1
       },
+      {
+        spotId: 4,
+        userId: 5,
+        review: 'been here and wow',
+        stars: 4
+      },
+      {
+        spotId: 6,
+        userId: 5,
+        review: 'always visiting new places and this is one',
+        stars: 1
+      },
+      {
+        spotId: 7,
+        userId: 5,
+        review: 'okay last demo review for now',
+        stars: 2
+      },
+      {
+        spotId: 1,
+        userId: 3,
+        review: 'Liked it okay ish',
+        stars: 2
+      },
+      {
+        spotId: 2,
+        userId: 3,
+        review: 'Liked it okay ish',
+        stars: 2
+      },
+      {
+        spotId: 5,
+        userId: 3,
+        review: 'Decent spot',
+        stars: 2
+      }
     ])
 
 
