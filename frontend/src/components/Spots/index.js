@@ -4,6 +4,7 @@ import { NavLink, Switch, Route } from 'react-router-dom'
 import { fetchSpots, getAllSpots } from "../../store/spots"
 // import { Route }
 import SpotShow from '../SpotShow'
+import './index.css'
 
 
 
@@ -22,25 +23,33 @@ const SpotsList = () => {
   if (!spots) return null
 
   return (
-    <div>
-      <h1>Spots List</h1>
-      <ul>
+    <div className='spots-grid-container'>
+
+      <div className='spots-container'>
+        {/* <h1>Spots List</h1> */}
+        {/* <ul> */}
         {/* {spots.map(spot => ( */}
         {Object.values(spots).map(spot => (
-          <NavLink key={spot.id} to={`/spots/${spot.id}`} spot={spot}>
-            <img src={spot?.previewImage} alt='previewImage' />
-            <h3>
-              {spot.name}
-            </h3>
-            <div>{spot.city}, {spot.state} <span>★ {spot.avgRating}</span></div>
-            <div>"{spot.description}"</div>
-            <div>${spot.price} <span>night</span></div>
-          </NavLink>
+          <div className='spots-spot-item' style={{ textDecoration: 'none' }}>
+            <NavLink key={spot.id} to={`/spots/${spot.id}`} spot={spot}>
+              <div className='spots-spot-item-image'>
+                <img src={spot?.previewImage} alt='previewImage' className='spots-spot-preview-image' />
+              </div>
+              <div>
+
+                {spot.name}
+              </div>
+              <div>{spot.city}, {spot.state} <span>★ {spot.avgRating}</span></div>
+              <div>"{spot.description}"</div>
+              <div>${spot.price} <span>night</span></div>
+            </NavLink>
+          </div>
         ))}
-      </ul>
-      <Route path="/spots/:spotId">
-        <SpotShow />
-      </Route>
+        {/* </ul> */}
+        <Route path="/spots/:spotId">
+          <SpotShow />
+        </Route>
+      </div>
     </div>
   )
 }

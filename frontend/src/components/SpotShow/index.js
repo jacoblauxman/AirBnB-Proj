@@ -22,7 +22,7 @@ const SpotShow = () => {
 
   const currUser = useSelector(getCurrUser)
   const reviews = useSelector(state => state.reviews.oneSpot)
-  //for listening and updating from when reviews submit/delete!!
+  //for listening and updating from when reviews submit/delete!!!!!!!!!
   const reviewsArr = Object.values(reviews)
   const spot = useSelector(state => state.spots.oneSpot)
 

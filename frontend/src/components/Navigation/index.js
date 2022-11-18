@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 // import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
+import logo from './logo.png'
 
 // bring in modal -- children of this modal can be either login or signup form
 import { Modal } from '../../context/Modal';
@@ -24,33 +25,54 @@ function Navigation({ isLoaded }) {
 
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">
-          Home
-        </NavLink>
+    <div className='navigation-container'>
+      {/* <div className='navigation-subcontainer'> */}
+
+      <div>
+        <NavLink exact to="/" style={{ textDecoration: 'none' }}>
+          <div className='logo-container'>
+            <div className='da-icon'>
+              <img src={logo} className={'site-logo'} />
+            </div>
+            <div className='logo-name'>
+              buh'n'buh
+            </div>
+          </div>
+        </NavLink >
+      </div>
+      {
+        sessionUser && (
+          <div className='hosting-container'>
+            <NavLink to="/create-spot" style={{ textDecoration: 'none' }}>
+              <button className='host-button'>
+                Host a buh
+              </button>
+            </NavLink>
+          </div>
+        )
+      }
+      <div>
         {isLoaded && (
-          <ProfileButton
-            user={sessionUser}
-            setLogin={setLogin}
-            setShowModal={setShowModal}
-          />
+          <div className='profile-button'>
+            {/* <i class="fa-solid fa-bars"></i> */}
+            <ProfileButton
+              user={sessionUser}
+              setLogin={setLogin}
+              setShowModal={setShowModal}
+            />
+          </div>
         )}
-      </li>
-      {sessionUser && (<li>
-        <NavLink to="/create-spot">
-          <button>
-            Host a Spot
-          </button>
-        </NavLink>
-      </li>)}
-      {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
-          {login ?
-            <LoginForm setShowModal={setShowModal} /> : <SignupFormPage setShowModal={setShowModal} />}
-        </Modal>
-      )}
-    </ul>
+      </div>
+      {
+        showModal && (
+          <Modal onClose={() => setShowModal(false)} style={{ textDecoration: 'none' }}>
+            {login ?
+              <LoginForm setShowModal={setShowModal} /> : <SignupFormPage setShowModal={setShowModal} />}
+          </Modal>
+        )
+      }
+      {/* </div> */}
+    </div >
   );
 }
 // we pass the prop of setShowModal to forms so they can close on click in forms!

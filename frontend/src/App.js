@@ -22,23 +22,28 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
-        <Switch>
-          <Route exact path="/">
-            <SpotsList />
-          </Route>
-          <Route path="/spots/:spotId">
-            <SpotShow />
-          </Route>
-          <Route path='/create-spot'>
-            <CreateSpotForm />
-          </Route>
-          <Route path='/create-review'>
-            <CreateReviewForm />
-          </Route>
-        </Switch>
-      )}
+      <div>
+        <Navigation isLoaded={isLoaded} />
+      </div>
+      <div>
+
+        {isLoaded && (
+          <Switch>
+            <Route exact path="/">
+              <SpotsList />
+            </Route>
+            <Route path="/spots/:spotId">
+              <SpotShow />
+            </Route>
+            <Route path='/create-spot'>
+              <CreateSpotForm />
+            </Route>
+            <Route path='/create-review'>
+              <CreateReviewForm />
+            </Route>
+          </Switch>
+        )}
+      </div>
     </>
   );
 }
