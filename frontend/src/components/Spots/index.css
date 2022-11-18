@@ -1,13 +1,28 @@
 .spots-grid-container {
   display: flex;
   padding: 0.5rem;
+  flex-wrap: wrap;
+  align-content: space-between;
+  /* justify-content: center; */
+  width: 100vw;
 }
 
-.spots-container {
+.spots-grid {
   display: grid;
-  justify-content: space-evenly;
-  grid-template-columns: auto auto auto auto;
+  justify-content: space-between;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   border: 4px solid green;
+  margin: 20px;
+  width: 100vw;
+}
+
+.spots-spot-item {
+  margin-bottom: 10px;
+  display: flex;
+  border: 3px solid blue;
+  align-self: center;
+  justify-content: center;
+
 }
 
 
@@ -15,9 +30,11 @@
   object-fit: contain;
   border-radius: 15px;
   padding: 10px;
-  width: max-content;
-  height: max-content;
+  max-width: 300px;
+  max-height: 400px;
   /* height: 90%; */
+  border: 3px solid purple;
+  display: block;
 }
 
 .spots-spot-item-image {
@@ -25,7 +42,7 @@
   align-items: center;
   height: 200px;
   width: 200px; */
-  object-fit: contain;
+  object-fit: cover;
   border: 3px red solid;
   padding: 5px;
   /* height: 200px; */

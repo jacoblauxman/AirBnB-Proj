@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box;
+  /* justify-content: center; */
+}
+
+.single-spot-container {
+  display: flex;
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  border: 3px solid blue;
+}

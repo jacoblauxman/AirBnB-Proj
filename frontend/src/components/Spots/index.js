@@ -25,13 +25,13 @@ const SpotsList = () => {
   return (
     <div className='spots-grid-container'>
 
-      <div className='spots-container'>
+      <div className='spots-grid'>
         {/* <h1>Spots List</h1> */}
         {/* <ul> */}
         {/* {spots.map(spot => ( */}
         {Object.values(spots).map(spot => (
           <div className='spots-spot-item' style={{ textDecoration: 'none' }}>
-            <NavLink key={spot.id} to={`/spots/${spot.id}`} spot={spot}>
+            <NavLink key={spot.id} to={`/spots/${spot.id}`} spot={spot} className='spots-spot-link'>
               <div className='spots-spot-item-image'>
                 <img src={spot?.previewImage} alt='previewImage' className='spots-spot-preview-image' />
               </div>

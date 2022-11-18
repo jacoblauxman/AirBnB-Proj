@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className='main-nav-container'>
         <Navigation isLoaded={isLoaded} />
       </div>
       <div>

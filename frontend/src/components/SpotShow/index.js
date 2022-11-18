@@ -7,6 +7,8 @@ import EditSpotForm from '../EditSpotForm';
 import ReviewsList from '../Reviews';
 import { getReviews } from '../../store/reviews';
 
+import './SpotShow.css'
+
 
 
 const SpotShow = () => {
@@ -65,7 +67,7 @@ const SpotShow = () => {
   return (
     <>
       {isLoaded && (
-        <div>
+        <div className='single-spot-container'>
           <div>
             <h1>SINGLE SPOT</h1>
             <h2>{spot?.name}</h2>
