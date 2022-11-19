@@ -10,10 +10,9 @@ import logo from './logo.png'
 import { Modal } from '../../context/Modal';
 // bring in forms to apply with modal
 import LoginForm from '../LoginFormModal/LoginForm';
-import LoginFormModal from '../LoginFormModal';
 import SignupFormPage from '../SignupFormPage'
 // import CreateSpotForm from '../CreateSpotForm';
-
+import CreateSpotFormModal from '../CreateSpotForm';
 
 
 function Navigation({ isLoaded }) {
@@ -26,9 +25,6 @@ function Navigation({ isLoaded }) {
 
   return (
     <div className='navigation-container'>
-      {/* <LoginFormModal /> */}
-      {/* <div className='navigation-subcontainer'> */}
-
       <div>
         <NavLink exact to="/" style={{ textDecoration: 'none' }}>
           <div className='logo-container'>
@@ -45,11 +41,7 @@ function Navigation({ isLoaded }) {
         {
           sessionUser && (
             <div className='hosting-container'>
-              <NavLink to="/create-spot" style={{ textDecoration: 'none' }}>
-                <button className='host-button'>
-                  Host a buh
-                </button>
-              </NavLink>
+              <CreateSpotFormModal />
             </div>
           )
         }
@@ -61,6 +53,7 @@ function Navigation({ isLoaded }) {
                 user={sessionUser}
                 setLogin={setLogin}
                 setShowModal={setShowModal}
+                className='profile-button'
               />
             </div>
           )}
@@ -74,7 +67,6 @@ function Navigation({ isLoaded }) {
           </Modal>
         )
       }
-      {/* </div> */}
     </div >
   );
 }
@@ -92,3 +84,18 @@ function Navigation({ isLoaded }) {
 // PROFILE BUTTON NOW HAS PROPS PASSED IN
 
 export default Navigation;
+
+
+
+// OLD HOST BUTTON IF NEEDED:
+// {
+//   sessionUser && (
+//     <div className='hosting-container'>
+//       <NavLink to="/create-spot" style={{ textDecoration: 'none' }}>
+//         <button className='host-button'>
+//           Host a buh
+//         </button>
+//       </NavLink>
+//     </div>
+//   )
+// }

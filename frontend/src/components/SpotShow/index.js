@@ -10,6 +10,7 @@ import EditSpotFormModal from '../EditSpotForm';
 import EditSpotForm from '../EditSpotForm';
 import './SpotShow.css'
 
+const noImage = './no-image-available.png'
 
 
 const SpotShow = () => {
@@ -72,13 +73,14 @@ const SpotShow = () => {
           <div className='single-spot'>
             {/* <h1>SINGLE SPOT</h1> */}
             <h2 className='spot-title'>{spot?.name} - {spot?.description}</h2>
-            <div><span className='spot-avg-rating'>★ {spot?.avgStarRating ? spot?.avgStarRating : 'New'} · </span><span className='reviews-count'>{reviewsArr.length} reviews · </span><span className='spot-location-info'>{spot?.city}, {spot?.state}, {spot?.country}</span></div>
-            <div className='single-spot-images-container'>{spot.SpotImages?.map(image => (
+            <div><span className='spot-avg-rating'>★ {spot?.avgStarRating ? spot?.avgStarRating : 'New'} · </span><span className='reviews-count'>{spot?.numReviews} reviews · </span><span className='spot-location-info'>{spot?.city}, {spot?.state}, {spot?.country}</span></div>
+            <div className='single-spot-images-container'>{spot?.SpotImages && spot.SpotImages?.map(image => (
               <div key={image.id} className='single-spot-image'>
-                <img src={image.url} alt='Spot Preview' className='spot-image-url' />
+                <img src={image?.url} alt='Spot Preview' className='spot-image-url' />
               </div>
-            ))}</div>
-            {/* <div>{spot?.description}</div> */}
+            ))}
+              {/* <div>{spot?.description}</div> */}
+            </div>
             <h3 className='spot-host-info'>Entire Spot hosted by {spot?.Owner?.firstName}</h3>
             <div className='spot-details-random'>
               {Math.ceil(Math.random() * 3) * 2} guests · {Math.ceil(Math.random() * 3) * 2} bedrooms · {Math.ceil(Math.random() * 3) * 2} beds · {Math.ceil(Math.random() * 3) * 2} baths
@@ -92,10 +94,10 @@ const SpotShow = () => {
                     <EditSpotFormModal />
                   </div>
                   <div>
-                      <button
-                        type="button"
-                        onClick={handleDelete}> Delete Spot </button>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={handleDelete}> Delete Spot </button>
+                  </div>
                 </>
               ))}
           </div>

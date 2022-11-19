@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
-import LoginFormModal from "../LoginFormModal";
+// import LoginFormModal from "../LoginFormModal";
 
 function ProfileButton({ user, setLogin, setShowModal }) {
   const dispatch = useDispatch();

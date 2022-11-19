@@ -35,7 +35,7 @@ const SpotsList = () => {
               {/* <h3 className='spots-spot-item-name'>
                 {spot.name}
               </h3> */}
-              <div className='spot-location-avgRating'><span className='spot-location'>{spot.city}, {spot.state}</span><span className='spot-avgRating'>★ {spot?.avgRating}</span></div>
+              <div className='spot-location-avgRating'><span className='spot-location'>{spot.city}, {spot.state}</span><span className='spot-avgRating'>★ {spot?.avgRating || 'New'}</span></div>
               <div className='spot-description'
               // style={{ fontWeight: '175', padding: '1rem', color: 'black' }}
               >"{spot.description}"</div>
