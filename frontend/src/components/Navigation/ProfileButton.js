@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 // import LoginFormModal from "../LoginFormModal";
+import './Navigation.css'
 
 function ProfileButton({ user, setLogin, setShowModal }) {
   const dispatch = useDispatch();
@@ -35,13 +36,16 @@ function ProfileButton({ user, setLogin, setShowModal }) {
 
   return (
     <>
-    {/* <LoginFormModal /> */}
       <div className='profile-container'>
         <div className='profile-button-container'>
           <button onClick={openMenu} className='profile-button'>
             {/* <i className="fa-regular fa-bars"></i> */}
-            <i className="fa-solid fa-bars"></i>
-            <i className="fas fa-user-circle" />
+            <div className='bars-icon-container'>
+              <i className="fa-solid fa-bars"></i>
+            </div>
+            <div className='user-icon-container'>
+              <i className="fas fa-user-circle" />
+            </div>
           </button>
         </div>
 

@@ -7,7 +7,7 @@
    position: fixed;
    display: flex;
    width: 100vw;
-   height: 10vh;
+   height: 8vh;
    background-color: white;
    flex-direction: row;
    align-items: center;
@@ -80,34 +80,40 @@
    align-items: center;
    position: relative;
    background-color: white;
-   /* border: 2px solid gray; */
-   /* border-radius: 30px; */
-   /* background-color: rgb(240, 239, 239) */
  }
 
 
  .profile-button {
    border-radius: 30px;
    height: 50px;
-   width: 75px;
-   /* border: none; */
+   width: 90px;
    border: 1px solid rgba(199, 197, 197, 0.564);
-   justify-content: space-evenly;
    align-items: center;
    position: relative;
    background-color: white;
-   margin-right: 1.5rem;
+   margin-right: 1.2rem;
+   display: flex;
+   justify-content: center;
  }
 
  .profile-button:hover {
    box-shadow: 0px 2px 2px 1px rgb(213, 213, 213)
  }
 
- /* not working */
- /* .fa-solid.fa-bars {
+ .fa-bars {
    justify-content: center;
-   size: 10rem; */
- /* } */
+   size: 10rem;
+   font-size: 1rem;
+   color: rgba(70, 69, 69, 0.864);
+   margin-right: .3rem;
+   padding-right: .3rem;
+   align-items: center;
+ }
+
+ .fa-user-circle {
+   font-size: 1.9rem;
+   color: rgba(70, 69, 69, 0.864);
+ }
 
 
  .profile-dropdown-container {

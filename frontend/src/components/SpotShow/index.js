@@ -70,16 +70,26 @@ const SpotShow = () => {
         <div className='single-spot-container'>
           <div className='single-spot'>
             <h2 className='spot-title'>{spot?.name} - {spot?.description}</h2>
-            <div><span className='spot-avg-rating'>★ {spot?.avgStarRating ? spot?.avgStarRating : 'New'} · </span><span className='reviews-count'>{spot?.numReviews} reviews · </span><span className='spot-location-info'>{spot?.city}, {spot?.state}, {spot?.country}</span></div>
-            <div className='single-spot-images-container'>{spot?.SpotImages.length ? spot.SpotImages?.map(image => (
-              <div key={image.id} className='single-spot-image'>
-                <img src={image?.url} alt='Spot Preview' className='spot-image-url' />
+            <div className='spot-title-subheader'>
+              <span className='spot-avg-rating'>★ {spot?.avgStarRating ? spot?.avgStarRating : 'New'} · </span><span className='reviews-count'>{spot?.numReviews} reviews · </span><span className='spot-location-info'>{spot?.city}, {spot?.state}, {spot?.country}</span>
               </div>
+            <div className='single-spot-images-container'>{spot?.SpotImages.length ? spot.SpotImages?.map(image => (
+              // <div key={image.id} className='single-spot-image'>
+              <img src={image?.url} alt='Spot Preview' className='spot-image-url' />
+              // </div>
             )) : <img src={noImage} alt='Preview Not Available' className='single-spot-image' />}
             </div>
             <h3 className='spot-host-info'>Entire Spot hosted by {spot?.Owner?.firstName}</h3>
             <div className='spot-details-random'>
               {Math.ceil(Math.random() * 3) * 2} guests · {Math.ceil(Math.random() * 3) * 2} bedrooms · {Math.ceil(Math.random() * 3) * 2} beds · {Math.ceil(Math.random() * 3) * 2} baths
+            </div>
+            <div className='spot-main-details'>
+              <div>
+                <span className='owner-medal'><i class="fa-solid fa-medal"></i></span> <span>{spot?.Owner?.firstName} is a Superhost</span>
+                </div>
+                <div className='owner-medal-info'>
+                  <span>Superhosts are experienced, highly rated hosts who are committed to great stays for great guests</span>
+                </div>
             </div>
           </div>
           <div>

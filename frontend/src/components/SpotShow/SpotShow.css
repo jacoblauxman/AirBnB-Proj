@@ -1,7 +1,5 @@
 * {
   box-sizing: border-box;
-  /* justify-content: center; */
-  /* margin-top: 10rem; */
 }
 
 .single-spot-container {
@@ -11,9 +9,8 @@
   justify-content: center;
   /* border: 3px solid blue; */
   padding: 15px;
-  /* margin: 20px; */
   align-items: center;
-  width: 100vw;
+  width: 90vw;
   height: 90vh;
 }
 
@@ -27,22 +24,29 @@
 .single-spot {
   justify-content: center;
   display: block;
-  /* border: 3px solid green; */
-  width: 50vw;
-  margin-top: 7.5rem;
+  width: 100%;
+  margin-top: 15rem;
 }
 
 .spot-title {
+  display: flex;
   justify-content: left;
   /* align-items: center; */
-  margin-top: 3rem;
+  margin-top: 5rem;
+  margin-left: 2.5rem;
+  padding-top: 3rem;
   font-weight: 450;
 }
 
+.spot-title-subheader {
+  display: flex;
+  justify-content: left;
+  margin-left: 2.5rem;
+}
 
 .single-spot-image {
-  max-width: 600px;
-  max-height: 400px;
+  max-width: 100%;
+  max-height: 100%;
   display: flex;
   overflow: hidden;
   /* border: 3px solid brown; */
@@ -52,25 +56,48 @@
 }
 
 .spot-image-url {
-  width: 600px;
-  height: 400px;
+  width: 90%;
+  height: 90%;
   border-radius: 20px;
-  object-fit: cover;
+  object-fit: contain;
   /* border: 3px solid blue; */
 }
 
 .spot-host-info {
   font-weight: 475;
+  margin-left: 3rem;
 }
 
 .spot-details-random {
   font-weight: 250;
   padding-bottom: 2rem;
   width: 100%;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid rgba(144, 144, 144, 0.387);
   margin-bottom: 1rem;
+  margin-left: 3rem;
 }
 
+.spot-main-details {
+  font-weight: 475;
+  padding-bottom: 2rem;
+  width: 100%;
+  border-bottom: 1px solid rgba(144, 144, 144, 0.387);
+  margin-bottom: 1rem;
+  margin-left: 3rem;
+}
+
+.owner-medal {
+  padding: 1rem;
+  color: rgba(70, 70, 70, 0.851);
+  font-size: 1.5rem;
+}
+
+.owner-medal-info {
+  margin-top: .4rem;
+  padding-left: 3.8rem;
+  font-weight: 250;
+  color: rgba(69, 69, 69, 0.653)
+}
 
 .edit-spot-delete-spot-container {
   display: inline;
