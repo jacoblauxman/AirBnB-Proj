@@ -62,7 +62,7 @@ const CreateSpotForm = ({ setShowModal }) => {
   const handleCancel = (e) => {
     e.preventDefault();
     //hideForm()
-    history.push('/')
+    setShowModal(false)
   }
 
 
