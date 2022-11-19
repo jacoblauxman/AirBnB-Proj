@@ -9,8 +9,9 @@ import { getReviews } from '../../store/reviews';
 import EditSpotFormModal from '../EditSpotForm';
 import EditSpotForm from '../EditSpotForm';
 import './SpotShow.css'
+import noImage from './noImage.png'
 
-const noImage = './no-image-available.png'
+// const noImage = './no-image-available.png'
 
 
 const SpotShow = () => {
@@ -46,8 +47,6 @@ const SpotShow = () => {
     setDisplayForm(prevDisplay => !prevDisplay)
   }
 
-
-
   // handling spot delete button
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -59,7 +58,6 @@ const SpotShow = () => {
         if (data && data.errors) setErrors(data.errors)
         if (data && !data.errors.length) history.push('/')
       }).then(history.push('/'))
-
   }
 
 
@@ -71,15 +69,13 @@ const SpotShow = () => {
       {isLoaded && (
         <div className='single-spot-container'>
           <div className='single-spot'>
-            {/* <h1>SINGLE SPOT</h1> */}
             <h2 className='spot-title'>{spot?.name} - {spot?.description}</h2>
             <div><span className='spot-avg-rating'>★ {spot?.avgStarRating ? spot?.avgStarRating : 'New'} · </span><span className='reviews-count'>{spot?.numReviews} reviews · </span><span className='spot-location-info'>{spot?.city}, {spot?.state}, {spot?.country}</span></div>
-            <div className='single-spot-images-container'>{spot?.SpotImages && spot.SpotImages?.map(image => (
+            <div className='single-spot-images-container'>{spot?.SpotImages.length ? spot.SpotImages?.map(image => (
               <div key={image.id} className='single-spot-image'>
                 <img src={image?.url} alt='Spot Preview' className='spot-image-url' />
               </div>
-            ))}
-              {/* <div>{spot?.description}</div> */}
+            )) : <img src={noImage} alt='Preview Not Available' className='single-spot-image' />}
             </div>
             <h3 className='spot-host-info'>Entire Spot hosted by {spot?.Owner?.firstName}</h3>
             <div className='spot-details-random'>
@@ -90,13 +86,18 @@ const SpotShow = () => {
             {currUser && (
               currUser.id === spot.ownerId && (
                 <>
-                  <div>
-                    <EditSpotFormModal />
-                  </div>
-                  <div>
-                    <button
-                      type="button"
-                      onClick={handleDelete}> Delete Spot </button>
+                  <div className='edit-spot-delete-spot-container'>
+                    <span className='edit-spot-modal-container'>
+                      <EditSpotFormModal />
+                    </span>
+                    <span className='delete-spot-container'>
+                      <button
+                        type="button"
+                        onClick={handleDelete}
+                        className='delete-spot-button'>
+                        ¿ Delete Spot ?
+                      </button>
+                    </span>
                   </div>
                 </>
               ))}
