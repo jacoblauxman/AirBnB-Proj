@@ -53,3 +53,19 @@
   padding: .3rem;
   margin-bottom: .3;
 }
+
+
+.delete-review-button {
+  border-radius: 20px;
+  padding: .5rem;
+  margin-top: 1rem;
+  background-color: white;
+  border: 0.3px solid rgba(177, 177, 177, 0.541);
+  justify-content: center;
+  width: 10%;
+}
+
+.delete-review-button:hover {
+  background-color: rgba(225, 225, 225, 0.404);
+  cursor: pointer;
+}
