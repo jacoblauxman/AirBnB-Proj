@@ -84,10 +84,8 @@ const SpotShow = () => {
             <div className='spot-title-subheader'>
               <span className='spot-avg-rating'>★ {spot?.avgStarRating ? spot?.avgStarRating : 'New'} · </span><span className='reviews-count'>{spot?.numReviews} reviews · </span><span className='spot-location-info'>{spot?.city}, {spot?.state}, {spot?.country}</span>
             </div>
-            <div className='single-spot-images-container'>{spot?.SpotImages.length ? spot.SpotImages?.map(image => (
-              // <div key={image.id} className='single-spot-image'>
+            <div className='single-spot-images-container'>{spot?.SpotImages?.length ? spot?.SpotImages?.map(image => (
               <img src={image?.url} alt='Spot Preview' className='spot-image-url' />
-              // </div>
             )) : <img src={noImage} alt='Preview Not Available' className='single-spot-image' />}
             </div>
             <h3 className='spot-host-info'>Entire Spot hosted by {spot?.Owner?.firstName}</h3>

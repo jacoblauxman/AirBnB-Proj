@@ -78,7 +78,9 @@ const ReviewsList = ({ spotId }) => {
             <div className='reviews-array-container'>
               <div className='single-review-container' key={review?.id}>
                 <div className='reviewer-name'>
-                  {review?.User?.firstName} {review?.User?.lastName}
+                  <span className='user-icon-container'>
+                    <i className="fas fa-user-circle" />
+                  </span> {review?.User?.firstName} {review?.User?.lastName}
                 </div>
                 <div className='reviewer-review'>
                   {review?.review}
@@ -103,7 +105,7 @@ const ReviewsList = ({ spotId }) => {
           {currUser && (
             currUser?.id !== spot?.ownerId && (reviewedCheck && (
               <div className='add-review-container'>
-         <CreateReviewFormModal />
+                <CreateReviewFormModal />
               </div>
             )))
           }
