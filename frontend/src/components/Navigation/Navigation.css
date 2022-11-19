@@ -70,7 +70,8 @@
  } */
 
  .host-button:hover {
-   background-color: rgb(240, 239, 239)
+   background-color: rgb(240, 239, 239);
+   cursor: pointer;
  }
 
 
@@ -97,7 +98,8 @@
  }
 
  .profile-button:hover {
-   box-shadow: 0px 2px 2px 1px rgb(213, 213, 213)
+   box-shadow: 0px 2px 2px 1px rgb(213, 213, 213);
+   cursor: pointer;
  }
 
  .fa-bars {
@@ -140,4 +142,8 @@
    /* align-items: center; */
    justify-content: center;
    align-items: center;
+ }
+
+ .create-spot-button:hover {
+   cursor: pointer;
  }

@@ -1,0 +1,55 @@
+.spot-reviews-container {
+  display: flex;
+  justify-content: left;
+  /* flex-wrap: wrap; */
+  flex-flow: column wrap;
+  margin-left: 5rem;
+  padding-left: 2rem;
+  padding-top: 1.5rem;
+  width: 100%;
+  /* border: 2px solid red; */
+}
+
+.spot-reviews-list {
+  width: 100vw;
+}
+
+/* .reviews-array-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+} */
+
+.single-review-container {
+  /* display: flex; */
+  flex-direction: column;
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.137);
+  align-items: center;
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.reviewer-name {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  font-weight: 425;
+  /* padding-bottom: .3rem; */
+  margin-bottom: .75rem;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.reviewer-review {
+  font-weight: 225;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-bottom: .3rem;
+}
+
+.review-stars {
+  padding: .3rem;
+  margin-bottom: .3;
+}

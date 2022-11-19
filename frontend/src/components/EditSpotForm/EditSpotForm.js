@@ -24,6 +24,9 @@ const EditSpotForm = ({ setShowModal }) => {
   const [errors, setErrors] = useState([])
 
 
+  const currUser = useSelector(state => state.session.user)
+
+  const currSpot = useSelector(state => state.spots.oneSpot)
 
   const dispatch = useDispatch()
 
@@ -43,25 +46,30 @@ const EditSpotForm = ({ setShowModal }) => {
       lng,
       description,
       price,
+      //TESTING
+      Owner: { ...currUser }
     }
+    console.log('editSPot handleSubmit, here IS UPDATED SPOT', updatedSpot)
 
     return dispatch(updateSpot(updatedSpot))
       .catch(async res => {
         const data = await res.json()
         if (data && data.errors) setErrors(data.errors)
-        if (data && !data.errors.length) {
-          updatedSpot && history.push(`/spots/${spot.id}`)
-        }
+        // if (data && !data.errors.length) {
+        //   updatedSpot && history.push(`/spots/${spot.id}`)
+        // }
       }).then(setShowModal(false))
+      // .then(getCurrUser)
   }
 
   const handleCancel = (e) => {
     e.preventDefault();
-    history.push(`/spots/${spot.id}`)
+    // history.push(`/spots/${spot.id}`)
+    setShowModal(false)
   }
 
   //testing - going to make conditional to render/return null if not logged in
-  const currUser = useSelector(getCurrUser)
+  // const currUser = useSelector(getCurrUser)
   if (!currUser) {
     history.push('/')
   }

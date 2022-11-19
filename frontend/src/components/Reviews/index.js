@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getReviews, removeReview } from '../../store/reviews'
 import { getCurrUser } from '../../store/session'
 import { getOneSpot } from "../../store/spots"
+import CreateReviewFormModal from '../CreateReviewForm'
 import CreateReviewForm from '../CreateReviewForm'
 
+import './Reviews.css'
 
 const ReviewsList = ({ spotId }) => {
 
@@ -63,57 +65,69 @@ const ReviewsList = ({ spotId }) => {
   if (!spotId) return null;
 
   return (
-    <>
+    <div className='spot-reviews-container'>
       {isLoaded &&
-        <div className='spot-reviews-container'>
-          <div>
-            <h2>★ {spot?.avgStarRating} · {reviewsArr?.length} Reviews</h2>
-            {errors.length > 0 && <div>Error !</div>}
-            {errors.map(error => (
-              <li key={error}>{error}</li>
-            ))}
+        // <div className='spot-reviews-container'>
+        <div>
+          <h2>★ {spot?.avgStarRating} · {reviewsArr?.length} Reviews</h2>
+          {errors.length > 0 && <div>Error !</div>}
+          {errors.map(error => (
+            <li key={error}>{error}</li>
+          ))}
+          {reviewsArr?.map(review => (
             <div className='reviews-array-container'>
-              {reviewsArr?.map(review => (
-                <div key={review?.id}>
-                  <div className='reviewer-name'>
-                    {review?.User?.firstName} {review?.User?.lastName}
-                  </div>
-                  <div className='reviewer-review'>
-                    {review?.review}
-                  </div>
-                  <div>
-                    ★ {review?.stars}
-                  </div>
-                  {currUser &&
-                    currUser?.id === review?.userId && (
-                      <div className='delete-review-container'>
-                        <button type='button'
-                          className='delete-review-button'
-                          onClick={() => dispatch(removeReview(review.id))}>
-                          Delete Review
-                        </button>
-                      </div>
-                    )}
+              <div className='single-review-container' key={review?.id}>
+                <div className='reviewer-name'>
+                  {review?.User?.firstName} {review?.User?.lastName}
                 </div>
-              ))}
+                <div className='reviewer-review'>
+                  {review?.review}
+                </div>
+                <div className='review-stars'>
+                  ★ {review?.stars}
+                </div>
+                {currUser &&
+                  currUser?.id === review?.userId && (
+                    <div className='delete-review-container'>
+                      <button type='button'
+                        className='delete-review-button'
+                        onClick={() => dispatch(removeReview(review.id))}>
+                        Delete Review
+                      </button>
+                    </div>
+                  )}
+              </div>
             </div>
-          </div>
+          ))}
+          {/* </div> */}
           {currUser && (
             currUser?.id !== spot?.ownerId && (reviewedCheck && (
               <div className='add-review-container'>
-                <button type='button'
-                className='add-review-button'
-                  onClick={handleCreate}>Add a Review</button>
-                <div style={{ visibility: displayForm ? 'visible' : 'hidden' }}>
-                  <CreateReviewForm spot={spot} displayForm={displayForm} setDisplayForm={setDisplayForm} />
-                </div>
+         <CreateReviewFormModal />
               </div>
             )))
           }
         </div>
       }
-    </>
+    </div>
   )
 }
 
 export default ReviewsList
+
+
+
+
+// create review button container and all for later
+// {currUser && (
+//   currUser?.id !== spot?.ownerId && (reviewedCheck && (
+//     <div className='add-review-container'>
+//       <button type='button'
+//         className='add-review-button'
+//         onClick={handleCreate}>Add a Review</button>
+//       <div style={{ visibility: displayForm ? 'visible' : 'hidden' }}>
+//         <CreateReviewForm spot={spot} displayForm={displayForm} setDisplayForm={setDisplayForm} />
+//       </div>
+//     </div>
+//   )))
+// }

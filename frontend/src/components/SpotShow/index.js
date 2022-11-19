@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchOneSpot, removeSpot } from '../../store/spots'
+import { fetchOneSpot, getOneSpot, removeSpot } from '../../store/spots'
 import { getCurrUser } from '../../store/session';
 import ReviewsList from '../Reviews';
 import { getReviews } from '../../store/reviews';
@@ -63,6 +63,7 @@ const SpotShow = () => {
 
   if (Object.values(spot).length === 0) return null;
 
+  // if (!spot.Owner) dispatch(getOneSpot)
 
   return (
     <>
@@ -72,7 +73,7 @@ const SpotShow = () => {
             <h2 className='spot-title'>{spot?.name} - {spot?.description}</h2>
             <div className='spot-title-subheader'>
               <span className='spot-avg-rating'>★ {spot?.avgStarRating ? spot?.avgStarRating : 'New'} · </span><span className='reviews-count'>{spot?.numReviews} reviews · </span><span className='spot-location-info'>{spot?.city}, {spot?.state}, {spot?.country}</span>
-              </div>
+            </div>
             <div className='single-spot-images-container'>{spot?.SpotImages.length ? spot.SpotImages?.map(image => (
               // <div key={image.id} className='single-spot-image'>
               <img src={image?.url} alt='Spot Preview' className='spot-image-url' />
@@ -86,15 +87,15 @@ const SpotShow = () => {
             <div className='spot-main-details'>
               <div>
                 <span className='owner-medal'><i class="fa-solid fa-medal"></i></span> <span>{spot?.Owner?.firstName} is a Superhost</span>
-                </div>
-                <div className='owner-medal-info'>
-                  <span>Superhosts are experienced, highly rated hosts who are committed to great stays for great guests</span>
-                </div>
+              </div>
+              <div className='owner-medal-info'>
+                <span>Superhosts are experienced, highly rated hosts who are committed to great stays for great guests</span>
+              </div>
             </div>
           </div>
           <div>
             {currUser && (
-              currUser.id === spot.ownerId && (
+              currUser?.id === spot?.ownerId && (
                 <>
                   <div className='edit-spot-delete-spot-container'>
                     <span className='edit-spot-modal-container'>
@@ -112,9 +113,9 @@ const SpotShow = () => {
                 </>
               ))}
           </div>
-          <div>
+          {/* <div className='spot-reviews-list'> */}
             {spot && (<ReviewsList spotId={spot?.id} />)}
-          </div>
+          {/* </div> */}
         </div >)}
     </>
   )

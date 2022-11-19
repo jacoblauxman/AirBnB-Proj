@@ -110,6 +110,7 @@ export const updateSpot = spot => async dispatch => {
   })
 
   if (response.ok) {
+    console.log('in thunkresponseOK::', response)
     const updatedSpot = await response.json()
     //add our images back to edited spot:
     const imagesResponse = await csrfFetch(`/api/spots/${updatedSpot.id}`)
@@ -179,11 +180,17 @@ const spotsReducer = (state = initialState, action) => {
       const newState = {
         ...state,
         // this line especially intended for UPDATE spreading, as well as setting 'oneSpot'
-        Spots: { ...state.Spots, [action.spot.id]: { ...state.Spots[action.spot.id], ...action.spot } },
-        oneSpot: { ...state.oneSpot }
+        Spots: {
+          ...state.Spots, [action.spot.id]: {
+            ...state.Spots[action.spot.id], ...action.spot,
+            ...state.Owner
+          }
+        },
+        oneSpot: { ...state.oneSpot, ...state.Owner, ...state.SpotImages, ...action.spot }
       }
       // sets our one spot, and returns
-      newState.oneSpot = action.spot;
+      // newState.oneSpot = action.spot;
+      console.log(newState.oneSpot, ':: HERE IN REDUCER - new state')
       return newState;
 
     // delete a spot:
