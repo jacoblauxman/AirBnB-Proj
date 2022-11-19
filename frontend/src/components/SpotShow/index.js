@@ -34,18 +34,23 @@ const SpotShow = () => {
 
   useEffect(() => {
     dispatch(fetchOneSpot(spotId))
-    console.log('in useEffect spotShow')
+      .catch(async res => {
+        const data = await res.json()
+        console.log(data.errors)
+        if (data && data.errors) setErrors(data.errors)
+      })
+    console.log('in useEffect spotShow',)
     dispatch(getReviews(spotId))
       .then(() => setIsLoaded(true))
   }, [dispatch, spotId, reviewsArr.length])
 
 
   // handling edit form button
-  const handleEdit = async (e) => {
-    e.preventDefault()
+  // const handleEdit = async (e) => {
+  //   e.preventDefault()
 
-    setDisplayForm(prevDisplay => !prevDisplay)
-  }
+  //   setDisplayForm(prevDisplay => !prevDisplay)
+  // }
 
   // handling spot delete button
   const handleDelete = async (e) => {
@@ -56,12 +61,14 @@ const SpotShow = () => {
       .catch(async res => {
         const data = await res.json()
         if (data && data.errors) setErrors(data.errors)
-        if (data && !data.errors.length) history.push('/')
+        console.log(data.errors, 'HEY HERE ARE ERRORS IN RESPONSE')
+        // if (data && !data.errors.length) history.push('/')
       }).then(history.push('/'))
   }
 
+  console.log('IN SPOTSHOW, here is errors', errors)
 
-  if (Object.values(spot).length === 0) return null;
+  if (errors?.length > 0) history.push('/404')
 
   // if (!spot.Owner) dispatch(getOneSpot)
 
@@ -69,6 +76,9 @@ const SpotShow = () => {
     <>
       {isLoaded && (
         <div className='single-spot-container'>
+          {errors?.map((error, idx) => (
+            <li key={idx}>{error}</li>
+          ))}
           <div className='single-spot'>
             <h2 className='spot-title'>{spot?.name} - {spot?.description}</h2>
             <div className='spot-title-subheader'>
@@ -114,9 +124,17 @@ const SpotShow = () => {
               ))}
           </div>
           {/* <div className='spot-reviews-list'> */}
-            {spot && (<ReviewsList spotId={spot?.id} />)}
+          {spot?.id && (<ReviewsList spotId={spot?.id} />)}
           {/* </div> */}
         </div >)}
+      {/* {!isLoaded && errors.length > 0 && (
+        <>
+          RESOURCE NOT FOUND
+          {errors.map((error, idx) => (
+            <li key={idx}>{error}</li>
+          ))}
+        </>
+      )} */}
     </>
   )
 }

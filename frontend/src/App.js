@@ -28,20 +28,27 @@ function App() {
       <div>
 
         {isLoaded && (
-          <Switch>
-            <Route exact path="/">
-              <SpotsList />
+          <>
+            <Switch>
+              <Route exact path="/">
+                <SpotsList />
+              </Route>
+              <Route path="/spots/:spotId">
+                <SpotShow />
+              </Route>
+              <Route path='/create-spot'>
+                <CreateSpotForm />
+              </Route>
+              <Route path='/create-review'>
+                <CreateReviewForm />
+              </Route>
+            <Route>
+              <div className='error-handler'>
+                ¡ RESOÜRCE NOT FOÜND !
+              </div>
             </Route>
-            <Route path="/spots/:spotId">
-              <SpotShow />
-            </Route>
-            <Route path='/create-spot'>
-              <CreateSpotForm />
-            </Route>
-            <Route path='/create-review'>
-              <CreateReviewForm />
-            </Route>
-          </Switch>
+            </Switch>
+          </>
         )}
       </div>
     </>

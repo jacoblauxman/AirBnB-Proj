@@ -22,4 +22,8 @@
 #modal-content {
   position: absolute;
   background-color: white;
+  /* display: flex;
+  width: 50%;
+  height: 15rem;
+  align-items: center; */
 }

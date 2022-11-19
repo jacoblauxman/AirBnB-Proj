@@ -4,7 +4,7 @@ import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-//import './LoginForm.css';
+import './LoginForm.css';
 
 
 function LoginFormPage() {
@@ -29,7 +29,7 @@ function LoginFormPage() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='login-form-container' onSubmit={handleSubmit}>
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>

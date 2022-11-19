@@ -66,17 +66,21 @@ function ProfileButton({ user, setLogin, setShowModal }) {
           (
             <div className='profile-dropdown-container'>
               <div className="profile-dropdown">
-                <div>
-                  <button onClick={() => {
-                    setLogin(true)
-                    setShowModal(true)
-                    //if someone clicks log in button - login is true, open up modal
-                  }}>
+                <div className='login-button-container'>
+                  <button
+                    className='login-button'
+                    onClick={() => {
+                      setLogin(true)
+                      setShowModal(true)
+                      //if someone clicks log in button - login is true, open up modal
+                    }}>
                     Log In
                   </button>
                 </div>
-                <div>
-                  <button onClick={() => {
+                <div className='signup-button-container'>
+                  <button
+                  className='signup-button'
+                  onClick={() => {
                     setLogin(false)
                     setShowModal(true)
                     // need to hardcode to true to make sure when they click elsewhere in modal it closes!

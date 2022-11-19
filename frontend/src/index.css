@@ -7,3 +7,16 @@
 * {
   box-sizing: border-box;
 }
+
+
+.error-handler {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25%;
+  width: 100%;
+  font-size: 8rem;
+  color: rgba(255, 111, 0, 0.592);
+  text-align: center;
+}

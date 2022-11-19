@@ -438,15 +438,18 @@ router.get('/:spotId', async (req, res) => {
     const err = new Error("Spot couldn't be found")
     err.title = 'Invalid Spot id'
     err.message = "Spot couldn't be found",
-      err.status = 404
+      err.errors = [`Spot couldn't be found`]
+    err.status = 404
     err.statusCode = 404
 
     // throw err
+    res.status(404).json(err)
 
-    res.status(404).json({
-      message: `Spot couldn't be found`,
-      statusCode: 404
-    })
+    // res.status(404).json({
+    //   errors: [`Spot Couldn't Be Found`],
+    //   message: `Spot couldn't be found`,
+    //   statusCode: 404
+    // })
   }
 
 
