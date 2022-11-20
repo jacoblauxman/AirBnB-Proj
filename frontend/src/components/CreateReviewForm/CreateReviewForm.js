@@ -62,10 +62,10 @@ const CreateReviewForm = ({ setShowModal }) => {
 
 
   return (
-    <div>
-      <div>
-        <h1>Leave a Review!</h1>
-      </div>
+
+    <>
+      <h1 className='form-title'>Leave a Review</h1>
+
       <form onSubmit={handleSubmit}>
         {errors.length > 0 && <div>Error !</div>}
         {errors.map(error => (
@@ -77,6 +77,7 @@ const CreateReviewForm = ({ setShowModal }) => {
           value={review}
           placeholder='Your thoughts here'
           name='review'
+          required
         />
         <input
           type='number'
@@ -84,12 +85,13 @@ const CreateReviewForm = ({ setShowModal }) => {
           value={stars}
           placeholder='rating'
           name='stars'
+          required
         />
         <button type='submit'
         >Add Review</button>
         <button type='button' onClick={handleCancel}>Cancel</button>
       </form>
-    </div>
+    </>
   )
 
 }

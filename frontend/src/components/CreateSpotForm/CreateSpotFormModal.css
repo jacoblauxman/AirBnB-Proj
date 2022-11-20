@@ -1,7 +1,6 @@
 .create-spot-button {
   border-radius: 20px;
   background-color: white;
-  /* border: 1px solid gray; */
   width: 8rem;
   height: 3rem;
   font-size: 1rem;
@@ -13,4 +12,12 @@
 
 .create-spot-button:hover {
   background-color: rgb(240, 239, 239)
+}
+
+form label {
+  margin-bottom: 1rem;
+  border-radius: .3rem;
+  height: 100%;
+  border: 1px solid rgba(128, 128, 128, 0.478);
+  padding: .3rem;
 }

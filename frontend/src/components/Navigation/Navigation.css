@@ -145,6 +145,7 @@
    height: 100%;
    box-shadow: 0px 0px 5px 5px rgba(179, 179, 179, 0.251);
    /* border: 1px solid rgba(128, 128, 128, 0.273) */
+   overflow: hidden;
  }
 
  .login-button-container {
@@ -190,7 +191,7 @@
    background-color: white;
    border: none;
    justify-content: space-between;
-   font-weight: 250;
+   font-weight: 425;
    text-align: left;
    margin-left: 4px;
 
@@ -200,6 +201,102 @@
    background-color: rgb(240, 239, 239);
    cursor: pointer;
  }
+
+ .demo-login-container {
+   display: flex;
+   height: 100%;
+   width: 100%;
+   justify-content: center;
+   align-items: center;
+   border-bottom: 1px solid rgba(128, 128, 128, 0.273)
+ }
+
+ .demo-user-button {
+   /* display: flex; */
+   width: 100%;
+   height: 50%;
+   background-color: white;
+   border: none;
+   justify-content: space-between;
+   font-weight: 250;
+   text-align: left;
+   margin-left: 4px;
+ }
+
+ .demo-user-button:hover {
+   background-color: rgb(240, 239, 239);
+   cursor: pointer;
+ }
+
+
+
+
+ .user-info-container {
+   width: 100%;
+   height: 100%;
+   background-color: white;
+   border: none;
+   font-weight: 250;
+   text-align: left;
+   margin-left: 4px;
+   margin-top: 4px;
+   padding: .2rem;
+ }
+
+ .user-username {
+   width: 100%;
+   height: 50%;
+   background-color: white;
+   justify-content: space-between;
+   text-align: left;
+   padding-left: .3rem;
+   font-weight: 400;
+   font-size: .95rem;
+ }
+
+ .user-email {
+   width: 100%;
+   height: 50%;
+   background-color: white;
+   justify-content: space-between;
+   text-align: left;
+   /* margin-left: .4rem; */
+   padding-left: .3rem;
+   border-bottom: 1px solid rgba(128, 128, 128, 0.273);
+   font-size: .95rem;
+ }
+
+ .logout-button-container {
+   display: flex;
+   height: 50%;
+   width: 100%;
+   justify-content: center;
+   align-items: center;
+   border-bottom: 1px solid rgba(128, 128, 128, 0.273)
+ }
+
+ .logout-button {
+   /* display: flex; */
+   width: 100%;
+   height: 50%;
+   background-color: white;
+   border: none;
+   justify-content: space-between;
+   font-weight: 250;
+   text-align: left;
+   margin-left: 4px;
+ }
+
+ .logout-button:hover {
+   background-color: rgb(240, 239, 239);
+   cursor: pointer;
+ }
+
+
+
+
+
+
 
 
 

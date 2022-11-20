@@ -55,11 +55,7 @@ const EditSpotForm = ({ setShowModal }) => {
       .catch(async res => {
         const data = await res.json()
         if (data && data.errors) setErrors(data.errors)
-        // if (data && !data.errors.length) {
-        //   updatedSpot && history.push(`/spots/${spot.id}`)
-        // }
       }).then(setShowModal(false))
-      // .then(getCurrUser)
   }
 
   const handleCancel = (e) => {
@@ -69,7 +65,6 @@ const EditSpotForm = ({ setShowModal }) => {
   }
 
   //testing - going to make conditional to render/return null if not logged in
-  // const currUser = useSelector(getCurrUser)
   if (!currUser) {
     history.push('/')
   }
@@ -77,6 +72,7 @@ const EditSpotForm = ({ setShowModal }) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h1>Edit Your Spot</h1>
       {/* <h1>Edit Spot</h1> */}
       {errors.length > 0 && <div>Error !</div>}
       {errors.map(error => (

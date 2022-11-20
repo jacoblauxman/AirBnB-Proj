@@ -82,7 +82,7 @@ const SpotShow = () => {
           <div className='single-spot'>
             <h2 className='spot-title'>{spot?.name} - {spot?.description}</h2>
             <div className='spot-title-subheader'>
-              <span className='spot-avg-rating'>★ {spot?.avgStarRating ? spot?.avgStarRating : 'New'} · </span><span className='reviews-count'>{spot?.numReviews} reviews · </span><span className='spot-location-info'>{spot?.city}, {spot?.state}, {spot?.country}</span>
+              <span className='spot-avg-rating'>★ {spot?.avgStarRating ? spot?.avgStarRating : 'New'}&nbsp;·&nbsp;</span><span className='reviews-count'> {spot?.numReviews} reviews&nbsp;·&nbsp;</span> <span className='spot-location-info'>{spot?.city}, {spot?.state}, {spot?.country}</span>
             </div>
             <div className='single-spot-images-container'>{spot?.SpotImages?.length ? spot?.SpotImages?.map(image => (
               <img src={image?.url} alt='Spot Preview' className='spot-image-url' />
@@ -101,10 +101,8 @@ const SpotShow = () => {
               </div>
             </div>
           </div>
-          <div>
             {currUser && (
               currUser?.id === spot?.ownerId && (
-                <>
                   <div className='edit-spot-delete-spot-container'>
                     <span className='edit-spot-modal-container'>
                       <EditSpotFormModal />
@@ -118,21 +116,11 @@ const SpotShow = () => {
                       </button>
                     </span>
                   </div>
-                </>
               ))}
-          </div>
           {/* <div className='spot-reviews-list'> */}
           {spot?.id && (<ReviewsList spotId={spot?.id} />)}
           {/* </div> */}
         </div >)}
-      {/* {!isLoaded && errors.length > 0 && (
-        <>
-          RESOURCE NOT FOUND
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </>
-      )} */}
     </>
   )
 }

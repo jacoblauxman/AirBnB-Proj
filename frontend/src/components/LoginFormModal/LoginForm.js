@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
+import { useEffect } from 'react'
 
 function LoginForm({ setShowModal }) {
   //passed in setter of modal
@@ -10,9 +11,12 @@ function LoginForm({ setShowModal }) {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
+  // useEffect(() => {
+
+  // }, [errors.length])
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors([]);
     return dispatch(sessionActions.login({ credential, password }))
       // adding our then in before the catch -- any below 400
       // if it's successful do the 'then' --> set our showModal slice of state to false
@@ -20,6 +24,7 @@ function LoginForm({ setShowModal }) {
       .then(() => {
         console.log('.then in loginForm')
         setShowModal(false)
+        setErrors([]);
       })
       .catch(
         async (res) => {
@@ -32,32 +37,41 @@ function LoginForm({ setShowModal }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((error, idx) => (
-          <li key={idx}>{error}</li>
-        ))}
-      </ul>
-      <label>
-        Username or Email
-        <input
-          type="text"
-          value={credential}
-          onChange={(e) => setCredential(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button type="submit">Log In</button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <h1 className='form-title'>Login</h1>
+        <ul>
+          {errors.map((error, idx) => (
+            <li key={idx}>{error}</li>
+          ))}
+        </ul>
+        <label>
+          <input
+            title="Username or Email Required"
+            type="text"
+            value={credential}
+            onChange={(e) => setCredential(e.target.value)}
+            required
+            placeholder='Username or Email'
+            minLength={0}
+          />
+        </label>
+        <label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            placeholder='Password'
+          />
+        </label>
+        <button
+          type="submit"
+        >
+          Continue
+        </button>
+      </form>
+    </>
   );
 }
 

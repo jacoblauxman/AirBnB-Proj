@@ -63,7 +63,7 @@ function Navigation({ isLoaded }) {
         showModal && (
           <Modal onClose={() => setShowModal(false)} style={{ textDecoration: 'none' }}>
             {login ?
-              <LoginForm setShowModal={setShowModal} /> : <SignupFormPage setShowModal={setShowModal} />}
+              <LoginForm setShowModal={setShowModal} showModal={showModal} /> : <SignupFormPage setShowModal={setShowModal} />}
           </Modal>
         )
       }

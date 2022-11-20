@@ -53,10 +53,14 @@ function ProfileButton({ user, setLogin, setShowModal }) {
           (
             <div className='profile-dropdown-container'>
               <div className="profile-dropdown">
-                <div>{user.username}</div>
-                <div>{user.email}</div>
-                <div>
-                  <button onClick={logout}>Log Out</button>
+                <div className='user-info-container'>
+                <div className='user-username'>{user.username}</div>
+                <div className='user-email'>{user.email}</div>
+                </div>
+                <div className='logout-button-container'>
+                  <button
+                  className='logout-button'
+                  onClick={logout}>Log Out</button>
 
                 </div>
               </div>
@@ -86,6 +90,16 @@ function ProfileButton({ user, setLogin, setShowModal }) {
                     // need to hardcode to true to make sure when they click elsewhere in modal it closes!
                   }}>
                     Sign Up
+                  </button>
+                </div>
+                <div className='demo-login-container'>
+                  <button
+                  className='demo-user-button'
+                  onClick={() => {
+                    dispatch(sessionActions.login({credential: 'DemoUser', password: 'password'}))
+                    setShowModal(false)
+                  }}>
+                    Demo User
                   </button>
                 </div>
               </div>

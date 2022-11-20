@@ -3,38 +3,45 @@
 }
 
 .single-spot-container {
-  margin-top: 10vh;
+  /* margin-top: 20%; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   /* border: 3px solid blue; */
-  padding: 15px;
+  padding-left: 15%;
+  padding-right: 15%;
+  margin: 0 10%;
+  /* margin-left: 5rem; */
+  /* margin-right: 20rem; */
+  /* align-self: center; */
   align-items: center;
-  width: 90vw;
-  height: 90vh;
+  width: 75%;
+  height: 100%;
 }
 
 .single-spot-images-container {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   /* margin-top: 10vh; */
-  width: 95vw;
+  /* padding: %; */
+  width: 100%;
 }
 
 .single-spot {
   justify-content: center;
-  display: block;
+  /* display: block; */
   width: 100%;
-  margin-top: 5rem;
+  /* align-items: start; */
+  /* margin-top: 5rem; */
 }
 
 .spot-title {
   display: flex;
   justify-content: left;
   /* align-items: center; */
-  margin-top: 5rem;
-  margin-left: 2.5rem;
+  margin-top: 2rem;
+  /* margin-left: 2.5rem; */
   padding-top: 3rem;
   font-weight: 450;
 }
@@ -42,7 +49,7 @@
 .spot-title-subheader {
   display: flex;
   justify-content: left;
-  margin-left: 2.5rem;
+  /* margin-left: 2.5rem; */
   margin-bottom: 1.75rem;
 }
 
@@ -58,8 +65,8 @@
 }
 
 .spot-image-url {
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   border-radius: 20px;
   object-fit: contain;
   /* border: 3px solid blue; */
@@ -67,7 +74,7 @@
 
 .spot-host-info {
   font-weight: 475;
-  margin-left: 3rem;
+  /* margin-left: 3rem; */
 }
 
 .spot-details-random {
@@ -76,7 +83,7 @@
   width: 100%;
   border-bottom: 1px solid rgba(144, 144, 144, 0.387);
   margin-bottom: 1rem;
-  margin-left: 3rem;
+  /* margin-left: 3rem; */
 }
 
 .spot-main-details {
@@ -85,7 +92,7 @@
   width: 100%;
   border-bottom: 1px solid rgba(144, 144, 144, 0.387);
   margin-bottom: 1rem;
-  margin-left: 3rem;
+  /* margin-left: 3rem; */
 }
 
 .owner-medal {
@@ -102,8 +109,8 @@
 }
 
 .edit-spot-delete-spot-container {
-  display: inline;
-  justify-content: space-between;
+  display: flex;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
 }

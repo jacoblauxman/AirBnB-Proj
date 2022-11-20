@@ -1,18 +1,31 @@
 .spot-reviews-container {
   display: flex;
   justify-content: left;
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
   flex-flow: column wrap;
-  margin-left: 5rem;
-  padding-left: 2rem;
-  padding-top: 1.5rem;
+  /* margin-left: 5rem; */
+  /* padding-left: 2rem;
+  padding-top: 1.5rem; */
   width: 100%;
-  /* border: 2px solid red; */
+  height: 100%;
+  padding: 10%
+    /* border: 2px solid red; */
 }
 
+.spot-reviews-grid-container {
+  display: grid;
+  justify-content: space-evenly;
+  grid-template-columns: 1fr 1fr;
+  padding: 1.5rem;
+  width: 100%;
+
+}
+
+/*
 .spot-reviews-list {
   width: 100vw;
-}
+  justify-content: center;
+} */
 
 /* .reviews-array-container {
   display: flex;
@@ -22,12 +35,14 @@
 } */
 
 .single-review-container {
-  /* display: flex; */
+  display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   border-bottom: 0.5px solid rgba(128, 128, 128, 0.137);
-  align-items: center;
+  align-items: left;
   padding: 1.5rem;
   margin-bottom: 3rem;
+  justify-content: center;
 }
 
 .reviewer-name {
@@ -37,8 +52,14 @@
   font-weight: 425;
   /* padding-bottom: .3rem; */
   margin-bottom: .75rem;
-  padding: 1.5rem;
+  /* padding: rem; */
   width: 100%;
+}
+
+.user-icon-container {
+  display: flex;
+  /* padding: 0.3rem; */
+  margin-right: .5rem;
 }
 
 .reviewer-review {
@@ -55,6 +76,7 @@
 }
 
 
+
 .delete-review-button {
   border-radius: 20px;
   padding: .5rem;
@@ -62,7 +84,7 @@
   background-color: white;
   border: 0.3px solid rgba(177, 177, 177, 0.541);
   justify-content: center;
-  width: 10%;
+  width: 25%;
 }
 
 .delete-review-button:hover {

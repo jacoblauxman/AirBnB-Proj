@@ -8,6 +8,7 @@ import { getCurrUser } from '../../store/session';
 
 
 
+
 const CreateSpotForm = ({ setShowModal }) => {
   const [name, setName] = useState('')
   const [address, setAddress] = useState('')
@@ -76,90 +77,100 @@ const CreateSpotForm = ({ setShowModal }) => {
 
 
   return (
-    <div className='create-spot-container'>
-      <h1>Host a Spot (Create a Spot)</h1>
-      <form onSubmit={handleSubmit}>
-        {errors.length > 0 && <div className='create-error-title'>Error !</div>}
-        {errors.map(error => (
-          <div className='create-error-container' key={error}>{error}</div>
-        ))}
-        <input
-          type='text'
-          onChange={e => setName(e.target.value)}
-          value={name}
-          placeholder='Name Here'
-          name='title'
-        />
-        <input
-          type='text'
-          value={address}
-          onChange={e => setAddress(e.target.value)}
-          placeholder='Address'
-          name='address'
-        />
-        <input
-          type='text'
-          value={city}
-          onChange={e => setCity(e.target.value)}
-          placeholder='City'
-          name='city'
-        />
-        <input
-          type='text'
-          value={state}
-          onChange={e => setState(e.target.value)}
-          placeholder='State'
-          name='state'
-        />
-        <input
-          type='text'
-          value={country}
-          onChange={e => setCountry(e.target.value)}
-          placeholder='Country'
-          name='country'
-        />
-        <input
-          type='text'
-          value={lat}
-          onChange={e => setLat(e.target.value)}
-          placeholder='latitude'
-          name='latitude'
-        />
-        <input
-          type='text'
-          value={lng}
-          onChange={e => setLng(e.target.value)}
-          placeholder='longitude'
-          name='longitude'
-        />
-        <input
-          type='text'
-          value={price}
-          onChange={e => setPrice(e.target.value)}
-          placeholder='Price'
-          name='price'
-        />
-        <textarea
-          value={description}
-          onChange={e => setDescription(e.target.value)}
-          name='description'
-          placeholder='Spot Description'
-          rows='10'
-        ></textarea>
-        <input
-          type='text'
-          value={previewImage}
-          onChange={e => setPreviewImage(e.target.value)}
-          placeholder='Preview Image URL'
-          name='previewImage'
-        />
-        <button type="submit"
-        // disabled={errors.length > 0}
-        >Create new Spot
-        </button>
-        <button type="button" onClick={handleCancel}>Cancel</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <h1>Become a Host</h1>
+      {errors.length > 0 && <div className='create-error-title'>Error !</div>}
+      {errors.map(error => (
+        <div className='create-error-container' key={error}>{error}</div>
+      ))}
+      <input
+        type='text'
+        onChange={e => setName(e.target.value)}
+        value={name}
+        placeholder='Name Here'
+        name='title'
+        required
+      />
+      <input
+        type='text'
+        value={address}
+        onChange={e => setAddress(e.target.value)}
+        placeholder='Address'
+        name='address'
+        required
+      />
+      <input
+        type='text'
+        value={city}
+        onChange={e => setCity(e.target.value)}
+        placeholder='City'
+        name='city'
+        required
+      />
+      <input
+        type='text'
+        value={state}
+        onChange={e => setState(e.target.value)}
+        placeholder='State'
+        name='state'
+        required
+        minlength='2'
+        maxlength='2'
+      />
+      <input
+        type='text'
+        value={country}
+        onChange={e => setCountry(e.target.value)}
+        placeholder='Country'
+        name='country'
+        required
+      />
+      <input
+        type='text'
+        value={lat}
+        onChange={e => setLat(e.target.value)}
+        placeholder='latitude'
+        name='latitude'
+        required
+      />
+      <input
+        type='text'
+        value={lng}
+        onChange={e => setLng(e.target.value)}
+        placeholder='longitude'
+        name='longitude'
+        required
+      />
+      <input
+        type='text'
+        value={price}
+        onChange={e => setPrice(e.target.value)}
+        placeholder='Price'
+        name='price'
+        required
+      />
+      <textarea
+        value={description}
+        onChange={e => setDescription(e.target.value)}
+        name='description'
+        placeholder='Spot Description'
+        rows='5'
+        required
+      ></textarea>
+      <input
+        type='text'
+        value={previewImage}
+        onChange={e => setPreviewImage(e.target.value)}
+        placeholder='Preview Image URL'
+        name='previewImage'
+        required
+      />
+      <button type="submit"
+      // disabled={errors.length > 0}
+      >Create new Spot
+      </button>
+      <button type="button" onClick={handleCancel}>Cancel</button>
+    </form>
   )
 }
 

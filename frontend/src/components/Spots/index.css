@@ -1,9 +1,11 @@
 .spots-grid-container {
   /* box-sizing: border-box; */
-  display: flex;
-  padding: 0.5rem;
-  flex-wrap: wrap;
+  /* display: flex; */
+  /* padding: 0.5rem; */
+  /* flex-wrap: wrap; */
+  align-items: center;
   align-content: space-between;
+  justify-content: center;
   width: 100vw;
   margin-top: 10vh;
 }
@@ -11,10 +13,10 @@
 .spots-grid {
   display: grid;
   justify-content: space-evenly;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   margin: 10px;
-  width: 100vw;
-  padding: 50px;
+  width: 100%;
+  padding: 2rem;
 }
 
 .spots-spot-item {
