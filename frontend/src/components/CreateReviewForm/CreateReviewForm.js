@@ -30,13 +30,10 @@ const CreateReviewForm = ({ setShowModal }) => {
       .then(() => setShowModal(false))
       .catch(async res => {
         const data = await res.json()
-        console.log(data, 'data in error of newReview')
         if (data && data.errors) setErrors([data.errors])
       })
     setReview('')
     setStars('')
-    // setShowModal(false)
-    // .then(history.push(`/spots/${reviewSpot?.id}`))
   }
 
 
@@ -44,7 +41,6 @@ const CreateReviewForm = ({ setShowModal }) => {
     e.preventDefault()
     setStars('')
     setReview('')
-    // setDisplayForm(false)
     setShowModal(false)
     history.push(`/spots/${reviewSpot?.id}`)
   }

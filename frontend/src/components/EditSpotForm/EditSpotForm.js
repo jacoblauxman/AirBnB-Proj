@@ -15,8 +15,7 @@ const EditSpotForm = ({ setShowModal }) => {
   const [city, setCity] = useState(spot.city)
   const [state, setState] = useState(spot.state)
   const [country, setCountry] = useState(spot.country)
-  // const [lat, setLat] = useState(spot.lat)
-  // const [lng, setLng] = useState(spot.lng)
+
   const [description, setDescription] = useState(spot.description)
   const [price, setPrice] = useState(spot.price)
 
@@ -46,7 +45,6 @@ const EditSpotForm = ({ setShowModal }) => {
       //TESTING
       Owner: { ...currUser }
     }
-    console.log('editSPot handleSubmit, here IS UPDATED SPOT', updatedSpot)
 
     return dispatch(updateSpot(updatedSpot))
       .then(() => {
@@ -56,10 +54,8 @@ const EditSpotForm = ({ setShowModal }) => {
       })
       .catch(async res => {
         const data = await res.json()
-        console.log(data.errors, 'here are errors! .catch in editForm')
         if (data && data.errors.length > 0) setErrors(data.errors)
       })
-      // .then(setShowModal(false))
   }
 
   const handleCancel = (e) => {
@@ -130,24 +126,7 @@ const EditSpotForm = ({ setShowModal }) => {
         title='Please provide a valid Country'
         maxLength='20'
       />
-      {/* <input
-        type='text'
-        value={lat}
-        onChange={e => setLat(e.target.value)}
-        placeholder="Latitude"
-        name='latitude'
-        required
-        title='Please provide a valid Latitude'
-      />
-      <input
-        type='text'
-        value={lng}
-        onChange={e => setLng(e.target.value)}
-        placeholder="Longitude"
-        name='longitude'
-        required
-        title='Please provide a valid Longitude'
-      /> */}
+
       <input
         type='text'
         value={price}

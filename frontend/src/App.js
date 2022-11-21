@@ -8,7 +8,6 @@ import Navigation from "./components/Navigation";
 import SpotsList from "./components/Spots";
 import SpotShow from "./components/SpotShow";
 import CreateSpotForm from "./components/CreateSpotForm";
-// import EditSpotForm from "./components/EditSpotForm";
 import CreateReviewForm from "./components/CreateReviewForm";
 
 function App() {

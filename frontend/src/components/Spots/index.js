@@ -13,8 +13,6 @@ const SpotsList = () => {
 
   const spots = useSelector(state => state.spots.Spots)
 
-  console.log(spots, 'HERE IS SPOTS')
-
 
   useEffect(() => {
     dispatch(fetchSpots())
@@ -23,7 +21,6 @@ const SpotsList = () => {
   if (!spots) return null
 
   return (
-    // <div className='spots-grid-container'>
 
       <div className='spots-grid'>
         {Object.values(spots).map(spot => (
@@ -35,21 +32,18 @@ const SpotsList = () => {
 
               <div className='spot-location-avgRating'>
                 <span className='spot-location'>{spot.city}, {spot.state}</span>
-                <span className='spot-avgRating'><span className='spot-star'>★</span> {spot?.avgRating
-                // .toFixed(3)
-                || 'New'}</span></div>
+                <span className='spot-avgRating'><span className='spot-star'>★</span> {spot?.avgRating ||'New'}</span></div>
               <div className='spot-description'
               >Added {Math.ceil((Math.random() * 20))} weeks ago</div>
               <div className='spot-price' style={{ fontWeight: '475', color: 'black' }}>${spot.price} <span style={{ fontWeight: '225', color: 'black' }}> night</span></div>
             </NavLink>
           </div>
         ))}
-        {Object.values(spots)?.includes().id}
+        {/* {Object.values(spots)?.includes().id} */}
         <Route exact path="/spots/:spotId">
           <SpotShow />
         </Route>
       </div>
-    // </div>
   )
 }
 

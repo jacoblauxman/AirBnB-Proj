@@ -39,7 +39,6 @@ function ProfileButton({ user, setLogin, setShowModal }) {
       <div className='profile-container'>
         <div className='profile-button-container'>
           <button onClick={openMenu} className='profile-button'>
-            {/* <i className="fa-regular fa-bars"></i> */}
             <div className='bars-icon-container'>
               <i className="fa-solid fa-bars"></i>
             </div>

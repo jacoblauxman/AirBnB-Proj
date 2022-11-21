@@ -11,7 +11,6 @@ import EditSpotForm from '../EditSpotForm';
 import './SpotShow.css'
 import noImage from './noImage.png'
 
-// const noImage = './no-image-available.png'
 
 
 const SpotShow = () => {
@@ -36,10 +35,8 @@ const SpotShow = () => {
     dispatch(fetchOneSpot(spotId))
       .catch(async res => {
         const data = await res.json()
-        console.log(data.errors)
         if (data && data.errors.length > 0) history.push('/404')
       })
-    console.log('in useEffect spotShow',)
     dispatch(getReviews(spotId))
       .then(() => setIsLoaded(true))
   }, [dispatch, spotId, reviewsArr.length])
@@ -55,16 +52,12 @@ const SpotShow = () => {
       .catch(async res => {
         const data = await res.json()
         if (data && data.errors.length > 0) setErrors(data.errors)
-        console.log(data.errors, 'HEY HERE ARE ERRORS IN RESPONSE')
-        // if (data && !data.errors.length) history.push('/')
       }).then(history.push('/'))
   }
 
-  console.log('IN SPOTSHOW, here is errors', errors)
 
   if (errors?.length > 0) history.push('/404')
 
-  // if (!spot.Owner) dispatch(getOneSpot)
 
   return (
     <>
@@ -111,9 +104,7 @@ const SpotShow = () => {
                 </span>
               </div>
             ))}
-          {/* <div className='spot-reviews-list'> */}
           {spot?.id && (<ReviewsList spotId={spot?.id} />)}
-          {/* </div> */}
         </div >)}
     </>
   )

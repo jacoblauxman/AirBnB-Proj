@@ -1,27 +1,3 @@
-/* .loginformcontainer {
-  display: flex;
-  font-size: 30rem;
-  border-color: 50px;
-
-  background-color: black;
-
-}
-
-.form-title {
-  justify-content: center;
-}
-
-.login-form-container label input {
-  width: 100%;
-  font-size: 40em;
-  background-color: black;
-}
-
-.login-form-container label {
-  border: none;
-  font-size: 40em;
-} */
-
 
 .validation-error-list {
   list-style: none;

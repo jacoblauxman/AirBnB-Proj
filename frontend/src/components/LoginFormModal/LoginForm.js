@@ -11,26 +11,19 @@ function LoginForm({ setShowModal }) {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  // useEffect(() => {
-
-  // }, [errors.length])
 
   const handleSubmit = (e) => {
     e.preventDefault();
     return dispatch(sessionActions.login({ credential, password }))
       // adding our then in before the catch -- any below 400
       // if it's successful do the 'then' --> set our showModal slice of state to false
-      // .then(setShowModal(false))
       .then(() => {
-        console.log('.then in loginForm')
         setShowModal(false)
         setErrors([]);
       })
       .catch(
         async (res) => {
-          console.log('.catch for loginForm')
           const data = await res.json();
-          console.log(data)
           if (data && data.errors.length > 0) setErrors(data.errors);
         });
   };

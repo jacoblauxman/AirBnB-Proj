@@ -35,7 +35,6 @@ const ReviewsList = ({ spotId }) => {
 
   //listening and getting the reviews of spot!
   useEffect(() => {
-    console.log('in useEffect of reviews')
     dispatch(getReviews(spotId))
       .then(() => setIsLoaded(true))
   }, [dispatch, spotId])
@@ -105,19 +104,3 @@ const ReviewsList = ({ spotId }) => {
 
 export default ReviewsList
 
-
-
-
-// create review button container and all for later
-// {currUser && (
-//   currUser?.id !== spot?.ownerId && (reviewedCheck && (
-//     <div className='add-review-container'>
-//       <button type='button'
-//         className='add-review-button'
-//         onClick={handleCreate}>Add a Review</button>
-//       <div style={{ visibility: displayForm ? 'visible' : 'hidden' }}>
-//         <CreateReviewForm spot={spot} displayForm={displayForm} setDisplayForm={setDisplayForm} />
-//       </div>
-//     </div>
-//   )))
-// }

@@ -15,8 +15,7 @@ const CreateSpotForm = ({ setShowModal }) => {
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
   const [country, setCountry] = useState('')
-  // const [lat, setLat] = useState('')
-  // const [lng, setLng] = useState('')
+
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
   //additional,frontend previewImage
@@ -47,19 +46,15 @@ const CreateSpotForm = ({ setShowModal }) => {
       previewImage
     }
 
-    console.log(newSpot, 'IN CREATE SUBMIT, HERE IS NEW SPOT')
 
     const response = await dispatch(createSpot(newSpot))
       .then(() => {
-        console.log('.then in createSpotForm')
         setShowModal(false)
         setErrors([])
       })
       .catch(async res => {
         const data = await res.json()
-        console.log(data.errors, 'here are errors! .catch in createSpot')
         if (data && data.errors.length > 0) setErrors(data.errors)
-        // if (data && !data.errors.length) response && history.push('/')
       })
       .then(history.push("/"))
   }
@@ -72,9 +67,7 @@ const CreateSpotForm = ({ setShowModal }) => {
   }
 
 
-  //testing - going to make conditional to render/return null if not logged in
   const currUser = useSelector(getCurrUser)
-  console.log('HERE IS USER', currUser)
 
   if (!currUser) {
     history.push('/')
@@ -138,22 +131,6 @@ const CreateSpotForm = ({ setShowModal }) => {
         title='Please provide a valid Country'
         maxLength='20'
       />
-      {/* <input
-        type='text'
-        value={lat}
-        onChange={e => setLat(e.target.value)}
-        placeholder='latitude'
-        name='latitude'
-        required
-      />
-      <input
-        type='text'
-        value={lng}
-        onChange={e => setLng(e.target.value)}
-        placeholder='longitude'
-        name='longitude'
-        required
-      /> */}
       <input
         type='text'
         value={price}

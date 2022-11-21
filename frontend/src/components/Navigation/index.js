@@ -48,7 +48,6 @@ function Navigation({ isLoaded }) {
         <div>
           {isLoaded && (
             <div>
-              {/* <i class="fa-solid fa-bars"></i> */}
               <ProfileButton
                 user={sessionUser}
                 setLogin={setLogin}
@@ -84,18 +83,3 @@ function Navigation({ isLoaded }) {
 // PROFILE BUTTON NOW HAS PROPS PASSED IN
 
 export default Navigation;
-
-
-
-// OLD HOST BUTTON IF NEEDED:
-// {
-//   sessionUser && (
-//     <div className='hosting-container'>
-//       <NavLink to="/create-spot" style={{ textDecoration: 'none' }}>
-//         <button className='host-button'>
-//           Host a buh
-//         </button>
-//       </NavLink>
-//     </div>
-//   )
-// }

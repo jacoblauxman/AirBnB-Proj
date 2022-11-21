@@ -29,7 +29,6 @@ function SignupFormPage({ setShowModal }) {
         .then(() => setShowModal(false))
         .catch(async (res) => {
           const data = await res.json();
-          console.log(data, 'in handle signup forM!!!')
           if (data && data.errors) setErrors(data.errors);
         });
     }
