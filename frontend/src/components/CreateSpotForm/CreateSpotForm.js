@@ -15,8 +15,8 @@ const CreateSpotForm = ({ setShowModal }) => {
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
   const [country, setCountry] = useState('')
-  const [lat, setLat] = useState('')
-  const [lng, setLng] = useState('')
+  // const [lat, setLat] = useState('')
+  // const [lng, setLng] = useState('')
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
   //additional,frontend previewImage
@@ -40,8 +40,8 @@ const CreateSpotForm = ({ setShowModal }) => {
       city,
       state,
       country,
-      lat,
-      lng,
+      lat: 111.1111,
+      lng: 111.1111,
       description,
       price,
       previewImage
@@ -50,11 +50,17 @@ const CreateSpotForm = ({ setShowModal }) => {
     console.log(newSpot, 'IN CREATE SUBMIT, HERE IS NEW SPOT')
 
     const response = await dispatch(createSpot(newSpot))
+      .then(() => {
+        console.log('.then in createSpotForm')
+        setShowModal(false)
+        setErrors([])
+      })
       .catch(async res => {
         const data = await res.json()
-        if (data && data.errors) setErrors(data.errors)
-        if (data && !data.errors.length) response && history.push('/')
-      }).then(setShowModal(false))
+        console.log(data.errors, 'here are errors! .catch in createSpot')
+        if (data && data.errors.length > 0) setErrors(data.errors)
+        // if (data && !data.errors.length) response && history.push('/')
+      })
     // .then(history.push("/"))
   }
 
@@ -62,7 +68,6 @@ const CreateSpotForm = ({ setShowModal }) => {
   //cancel button click
   const handleCancel = (e) => {
     e.preventDefault();
-    //hideForm()
     setShowModal(false)
   }
 
@@ -79,17 +84,18 @@ const CreateSpotForm = ({ setShowModal }) => {
   return (
     <form onSubmit={handleSubmit}>
       <h1>Become a Host</h1>
-      {errors.length > 0 && <div className='create-error-title'>Error !</div>}
-      {errors.map(error => (
-        <div className='create-error-container' key={error}>{error}</div>
-      ))}
+      <ul className='validation-error-list'>
+        {errors?.length > 0 && errors.map((error, idx) => <li className='validation-error' key={idx}>{error}</li>)}
+      </ul>
       <input
         type='text'
         onChange={e => setName(e.target.value)}
         value={name}
-        placeholder='Name Here'
+        placeholder='Location Name Here'
         name='title'
         required
+        maxLength='20'
+
       />
       <input
         type='text'
@@ -98,6 +104,8 @@ const CreateSpotForm = ({ setShowModal }) => {
         placeholder='Address'
         name='address'
         required
+        title='Please provide a valid address'
+        maxLength='25'
       />
       <input
         type='text'
@@ -106,6 +114,8 @@ const CreateSpotForm = ({ setShowModal }) => {
         placeholder='City'
         name='city'
         required
+        title='Please Provide a Valid City'
+        maxLength='20'
       />
       <input
         type='text'
@@ -114,8 +124,9 @@ const CreateSpotForm = ({ setShowModal }) => {
         placeholder='State'
         name='state'
         required
-        minlength='2'
-        maxlength='2'
+        title='Please Provide a Valid State (abbrev.)'
+        minLength='2'
+        maxLength='2'
       />
       <input
         type='text'
@@ -124,8 +135,10 @@ const CreateSpotForm = ({ setShowModal }) => {
         placeholder='Country'
         name='country'
         required
+        title='Please provide a valid Country'
+        maxLength='20'
       />
-      <input
+      {/* <input
         type='text'
         value={lat}
         onChange={e => setLat(e.target.value)}
@@ -140,7 +153,7 @@ const CreateSpotForm = ({ setShowModal }) => {
         placeholder='longitude'
         name='longitude'
         required
-      />
+      /> */}
       <input
         type='text'
         value={price}
@@ -156,17 +169,20 @@ const CreateSpotForm = ({ setShowModal }) => {
         placeholder='Spot Description'
         rows='5'
         required
+        minLength='10'
+        maxLength='50'
+        title='Please add description between 10-50 chars.'
       ></textarea>
       <input
-        type='text'
+        type='url'
         value={previewImage}
         onChange={e => setPreviewImage(e.target.value)}
         placeholder='Preview Image URL'
         name='previewImage'
         required
+        title='Please provide a valid URL'
       />
       <button type="submit"
-      // disabled={errors.length > 0}
       >Create new Spot
       </button>
       <button type="button" onClick={handleCancel}>Cancel</button>

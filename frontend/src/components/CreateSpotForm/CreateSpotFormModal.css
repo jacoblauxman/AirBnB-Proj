@@ -21,3 +21,9 @@ form label {
   border: 1px solid rgba(128, 128, 128, 0.478);
   padding: .3rem;
 }
+
+.create-error-container {
+  list-style: none;
+  color: red;
+  font-weight: 400;
+}

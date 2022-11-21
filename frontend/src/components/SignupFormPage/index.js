@@ -29,6 +29,7 @@ function SignupFormPage({ setShowModal }) {
         .then(() => setShowModal(false))
         .catch(async (res) => {
           const data = await res.json();
+          console.log(data, 'in handle signup forM!!!')
           if (data && data.errors) setErrors(data.errors);
         });
     }
@@ -38,8 +39,8 @@ function SignupFormPage({ setShowModal }) {
   return (
     <form onSubmit={handleSubmit}>
       <h1>Create Account</h1>
-      <ul>
-        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+      <ul className='validation-error-list'>
+        {errors?.length > 0 && errors.map((error, idx) => <li className='validation-error' key={idx}>{error}</li>)}
       </ul>
       <label>
         <input
@@ -48,6 +49,9 @@ function SignupFormPage({ setShowModal }) {
           onChange={(e) => setFirstName(e.target.value)}
           required
           placeholder='First Name'
+          minlength='3'
+          maxlength='20'
+          title='Please provide a valid Name (max 20 char.)'
         />
       </label>
       <label>
@@ -57,15 +61,19 @@ function SignupFormPage({ setShowModal }) {
           onChange={(e) => setLastName(e.target.value)}
           required
           placeholder='Last Name'
+          minlength='3'
+          maxlength='20'
+          title='Please provide a valid Name (max 20 char.)'
         />
       </label>
       <label>
         <input
-          type="text"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           placeholder='Email'
+          title='Please provide a valid email'
         />
       </label>
       <label>
@@ -75,6 +83,7 @@ function SignupFormPage({ setShowModal }) {
           onChange={(e) => setUsername(e.target.value)}
           required
           placeholder='Username'
+          title='Please provide a Username (unique)'
         />
       </label>
       <label>
@@ -84,6 +93,9 @@ function SignupFormPage({ setShowModal }) {
           onChange={(e) => setPassword(e.target.value)}
           required
           placeholder='Password'
+          title='Please provide a valid password (between 5-16 chars)'
+          minlength='5'
+          maxlength='16'
         />
       </label>
       <label>
@@ -93,6 +105,7 @@ function SignupFormPage({ setShowModal }) {
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
           placeholder='Confirm Password'
+          title='Must match Password'
         />
       </label>
       <button type="submit">Sign Up</button>

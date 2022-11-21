@@ -32,18 +32,15 @@ function LoginForm({ setShowModal }) {
           const data = await res.json();
           console.log(data)
           if (data && data.errors.length > 0) setErrors(data.errors);
-        }
-      );
+        });
   };
 
   return (
     <>
       <form onSubmit={handleSubmit}>
         <h1 className='form-title'>Login</h1>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
+        <ul className='validation-error-list'>
+          {errors?.length > 0 && errors.map((error, idx) => <li className='validation-error' key={idx}>{error}</li>)}
         </ul>
         <label>
           <input

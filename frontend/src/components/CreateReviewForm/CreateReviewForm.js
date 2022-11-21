@@ -26,18 +26,16 @@ const CreateReviewForm = ({ setShowModal }) => {
       review,
       stars: +stars,
     }
-
     const res = await dispatch(createReview(newReview, reviewSpot.id))
+      .then(() => setShowModal(false))
       .catch(async res => {
         const data = await res.json()
-        if (data && data.errors) setErrors(data.errors)
-        // if (data && data.errors.length === 0) history.push(`/spots/${reviewSpot.id}`)
-      }).then(setShowModal(false))
-    // .then(dispatch(fetchOneSpot(reviewSpot?.id)))
-    // .then(setDisplayForm(false))
+        console.log(data, 'data in error of newReview')
+        if (data && data.errors) setErrors([data.errors])
+      })
     setReview('')
     setStars('')
-    setShowModal(false)
+    // setShowModal(false)
     // .then(history.push(`/spots/${reviewSpot?.id}`))
   }
 
@@ -51,26 +49,16 @@ const CreateReviewForm = ({ setShowModal }) => {
     history.push(`/spots/${reviewSpot?.id}`)
   }
 
-  useEffect(() => {
-    console.log('in UseEFFECT for review form creatioN!', reviewSpot.id)
-    dispatch(fetchOneSpot(reviewSpot.id))
-    dispatch(getReviews(reviewSpot.id))
-      .then(history.push(`/spots/${reviewSpot.id}`))
-    // .then(dispatch(getOneSpot(reviewSpot.id)))
-
-  }, [dispatch, history, reviewSpot.id, setShowModal])
 
 
   return (
-
     <>
       <h1 className='form-title'>Leave a Review</h1>
 
       <form onSubmit={handleSubmit}>
-        {errors.length > 0 && <div>Error !</div>}
-        {errors.map(error => (
-          <li key={error}>{error}</li>
-        ))}
+        <ul className='validation-error-list'>
+          {errors?.length > 0 && errors.map((error, idx) => <li className='validation-error' key={idx}>{error}</li>)}
+        </ul>
         <input
           type='text'
           onChange={e => setReview(e.target.value)}
@@ -78,6 +66,8 @@ const CreateReviewForm = ({ setShowModal }) => {
           placeholder='Your thoughts here'
           name='review'
           required
+          minLength='5'
+          maxLength='25'
         />
         <input
           type='number'

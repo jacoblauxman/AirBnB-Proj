@@ -21,3 +21,17 @@
   border: none;
   font-size: 40em;
 } */
+
+
+.validation-error-list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: .5rem;
+}
+
+.validation-error {
+  color: red;
+  font-weight: 400;
+}

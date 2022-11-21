@@ -36,3 +36,16 @@ form textarea {
   border-radius: .3rem;
   margin-bottom: 1rem;
 }
+
+.validation-error-list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: .5rem;
+}
+
+.validation-error {
+  color: red;
+  font-weight: 400;
+}

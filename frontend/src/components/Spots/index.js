@@ -27,7 +27,7 @@ const SpotsList = () => {
 
       <div className='spots-grid'>
         {Object.values(spots).map(spot => (
-          <div className='spots-spot-item' style={{ textDecoration: 'none' }}>
+          <div key={spot.id} className='spots-spot-item' style={{ textDecoration: 'none' }}>
             <NavLink key={spot?.id} exact to={`/spots/${spot.id}`} spot={spot} className='spots-spot-link' style={{ textDecoration: 'none' }}>
               <div className='spots-spot-image-container'>
                 <img src={spot?.previewImage} alt='previewImage' className='spots-spot-preview-image' />

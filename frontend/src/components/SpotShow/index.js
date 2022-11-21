@@ -45,12 +45,6 @@ const SpotShow = () => {
   }, [dispatch, spotId, reviewsArr.length])
 
 
-  // handling edit form button
-  // const handleEdit = async (e) => {
-  //   e.preventDefault()
-
-  //   setDisplayForm(prevDisplay => !prevDisplay)
-  // }
 
   // handling spot delete button
   const handleDelete = async (e) => {
@@ -60,7 +54,7 @@ const SpotShow = () => {
     const response = await dispatch(removeSpot(spot))
       .catch(async res => {
         const data = await res.json()
-        if (data && data.errors) setErrors(data.errors)
+        if (data && data.errors.length > 0) setErrors(data.errors)
         console.log(data.errors, 'HEY HERE ARE ERRORS IN RESPONSE')
         // if (data && !data.errors.length) history.push('/')
       }).then(history.push('/'))
@@ -85,7 +79,7 @@ const SpotShow = () => {
               <span className='spot-avg-rating'>★ {spot?.avgStarRating ? spot?.avgStarRating : 'New'}&nbsp;·&nbsp;</span><span className='reviews-count'> {spot?.numReviews} reviews&nbsp;·&nbsp;</span> <span className='spot-location-info'>{spot?.city}, {spot?.state}, {spot?.country}</span>
             </div>
             <div className='single-spot-images-container'>{spot?.SpotImages?.length ? spot?.SpotImages?.map(image => (
-              <img src={image?.url} alt='Spot Preview' className='spot-image-url' />
+              <img src={image?.url} key={image?.id} alt='Spot Preview' className='spot-image-url' />
             )) : <img src={noImage} alt='Preview Not Available' className='single-spot-image' />}
             </div>
             <h3 className='spot-host-info'>Entire Spot hosted by {spot?.Owner?.firstName}</h3>
@@ -101,22 +95,22 @@ const SpotShow = () => {
               </div>
             </div>
           </div>
-            {currUser && (
-              currUser?.id === spot?.ownerId && (
-                  <div className='edit-spot-delete-spot-container'>
-                    <span className='edit-spot-modal-container'>
-                      <EditSpotFormModal />
-                    </span>
-                    <span className='delete-spot-container'>
-                      <button
-                        type="button"
-                        onClick={handleDelete}
-                        className='delete-spot-button'>
-                        ¿ Delete Spot ?
-                      </button>
-                    </span>
-                  </div>
-              ))}
+          {currUser && (
+            currUser?.id === spot?.ownerId && (
+              <div className='edit-spot-delete-spot-container'>
+                <span className='edit-spot-modal-container'>
+                  <EditSpotFormModal />
+                </span>
+                <span className='delete-spot-container'>
+                  <button
+                    type="button"
+                    onClick={handleDelete}
+                    className='delete-spot-button'>
+                    ¿ Delete Spot ?
+                  </button>
+                </span>
+              </div>
+            ))}
           {/* <div className='spot-reviews-list'> */}
           {spot?.id && (<ReviewsList spotId={spot?.id} />)}
           {/* </div> */}

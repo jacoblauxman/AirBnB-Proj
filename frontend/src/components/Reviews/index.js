@@ -40,18 +40,6 @@ const ReviewsList = ({ spotId }) => {
   }, [dispatch, spotId])
 
 
-  //delete button handling -- not used && needs refactoring
-  // const handleDelete = (e) => {
-  //   e.preventDefault()
-
-  //   const response = dispatch(removeReview())
-  //     .catch(async res => {
-  //       const data = await res.json()
-  //       if (data && data.errors) setErrors(data.errors)
-  //       // if (data && !data.errors.length) history.push('/')
-  //     })
-  //   // .then(history.push(`/spots/${spotId}`))
-  // }
 
   //create button handling
   const handleCreate = async (e) => {
@@ -66,17 +54,16 @@ const ReviewsList = ({ spotId }) => {
 
   return (
     <div className='spot-reviews-container'>
-      {isLoaded &&
-        // <div className='spot-reviews-container'>
-        <div>
+    {isLoaded &&
+      <div className='spot-reviews-grid-container'>
           <h2>★ {spot?.avgStarRating} · {reviewsArr?.length} Reviews</h2>
           {errors.length > 0 && <div>Error !</div>}
           {errors.map(error => (
             <li key={error}>{error}</li>
           ))}
           {reviewsArr?.map(review => (
-            <div className='reviews-array-container'>
-              <div className='single-review-container' key={review?.id}>
+            <div className='reviews-array-container'  key={review?.id}>
+              <div className='single-review-container'>
                 <div className='reviewer-name'>
                   <span className='user-icon-container'>
                     <i className="fas fa-user-circle" />

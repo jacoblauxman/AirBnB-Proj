@@ -28,7 +28,7 @@
 
   display: inline-flex;
   flex-direction: column;
-  max-width: 100%;
+  max-width: 75%;
   max-height: 100%;
   align-items: center;
   border-radius: 20px;
@@ -64,7 +64,7 @@
   justify-content: center;
   height: 100%;
   font-weight: 300;
-  padding: 0.3rem;
+  padding-top: 0.3rem;
 }
 
 #modal-content form button {
@@ -87,5 +87,23 @@
 
 #modal-content form button:hover {
   cursor: pointer;
-  
+
+}
+
+.validation-error-list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: .5rem;
+}
+
+.validation-error {
+  color: red;
+  font-weight: 400;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  padding: 0 0.1rem;
+  margin: 0 0.3rem;
 }

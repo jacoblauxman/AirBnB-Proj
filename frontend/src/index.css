@@ -19,3 +19,8 @@
   color: rgba(255, 111, 0, 0.592);
   text-align: center;
 }
+
+/*/ to get rid of all padding on all items listed -- mainly errors/*/
+ul {
+  padding-inline-start: 0px;
+}
