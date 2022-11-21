@@ -135,7 +135,7 @@ const CreateSpotForm = ({ setShowModal }) => {
         type='text'
         value={price}
         onChange={e => setPrice(e.target.value)}
-        placeholder='Price'
+        placeholder='Price (currency not required)'
         name='price'
         required
       />

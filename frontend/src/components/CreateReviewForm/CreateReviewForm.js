@@ -63,7 +63,7 @@ const CreateReviewForm = ({ setShowModal }) => {
           name='review'
           required
           minLength='5'
-          maxLength='25'
+          maxLength='50'
         />
         <input
           type='number'
