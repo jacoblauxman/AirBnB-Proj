@@ -37,7 +37,7 @@ const SpotShow = () => {
       .catch(async res => {
         const data = await res.json()
         console.log(data.errors)
-        if (data && data.errors) setErrors(data.errors)
+        if (data && data.errors.length > 0) history.push('/404')
       })
     console.log('in useEffect spotShow',)
     dispatch(getReviews(spotId))

@@ -33,7 +33,7 @@ function App() {
               <Route exact path="/">
                 <SpotsList />
               </Route>
-              <Route path="/spots/:spotId">
+              <Route exact path="/spots/:spotId">
                 <SpotShow />
               </Route>
               <Route exact path='/create-spot'>
