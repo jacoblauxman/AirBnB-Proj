@@ -157,7 +157,8 @@ const CreateSpotForm = ({ setShowModal }) => {
         placeholder='Preview Image URL'
         name='previewImage'
         required
-        title='Please provide a valid URL'
+        title='Please provide a valid URL (less than 200 chars.)'
+        maxLength='200'
       />
       <button type="submit"
       >Create new Spot
