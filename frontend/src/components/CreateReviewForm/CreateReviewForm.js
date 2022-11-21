@@ -49,7 +49,7 @@ const CreateReviewForm = ({ setShowModal }) => {
     history.push(`/spots/${reviewSpot?.id}`)
   }
 
-
+  if (!currUser) history.push('/')
 
   return (
     <>
