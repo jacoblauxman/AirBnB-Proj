@@ -33,7 +33,12 @@ module.exports = (sequelize, DataTypes) => {
     lng: DataTypes.DECIMAL,
     name: DataTypes.STRING,
     description: DataTypes.STRING,
-    price: DataTypes.DECIMAL
+    price: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'Spot',

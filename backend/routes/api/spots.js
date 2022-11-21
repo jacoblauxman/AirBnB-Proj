@@ -290,7 +290,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
   newBooking = newBooking.toJSON()
 
   res.json(newBooking)
-
 })
 
 
@@ -367,7 +366,17 @@ router.post('/:spotId/reviews',
         'Stars must be an integer from 1 to 5',
       ]
 
-      throw err
+      res.status(400).json({ ...err })
+    }
+
+    if (stars < 1 || stars > 5) {
+      const err = new Error('Validation error')
+      err.status = 400,
+        err.title = 'Validation Error'
+      err.message = 'Stars must be between 1 and 5'
+      err.errors = ['Stars must be an integer from 1 and 5']
+
+      res.status(400).json({ ...err })
     }
 
     //error handling if spot doesn't exist
@@ -490,7 +499,7 @@ router.post('/', requireAuth, async (req, res) => {
   const currId = req.user.id
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
-  if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
+  if (!address || !city || !state || !country || !lat || !lng || !name || !description || isNaN(price)) {
 
     res.status(400).json({
       title: 'Validation Error',
@@ -504,9 +513,9 @@ router.post('/', requireAuth, async (req, res) => {
           'Country is required',
           'Latitude is not valid',
           'Longitude is not valid',
-          'Name must be less than 50 characters',
+          'Name must be less than 20 characters',
           'Description is required',
-          'Price per day is required'
+          'Price per day is required (Valid Amount)'
         ]
     })
   } else {
@@ -532,7 +541,7 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 
 
   //error handling - Validation on req.body
-  if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
+  if (!address || !city || !state || !country || !lat || !lng || !name || !description || isNaN(price)) {
 
     return res.status(400).json({
       title: 'Validation Error',
@@ -544,11 +553,9 @@ router.put('/:spotId', requireAuth, async (req, res) => {
           'City is required',
           'State is required',
           'Country is required',
-          'Latitude is not valid',
-          'Longitude is not valid',
-          'Name must be less than 50 characters',
+          'Name must be less than 20 characters',
           'Description is required',
-          'Price per day is required'
+          'Price per day is required (Valid Amount)'
         ]
     })
   }
