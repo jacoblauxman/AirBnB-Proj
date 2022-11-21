@@ -76,6 +76,8 @@ const CreateReviewForm = ({ setShowModal }) => {
           placeholder='rating'
           name='stars'
           required
+          min='1'
+          max='5'
         />
         <button type='submit'
         >Add Review</button>
