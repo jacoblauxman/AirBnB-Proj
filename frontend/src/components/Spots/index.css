@@ -25,10 +25,9 @@
   display: grid;
   justify-content: space-evenly;
   grid-template-columns: 1fr 1fr 1fr;
-  margin: 10%;
   margin-top: 10vh;
   width: 100%;
-  padding: 2rem;
+  padding: .5rem;
 }
 
 .spots-spot-item {
