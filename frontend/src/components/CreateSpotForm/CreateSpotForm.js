@@ -61,7 +61,7 @@ const CreateSpotForm = ({ setShowModal }) => {
         if (data && data.errors.length > 0) setErrors(data.errors)
         // if (data && !data.errors.length) response && history.push('/')
       })
-    // .then(history.push("/"))
+      .then(history.push("/"))
   }
 
 
