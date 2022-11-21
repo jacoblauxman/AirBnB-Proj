@@ -33,20 +33,20 @@ function App() {
               <Route exact path="/">
                 <SpotsList />
               </Route>
-              <Route path="/spots/:spotId">
+              <Route exact path="/spots/:spotId">
                 <SpotShow />
               </Route>
-              <Route path='/create-spot'>
+              <Route exact path='/create-spot'>
                 <CreateSpotForm />
               </Route>
-              <Route path='/create-review'>
+              <Route exact path='/create-review'>
                 <CreateReviewForm />
               </Route>
-            <Route>
-              <div className='error-handler'>
-                ¡ RESOÜRCE NOT FOÜND !
-              </div>
-            </Route>
+              <Route>
+                <div className='error-handler'>
+                  ¡ RESOÜRCE NOT FOÜND !
+                </div>
+              </Route>
             </Switch>
           </>
         )}
