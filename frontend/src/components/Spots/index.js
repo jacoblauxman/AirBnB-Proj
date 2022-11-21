@@ -32,12 +32,13 @@ const SpotsList = () => {
               <div className='spots-spot-image-container'>
                 <img src={spot?.previewImage} alt='previewImage' className='spots-spot-preview-image' />
               </div>
-              {/* <h3 className='spots-spot-item-name'>
-                {spot.name}
-              </h3> */}
-              <div className='spot-location-avgRating'><span className='spot-location'>{spot.city}, {spot.state}</span><span className='spot-avgRating'><span className='spot-star'>★</span> {spot?.avgRating || 'New'}</span></div>
+
+              <div className='spot-location-avgRating'>
+                <span className='spot-location'>{spot.city}, {spot.state}</span>
+                <span className='spot-avgRating'><span className='spot-star'>★</span> {spot?.avgRating
+                // .toFixed(3)
+                || 'New'}</span></div>
               <div className='spot-description'
-              // style={{ fontWeight: '175', padding: '1rem', color: 'black' }}
               >Added {Math.ceil((Math.random() * 20))} weeks ago</div>
               <div className='spot-price' style={{ fontWeight: '475', color: 'black' }}>${spot.price} <span style={{ fontWeight: '225', color: 'black' }}> night</span></div>
             </NavLink>
