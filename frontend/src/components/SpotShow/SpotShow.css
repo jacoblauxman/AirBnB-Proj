@@ -2,6 +2,36 @@
   box-sizing: border-box;
 }
 
+@media screen and (min-width: 1160px) {
+  .single-spot-container {
+    padding-left: 20%;
+    padding-right: 20%;
+    display: flex;
+    height: 80%;
+    width: 80%;
+  }
+
+  .single-spot-images-container {
+    padding: 5%;
+    /* margin: 5%; */
+  }
+}
+
+@media screen and (min-width: 1279px) {
+  .single-spot-container {
+    padding-left: 30%;
+    padding-right: 30%;
+    display: flex;
+    height: 80%;
+    width: 80%;
+  }
+
+  .single-spot-images-container {
+    padding: 5%;
+    /* margin: 5%; */
+  }
+}
+
 .single-spot-container {
   display: flex;
   flex-direction: column;

@@ -23,7 +23,7 @@ const SpotsList = () => {
   if (!spots) return null
 
   return (
-    <div className='spots-grid-container'>
+    // <div className='spots-grid-container'>
 
       <div className='spots-grid'>
         {Object.values(spots).map(spot => (
@@ -49,7 +49,7 @@ const SpotsList = () => {
           <SpotShow />
         </Route>
       </div>
-    </div>
+    // </div>
   )
 }
 

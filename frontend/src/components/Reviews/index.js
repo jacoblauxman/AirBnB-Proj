@@ -26,7 +26,7 @@ const ReviewsList = ({ spotId }) => {
   const spot = useSelector(getOneSpot)
 
   //grabbing reviews and converting to array
-  const reviews = useSelector(state => state.reviews.oneSpot)
+  const reviews = useSelector(state => state.reviews?.oneSpot)
   const reviewsArr = Object?.values(reviews).filter(review => review?.spotId === spotId)
 
   //check for if user has already reviewed spot
@@ -35,6 +35,7 @@ const ReviewsList = ({ spotId }) => {
 
   //listening and getting the reviews of spot!
   useEffect(() => {
+    console.log('in useEffect of reviews')
     dispatch(getReviews(spotId))
       .then(() => setIsLoaded(true))
   }, [dispatch, spotId])
@@ -54,15 +55,15 @@ const ReviewsList = ({ spotId }) => {
 
   return (
     <div className='spot-reviews-container'>
-    {isLoaded &&
-      <div className='spot-reviews-grid-container'>
+      {isLoaded &&
+        <div className='spot-reviews-grid-container'>
           <h2>★ {spot?.avgStarRating} · {reviewsArr?.length} Reviews</h2>
           {errors.length > 0 && <div>Error !</div>}
           {errors.map(error => (
             <li key={error}>{error}</li>
           ))}
-          {reviewsArr?.map(review => (
-            <div className='reviews-array-container'  key={review?.id}>
+          {reviewsArr?.length > 0 && reviewsArr?.map(review => (
+            <div className='reviews-array-container' key={review?.id}>
               <div className='single-review-container'>
                 <div className='reviewer-name'>
                   <span className='user-icon-container'>
@@ -80,7 +81,7 @@ const ReviewsList = ({ spotId }) => {
                     <div className='delete-review-container'>
                       <button type='button'
                         className='delete-review-button'
-                        onClick={() => dispatch(removeReview(review.id))}>
+                        onClick={() => dispatch(removeReview(review?.id))}>
                         Delete Review
                       </button>
                     </div>

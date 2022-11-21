@@ -1,10 +1,19 @@
-@media screen and (min-width: 1640px) {
+@media screen and (min-width: 1128px) {
+  .spots-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 1639px) {
   .spots-grid {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    width: 100%;
   }
 }
 
 .spots-grid-container {
+  display: flex;
   align-items: center;
   align-content: space-between;
   justify-content: center;
