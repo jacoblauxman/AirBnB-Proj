@@ -341,6 +341,11 @@ module.exports = {
         spotId: 11,
         url: 'https://whatifgaming.com/wp-content/uploads/2021/08/21-Epic-Modern-House-House-1024x576.png',
         preview: true
+      },
+      {
+        spotId: 12,
+        url: 'https://i.redd.it/nhtbh04es6c51.jpg',
+        preview: true
       }
     ])
 
