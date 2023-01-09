@@ -705,7 +705,6 @@ router.get('/', async (req, res) => {
     res.json({ Spots: allSpots, page, size })
 
 
-
   } else {
     //put OG allSpots here
 

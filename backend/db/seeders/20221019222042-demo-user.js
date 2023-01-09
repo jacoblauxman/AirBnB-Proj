@@ -1,11 +1,20 @@
 'use strict';
+
+// NEW: add this code to each migration file
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+// END of new code
+
 const bcrypt = require("bcryptjs");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
 
-    await queryInterface.bulkInsert('Users', [
+    options.tableName = 'Users'
+    await queryInterface.bulkInsert(options, [
       {
         email: 'demo@user.io',
         username: 'Jaboc',
@@ -44,8 +53,9 @@ module.exports = {
     ], {});
 
 
+    options.tableName = 'Spots'
 
-    await queryInterface.bulkInsert('Spots', [
+    await queryInterface.bulkInsert(options, [
       {
         ownerId: 1,
         address: '123 Good Day2You Rd',
@@ -193,8 +203,9 @@ module.exports = {
 
     ], {})
 
+    options.tableName = 'Reviews'
 
-    await queryInterface.bulkInsert('Reviews', [
+    await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
         userId: 5,
@@ -263,6 +274,7 @@ module.exports = {
       }
     ])
 
+    options.tableName = 'Bookings'
 
     await queryInterface.bulkInsert('Bookings', [
       {
@@ -286,7 +298,9 @@ module.exports = {
     ])
 
 
-    await queryInterface.bulkInsert('SpotImages', [
+    options.tableName = 'SpotImages'
+
+    await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
         url: 'https://whatifgaming.com/wp-content/uploads/2021/08/7-Wooden-Modern-House-1024x576.png',
@@ -350,7 +364,9 @@ module.exports = {
     ])
 
 
-    await queryInterface.bulkInsert('ReviewImages', [
+    options.tableName = 'ReviewImages'
+
+    await queryInterface.bulkInsert(options, [
       {
         reviewId: 1,
         url: 'http://supriseyourselfhere.com'
@@ -377,19 +393,34 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     const Op = Sequelize.Op;
-    await queryInterface.bulkDelete('ReviewImages', {});
 
-    await queryInterface.bulkDelete('SpotImages', {});
+    options.tableName = 'ReviewImages'
+    // await queryInterface.bulkDelete(options, {});
+    await queryInterface.bulkDelete(options);
 
-    await queryInterface.bulkDelete('Bookings', {});
+    options.tableName = 'SpotImages'
 
-    await queryInterface.bulkDelete('Reviews', {});
+    await queryInterface.bulkDelete(options);
 
-    await queryInterface.bulkDelete('Spots', {});
+    options.tableName = 'Bookings'
 
-    await queryInterface.bulkDelete('Users', {
-      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
-    }, {});
+    await queryInterface.bulkDelete(options);
+
+    options.tableName = 'Reviews'
+
+    await queryInterface.bulkDelete(options);
+
+    options.tableName = 'Spots'
+
+    await queryInterface.bulkDelete(options);
+
+    options.tableName = 'Users'
+
+    // await queryInterface.bulkDelete('Users', {
+    //   username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
+    // }, {});
+
+    await queryInterface.bulkDelete(options)
 
   }
 };

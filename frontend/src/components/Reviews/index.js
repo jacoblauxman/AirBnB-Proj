@@ -103,4 +103,3 @@ const ReviewsList = ({ spotId }) => {
 }
 
 export default ReviewsList
-

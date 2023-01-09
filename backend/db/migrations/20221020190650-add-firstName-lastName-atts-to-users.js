@@ -1,5 +1,13 @@
 'use strict';
 
+// NEW: add this code to each alter table migration file above up function
+let options = {};
+options.tableName = 'Users'; // define your table name in options object
+
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -9,12 +17,12 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.addColumn('Users', 'firstName', {
+    await queryInterface.addColumn(options, 'firstName', {
       type: Sequelize.STRING,
       allowNull: false
     })
 
-    await queryInterface.addColumn('Users', 'lastName', {
+    await queryInterface.addColumn(options, 'lastName', {
       type: Sequelize.STRING,
       allowNull: false
     })
@@ -28,9 +36,11 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
 
-    await queryInterface.removeColumn('Users', 'firstName')
+    await queryInterface.removeColumn(options, 'firstName')
 
-    await queryInterface.removeColumn('Users', 'lastName')
+    await queryInterface.removeColumn(options, 'lastName')
 
   }
 };
+
+// options object added as first argument instead of table name ('Users') for first arg in column creation/deletion

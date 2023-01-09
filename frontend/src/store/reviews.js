@@ -104,7 +104,6 @@ const reviewsReducer = (state = initialState, action) => {
 
     case ADD_REVIEW:
       const addedState = { ...state, oneSpot: { ...state.oneSpot } }
-      console.log('in ADD-REVIEW REDUCER', addedState)
       addedState.oneSpot[action.review.id] = action.review
       return addedState
     default:
