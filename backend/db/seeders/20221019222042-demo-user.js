@@ -14,6 +14,7 @@ module.exports = {
 
 
     options.tableName = 'Users'
+
     await queryInterface.bulkInsert(options, [
       {
         email: 'demo@user.io',
@@ -276,7 +277,7 @@ module.exports = {
 
     options.tableName = 'Bookings'
 
-    await queryInterface.bulkInsert('Bookings', [
+    await queryInterface.bulkInsert(options, [
       {
         spotId: 1,
         userId: 3,
