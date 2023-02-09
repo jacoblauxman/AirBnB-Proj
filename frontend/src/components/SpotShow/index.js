@@ -10,6 +10,7 @@ import EditSpotFormModal from '../EditSpotForm';
 import EditSpotForm from '../EditSpotForm';
 import './SpotShow.css'
 import noImage from './noImage.png'
+import BookingsList from '../Bookings';
 
 
 
@@ -106,6 +107,7 @@ const SpotShow = () => {
             ))}
           {spot?.id && (<ReviewsList spotId={spot?.id} />)}
         </div >)}
+      {spot?.id && (<BookingsList spotId={spot?.id} />)}
     </>
   )
 }
