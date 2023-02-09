@@ -13,6 +13,7 @@ const BookingsList = ({ spotId }) => {
   const history = useHistory()
   const currUser = useSelector(getCurrUser)
   const spot = useSelector(getOneSpot)
+  console.log(spotId, 'SPOTID IN BOOKINGS LIST- PROp!')
 
   const [isLoaded, setIsLoaded] = useState(false)
   const [errors, setErrors] = useState([])
@@ -22,23 +23,41 @@ const BookingsList = ({ spotId }) => {
   const bookingsArr = Object?.values(bookings)
 
   useEffect(() => {
-    dispatch(getBookings(spotId))
-      .then(() => setIsLoaded(true))
-  }, [dispatch, spotId])
+    if (spotId) {
+
+      dispatch(getBookings(spot?.id))
+        .then(() => {
+          console.log(spotId, 'SPOTID USEEFFECt')
+          setIsLoaded(true)
+        })
+    }
+  }, [dispatch, spotId, spot])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!user) {
-      errors.push('You need to login to do that!')
-    }
+    // if (!currUser) {
+    //   setErrors('You need to login to do that!')
+    // }
+    if (errors.length > 0) return
+
     const newBooking = { startDate: startDate, endDate: endDate }
     const res = await dispatch(createBooking(newBooking, spotId))
-    .then(() => history.push('/'))
-    .catch(async res => {
-      const data = await res.json()
-      if (data && data.errors) setErrors([data.errors])
-    })
+      .then(() => history.push('/'))
+      .catch(async res => {
+        const data = await res.json()
+        if (data && data.errors) setErrors([data.errors])
+      })
   }
+
+  const handleSetStart = (e) => {
+    setErrors([])
+    setStartDate(e.target.value)
+  }
+  const handleSetEnd = (e) => {
+    setErrors([])
+    setEndDate(e.target.value)
+  }
+
 
 
   if (!spotId || !isLoaded) return "Loading..."
@@ -58,14 +77,14 @@ const BookingsList = ({ spotId }) => {
               </ul>
               <input
                 type='date'
-                onChange={e => setStartDate(e.target.value)}
+                onChange={handleSetStart}
                 value={startDate}
                 required={true}
                 name='start date'
               />
               <input
                 type='date'
-                onChange={e => setEndDate(e.target.value)}
+                onChange={handleSetEnd}
                 value={endDate}
                 required={true}
                 name='end date'

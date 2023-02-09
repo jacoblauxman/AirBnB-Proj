@@ -96,7 +96,7 @@ export const removeBooking = (bookingId) => async dispatch => {
   }
 }
 
-export const ownerRemoveBooking = (bookingId) = async dispatch => {
+export const ownerRemoveBooking = (bookingId) => async dispatch => {
   const response = await csrfFetch(`/api/bookings/${bookingId}`, {
     method: "DELETE"
   })
