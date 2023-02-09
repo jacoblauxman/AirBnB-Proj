@@ -6,7 +6,7 @@ export const LOAD_BOOKINGS = 'bookings/LOAD_BOOKINGS'
 export const ADD_BOOKING = 'bookings/ADD_BOOKING'
 export const EDIT_BOOKING = 'bookings/EDIT_BOOKING'
 export const DELETE_BOOKING = 'bookings/DELETE_BOOKING'
-
+export const OWNER_DELETE = 'bookings/OWNER_DELETE'
 
 // --- ACTION CREATORS --- //
 
@@ -28,6 +28,11 @@ const editBooking = (booking) => ({
 
 const deleteBooking = (bookingId) => ({
   type: DELETE_BOOKING,
+  bookingId
+})
+
+const ownerDelete = (bookingId) => ({
+  type: OWNER_DELETE,
   bookingId
 })
 
@@ -91,6 +96,17 @@ export const removeBooking = (bookingId) => async dispatch => {
   }
 }
 
+export const ownerRemoveBooking = (bookingId) = async dispatch => {
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: "DELETE"
+  })
+
+  if (response.ok) {
+    dispatch(ownerDelete(bookingId))
+
+    return response
+  }
+}
 
 // --- INITIAL STATE --- //
 
@@ -132,6 +148,13 @@ const bookingsReducer = (state = initialState, action) => {
       delete deletedState.user[action.bookingId]
 
       return deletedState
+    }
+
+    case OWNER_DELETE: {
+      const ownerDeletedState = { ...state, oneSpot: { ...state.oneSpot }, user: { ...state.user } }
+      delete ownerDeletedState.oneSpot[action.bookingId]
+
+      return ownerDeletedState
     }
 
     default:
