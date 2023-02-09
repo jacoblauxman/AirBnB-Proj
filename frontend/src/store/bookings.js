@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 // --- STRING LITERALS --- //
 
 export const LOAD_BOOKINGS = 'bookings/LOAD_BOOKINGS'
+export const LOAD_USER_BOOKINGS = 'bookings/LOAD_USER_BOOKINGS'
 export const ADD_BOOKING = 'bookings/ADD_BOOKING'
 export const EDIT_BOOKING = 'bookings/EDIT_BOOKING'
 export const DELETE_BOOKING = 'bookings/DELETE_BOOKING'
@@ -14,6 +15,11 @@ const loadBookings = (bookings, spotId) => ({
   type: LOAD_BOOKINGS,
   bookings,
   spotId
+})
+
+const loadUserBookings = (bookings) => ({
+  type: LOAD_USER_BOOKINGS,
+  bookings
 })
 
 const addBooking = (booking) => ({
@@ -44,6 +50,17 @@ export const getBookings = (spotId) => async dispatch => {
   if (response.ok) {
     const bookings = await response.json()
     dispatch(loadBookings(bookings, spotId))
+
+    return bookings
+  }
+}
+
+export const getUserBookings = (userId) => async dispatch => {
+  const response = await csrfFetch(`/api/bookings/current`)
+
+  if (response.ok) {
+    const bookings = await response.json()
+    dispatch(loadUserBookings(bookings))
 
     return bookings
   }
@@ -124,6 +141,15 @@ const bookingsReducer = (state = initialState, action) => {
       })
 
       return loadedState
+    }
+
+    case LOAD_USER_BOOKINGS: {
+      const loadedUserBookingsState = { ...state, oneSpot: { ...state.oneSpot }, user: { ...state.user } }
+      action.bookings.Bookings.forEach(booking => {
+        loadedUserBookingsState.Bookings[booking.id] = booking;
+      })
+
+      return loadedUserBookingsState
     }
 
     case ADD_BOOKING: {

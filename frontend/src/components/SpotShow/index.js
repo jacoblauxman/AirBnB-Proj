@@ -11,6 +11,7 @@ import EditSpotForm from '../EditSpotForm';
 import './SpotShow.css'
 import noImage from './noImage.png'
 import BookingsList from '../Bookings';
+import CreateBookingFormModal from '../CreateBookingForm';
 
 
 
@@ -107,7 +108,7 @@ const SpotShow = () => {
             ))}
           {spot?.id && (<ReviewsList spotId={spot?.id} />)}
         </div >)}
-      {spot?.id && (<BookingsList spotId={spot?.id} />)}
+      {spot?.id && (<CreateBookingFormModal spotId={spot?.id} />)}
     </>
   )
 }
