@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
+import { NavLink } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 // import LoginFormModal from "../LoginFormModal";
 import './Navigation.css'
@@ -53,13 +54,16 @@ function ProfileButton({ user, setLogin, setShowModal }) {
             <div className='profile-dropdown-container'>
               <div className="profile-dropdown">
                 <div className='user-info-container'>
-                <div className='user-username'>{user.username}</div>
-                <div className='user-email'>{user.email}</div>
+                  <div className='user-username'>{user.username}</div>
+                  <div className='user-email'>
+                    <NavLink to={`/user`} className='user-username'>My Dates</NavLink>
+                  </div>
+                  {/* <div className='user-email'>{user.email}</div> */}
                 </div>
                 <div className='logout-button-container'>
                   <button
-                  className='logout-button'
-                  onClick={logout}>Log Out</button>
+                    className='logout-button'
+                    onClick={logout}>Log Out</button>
 
                 </div>
               </div>
@@ -82,22 +86,22 @@ function ProfileButton({ user, setLogin, setShowModal }) {
                 </div>
                 <div className='signup-button-container'>
                   <button
-                  className='signup-button'
-                  onClick={() => {
-                    setLogin(false)
-                    setShowModal(true)
-                    // need to hardcode to true to make sure when they click elsewhere in modal it closes!
-                  }}>
+                    className='signup-button'
+                    onClick={() => {
+                      setLogin(false)
+                      setShowModal(true)
+                      // need to hardcode to true to make sure when they click elsewhere in modal it closes!
+                    }}>
                     Sign Up
                   </button>
                 </div>
                 <div className='demo-login-container'>
                   <button
-                  className='demo-user-button'
-                  onClick={() => {
-                    dispatch(sessionActions.login({credential: 'DemoUser', password: 'password'}))
-                    setShowModal(false)
-                  }}>
+                    className='demo-user-button'
+                    onClick={() => {
+                      dispatch(sessionActions.login({ credential: 'DemoUser', password: 'password' }))
+                      setShowModal(false)
+                    }}>
                     Demo User
                   </button>
                 </div>

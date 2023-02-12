@@ -55,7 +55,7 @@ export const getBookings = (spotId) => async dispatch => {
   }
 }
 
-export const getUserBookings = (userId) => async dispatch => {
+export const getUserBookings = () => async dispatch => {
   const response = await csrfFetch(`/api/bookings/current`)
 
   if (response.ok) {
@@ -84,6 +84,7 @@ export const createBooking = (booking, spotId) => async dispatch => {
 }
 
 export const updateBooking = (booking) => async dispatch => {
+  console.log(booking, 'UPDATED BOOKING BEFORE SEND')
   const response = await csrfFetch(`/api/bookings/${booking.id}`, {
     method: "PUT",
     headers: {
@@ -146,7 +147,7 @@ const bookingsReducer = (state = initialState, action) => {
     case LOAD_USER_BOOKINGS: {
       const loadedUserBookingsState = { ...state, oneSpot: { ...state.oneSpot }, user: { ...state.user } }
       action.bookings.Bookings.forEach(booking => {
-        loadedUserBookingsState.Bookings[booking.id] = booking;
+        loadedUserBookingsState.user[booking.id] = booking;
       })
 
       return loadedUserBookingsState

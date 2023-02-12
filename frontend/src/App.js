@@ -9,6 +9,7 @@ import SpotsList from "./components/Spots";
 import SpotShow from "./components/SpotShow";
 import CreateSpotForm from "./components/CreateSpotForm";
 import CreateReviewForm from "./components/CreateReviewForm";
+import BookingsList from "./components/Bookings";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,9 @@ function App() {
               </Route>
               <Route exact path='/create-review'>
                 <CreateReviewForm />
+              </Route>
+              <Route exact path='/user'>
+                <BookingsList />
               </Route>
               <Route>
                 <div className='error-handler'>

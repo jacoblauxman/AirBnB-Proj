@@ -93,6 +93,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
   const { startDate, endDate } = req.body
 
+  let editedBooking = await Booking.findByPk(bookingId)
 
   //error handling for req body validation - need start and end
   if (!startDate || !endDate) {
@@ -104,22 +105,13 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         endDate: 'endDate must be provided'
       }
     })
-  }
-
-
-  let editedBooking = await Booking.findByPk(bookingId)
-
-  //error handling if booking doesn't exist
-  if (!editedBooking) {
+  } else if (!editedBooking) {
+    //error handling if booking doesn't exist
     res.status(404).json({
       message: `Booking couldn't be found`,
       statusCode: 404
     })
-  }
-
-
-
-  if (startDate >= endDate) {
+  } else if (startDate >= endDate) {
     res.status(400).json({
       message: 'Validation error',
       statusCode: 400,
@@ -127,51 +119,51 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         endDate: 'endDate cannot be on or before startDate'
       }
     })
-  }
-
-  //error handling if trying to edit booking past end date (current date)
-  if (new Date() >= endDate) {
+  } else if (new Date() >= new Date(endDate)) {
+    //error handling if trying to edit booking past end date (current date)
     res.status(403).json({
       message: `Past bookings can't be modified`,
       statusCode: 403
     })
-  }
+  } else {
 
-  //pull in spot to grab all potential bookings
-  let editedJSON = editedBooking.toJSON()
-  let spot = await Spot.findByPk(editedJSON.spotId)
+    //pull in spot to grab all potential bookings
+    let editedJSON = editedBooking.toJSON()
+    let spot = await Spot.findByPk(editedJSON.spotId)
+    let bookingConflicts = await Booking.findAll({
+      where: {
+        spotId: spot.id
+      }
+    })
 
-
-  let bookingConflicts = await Booking.findAll({
-    where: {
-      spotId: spot.id
-    }
-  })
-
-
-  //error handling if booking conflict:
-  for (let conflict of bookingConflicts) {
-    conflict = conflict.toJSON()
-    if ((startDate >= conflict.startDate && startDate <= conflict.endDate) ||
-      (endDate >= conflict.startDate && endDate <= conflict.endDate)) {
-      res.status(403).json({
-        message: 'Sorry, this spot is already booked for the specified dates',
-        statusCode: 403,
-        errors: {
-          startDate: 'Start date conflicts with an existing booking',
-          endDate: 'End date conflicts with an existing booking'
+    //error handling if booking conflict:
+    for (let conflict of bookingConflicts) {
+      conflict = conflict.toJSON()
+      if (conflict.id !== +bookingId) {
+        if (conflict.id !== +bookingId && (startDate >= conflict.startDate && startDate <= conflict.endDate) ||
+          (endDate >= conflict.startDate && endDate <= conflict.endDate)) {
+          console.log('\n', conflict.toJSON(), 'HIT ERRORS! CONFLICT', '\n')
+          res.status(403).json({
+            message: 'Sorry, this spot is already booked for the specified dates',
+            statusCode: 403,
+            errors: {
+              startDate: 'Start date conflicts with an existing booking',
+              endDate: 'End date conflicts with an existing booking'
+            }
+          })
         }
-      })
+      }
     }
   }
-
 
   editedBooking.set({
     startDate, endDate
   })
 
+  // console.log('\n', editedBooking, 'EDITED BOOKING!', '\n')
   await editedBooking.save()
   res.json(editedBooking)
+
 })
 
 

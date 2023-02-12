@@ -1,99 +1,123 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { createBooking, getBookings, ownerRemoveBooking } from '../../store/bookings'
+import { getUserBookings, removeBooking } from '../../store/bookings'
 import { getCurrUser } from '../../store/session'
-import { getOneSpot } from '../../store/spots'
+import EditBookingFormModal from '../EditBookingForm'
 import './Bookings.css'
 
 
-const BookingsList = ({ spotId }) => {
+const BookingsList = () => {
 
   const dispatch = useDispatch()
   const history = useHistory()
   const currUser = useSelector(getCurrUser)
-  const spot = useSelector(getOneSpot)
-  console.log(spotId, 'SPOTID IN BOOKINGS LIST- PROp!')
-
-  const [isLoaded, setIsLoaded] = useState(false)
   const [errors, setErrors] = useState([])
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const bookings = useSelector(state => state.bookings?.oneSpot)
+
+  const bookings = useSelector(state => state.bookings?.user)
   const bookingsArr = Object?.values(bookings)
+  const myfriendjson = JSON?.stringify(bookingsArr)
 
   useEffect(() => {
-    if (spotId) {
+    dispatch(getUserBookings())
 
-      dispatch(getBookings(spot?.id))
-        .then(() => {
-          console.log(spotId, 'SPOTID USEEFFECt')
-          setIsLoaded(true)
-        })
-    }
-  }, [dispatch, spotId, spot])
+  }, [dispatch, myfriendjson])
 
-  const handleSubmit = async (e) => {
+  const tripTime = (booking) => {
+    let start = new Date(booking.startDate)
+    let end = new Date(booking.endDate)
+    let diff = end - start
+    const day = (1000 * 3600 * 24)
+    let tripDays = diff / day
+    tripDays = Math.round(tripDays)
+
+    return tripDays
+  }
+
+  const editCheck = (booking) => {
+    const now = new Date()
+    const end = new Date(booking.endDate)
+
+    return now < end
+  }
+
+  const cancelCheck = (booking) => {
+    const now = new Date()
+    const start = new Date(booking.startDate)
+
+    return now < start
+  }
+
+  const dateFormatter = (date) => {
+    let res = new Date(date)
+    res = res.toDateString()
+
+    return res
+  }
+
+  const handleDelete = async (e, booking) => {
     e.preventDefault()
-    // if (!currUser) {
-    //   setErrors('You need to login to do that!')
-    // }
-    if (errors.length > 0) return
 
-    const newBooking = { startDate: startDate, endDate: endDate }
-    const res = await dispatch(createBooking(newBooking, spotId))
-      .then(() => history.push('/'))
+    const res = await dispatch(removeBooking(booking?.id))
+      .then(history.push('/user'))
       .catch(async res => {
         const data = await res.json()
-        if (data && data.errors) setErrors([data.errors])
+        if (data && data.errors.length > 0) {
+          setErrors(data.errors)
+          return
+        }
       })
   }
 
-  const handleSetStart = (e) => {
-    setErrors([])
-    setStartDate(e.target.value)
-  }
-  const handleSetEnd = (e) => {
-    setErrors([])
-    setEndDate(e.target.value)
-  }
-
-
-
-  if (!spotId || !isLoaded) return "Loading..."
-
+  if (!currUser) history.push('/')
 
   return (
-    <div className='spot-reviews-container'>
-      {isLoaded && (
-        <div className='spot-reviews-grid-container'>
-          {bookingsArr?.length > 0 && (
-            <div>Currently with {bookingsArr?.length} folks planning to stay!</div>
-          )}
-          <div className='bookings-form-container'>
-            <form onSubmit={handleSubmit}>
-              <ul className='validation-error-list'>
-                {errors?.length > 0 && errors.map((error, idx) => <li className='validation-error' key={idx}>{error}</li>)}
-              </ul>
-              <input
-                type='date'
-                onChange={handleSetStart}
-                value={startDate}
-                required={true}
-                name='start date'
-              />
-              <input
-                type='date'
-                onChange={handleSetEnd}
-                value={endDate}
-                required={true}
-                name='end date'
-              />
-              <button type='submit'>Book this Spot</button>
-            </form>
+    <div className='bookings-list-container'>
+      <div>
+        {bookingsArr?.length > 0 && (
+          <div>
+            Hey {currUser?.username}, here are all {bookingsArr?.length} of your booked dates at da Air Buh'n'Buh!
           </div>
-        </div>
-      )}
+        )}
+      </div>
+      <div>
+        {bookingsArr.length > 0 && bookingsArr?.map(booking => (
+          <div key={booking?.id} className='bookings-list-single-booking'>
+            <div className='single-booking-preview-image'>
+              {booking?.Spot?.previewImage}
+            </div>
+            <div className='single-booking-name'>
+              {booking?.Spot?.name}
+            </div>
+            <div className='single-booking-trip-days'>
+              From {dateFormatter(booking?.startDate)} To {dateFormatter(booking?.endDate)}
+            </div>
+            <div className='single-booking-price-info'>
+              <div className='single-booking-days'>
+                {tripTime(booking)} days for ${booking?.Spot?.price} a night
+              </div>
+              <div className='single-booking-total'>
+                ${tripTime(booking) * booking?.Spot?.price} before ${Math.floor(Math.random() * 100) * 5} service fees
+              </div>
+            </div>
+            {errors?.map((error, idx) => (
+              <li key={idx}>{error}</li>
+            ))}
+            {editCheck(booking) && (
+              <div className='single-booking-edit-delete-container'>
+                <EditBookingFormModal booking={booking} />
+                {cancelCheck(booking) && (
+                  <button
+                    className='create-review-modal'
+                    type='button'
+                    onClick={(e) => handleDelete(e, booking)}
+                  >Cancel Booking</button>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

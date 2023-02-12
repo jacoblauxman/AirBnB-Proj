@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useEffect } from 'react'
+import { getUserBookings } from "../../store/bookings";
 
 function LoginForm({ setShowModal }) {
   //passed in setter of modal
@@ -19,7 +20,8 @@ function LoginForm({ setShowModal }) {
       // if it's successful do the 'then' --> set our showModal slice of state to false
       .then(() => {
         setShowModal(false)
-        setErrors([]);
+        setErrors([])
+        dispatch(getUserBookings())
       })
       .catch(
         async (res) => {
