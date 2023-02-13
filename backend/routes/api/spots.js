@@ -1,4 +1,3 @@
-import { singleMulterUpload, singlePublicFileUpload } from '../../awsS3';
 // backend/routes/api/users.js
 const express = require('express');
 
@@ -12,6 +11,7 @@ const { parse } = require('pg-protocol');
 const e = require('express');
 
 //
+const { singlePublicFileUpload, singleMulterUpload } = require("../../awsS3")
 
 const router = express.Router();
 
@@ -327,10 +327,13 @@ router.post('/:spotId/bookings',
 
 router.post('/:spotId/images',
   requireAuth,
+  singleMulterUpload("image"),
   async (req, res) => {
     const userId = req.user.id
     const spotId = +req.params.spotId
     const { url, preview } = req.body;
+    const newSpotImageUrl = await singlePublicFileUpload(req.file)
+    console.log('\n', newSpotImageUrl, 'TESTING FOR URL!!!!!')
 
 
     //may break -- testing
@@ -359,7 +362,7 @@ router.post('/:spotId/images',
     } else {
 
       let newSpotImage = await SpotImage.create({
-        url,
+        url: newSpotImageUrl,
         preview,
         spotId
       })

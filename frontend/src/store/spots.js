@@ -68,6 +68,9 @@ export const fetchOneSpot = (spotId) => async dispatch => {
 
 //create a spot
 export const createSpot = (spot) => async (dispatch) => {
+  const { previewImage } = spot
+  console.log(previewImage, 'PULLED FROM OBJ')
+  const formData = new FormData()
   const response = await csrfFetch('/api/spots', { //CSRF FETCH when you get in trouble
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -76,14 +79,25 @@ export const createSpot = (spot) => async (dispatch) => {
 
   //add provided image to our new spot:
   if (response.ok) {
+    if (previewImage) {
+      formData.append("image", previewImage)
+      formData.append("preview", true)
+    }
+
     const addedSpot = await response.json()
     //adding our image to nex step
     const imageResponse = await csrfFetch(`/api/spots/${addedSpot.id}/images`, {
       method: 'POST',
-      body: JSON.stringify({
-        preview: true,
-        url: spot.previewImage
-      })
+      //testing with aws
+      headers: {
+        "Content-Type": "multipart/form-data"
+      },
+      body: formData
+      //previously working code:
+      // body: JSON.stringify({
+      //   preview: true,
+      //   url: spot.previewImage
+      // })
     })
 
     if (imageResponse.ok) {
@@ -92,7 +106,8 @@ export const createSpot = (spot) => async (dispatch) => {
       addedSpot.previewImage = addedSpotImage.url
       //addedSpot.avgRating = 0 // do we need to set or will null work?
       dispatch(addSpot(addedSpot))
-      return
+
+      return addedSpot
     }
   }
 }

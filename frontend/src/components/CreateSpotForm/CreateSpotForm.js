@@ -66,6 +66,11 @@ const CreateSpotForm = ({ setShowModal }) => {
     setShowModal(false)
   }
 
+  const updateFile = e => {
+    const file = e.target.files[0]
+    if (file) setPreviewImage(file)
+  }
+
 
   const currUser = useSelector(getCurrUser)
 
@@ -151,14 +156,14 @@ const CreateSpotForm = ({ setShowModal }) => {
         title='Please add description between 10-50 chars.'
       ></textarea>
       <input
-        type='url'
-        value={previewImage}
-        onChange={e => setPreviewImage(e.target.value)}
-        placeholder='Preview Image URL'
-        name='previewImage'
+        type='file'
+        // value={previewImage}
+        onChange={updateFile}
+        // placeholder='Preview Image Upload'
+        // name='previewImage'
         required
-        title='Please provide a valid URL (less than 200 chars.)'
-        maxLength='200'
+      // title='Please provide a valid URL (less than 200 chars.)'
+      // maxLength='200'
       />
       <button type="submit"
       >Create new Spot
