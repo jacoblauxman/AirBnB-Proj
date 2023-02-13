@@ -1,3 +1,4 @@
+import { singleMulterUpload, singlePublicFileUpload } from '../../awsS3';
 // backend/routes/api/users.js
 const express = require('express');
 
@@ -9,6 +10,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { response } = require('express');
 const { parse } = require('pg-protocol');
 const e = require('express');
+
 //
 
 const router = express.Router();
