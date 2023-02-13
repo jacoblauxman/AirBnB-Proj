@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import { getUserBookings, removeBooking } from '../../store/bookings'
 import { getCurrUser } from '../../store/session'
 import EditBookingFormModal from '../EditBookingForm'
@@ -13,13 +13,19 @@ const BookingsList = () => {
   const history = useHistory()
   const currUser = useSelector(getCurrUser)
   const [errors, setErrors] = useState([])
+  const [trips, setTrips] = useState([])
+  const [pastTrips, setPastTrips] = useState([])
 
   const bookings = useSelector(state => state.bookings?.user)
   const bookingsArr = Object?.values(bookings)
   const myfriendjson = JSON?.stringify(bookingsArr)
 
   useEffect(() => {
-    dispatch(getUserBookings())
+    dispatch(getUserBookings()).
+      then((res) => {
+        setPastTrips(pastBookings(res.Bookings))
+        setTrips(currentBookings(res.Bookings))
+      })
 
   }, [dispatch, myfriendjson])
 
@@ -69,28 +75,48 @@ const BookingsList = () => {
       })
   }
 
+  const currentBookings = bookings => {
+    let now = new Date()
+    let res = bookings.filter(booking => new Date(booking.endDate) > now)
+    console.log(res, 'TESTING RES IN CURRENT TRIPS!!')
+    return res
+  }
+
+  const pastBookings = bookings => {
+    let now = new Date()
+    let res = bookings.filter(booking => new Date(booking.endDate) < now)
+    console.log(res, 'RES IN TEST OF PAST TRIPS!!')
+
+    return res
+  }
+
   if (!currUser) history.push('/')
 
   return (
     <div className='bookings-list-container'>
       <div>
         {bookingsArr?.length > 0 && (
-          <div>
-            Hey {currUser?.username}, here are all {bookingsArr?.length} of your booked dates at da Air Buh'n'Buh!
+          <div className='bookings-list-header'>
+            Hey <span className='bold'>{currUser?.username}</span>, here are all {bookingsArr?.length} of your booked dates at da Air Buh'n'Buh!
+          </div>
+        )}
+        {bookingsArr?.length === 0 && (
+          <div className='bookings-list-header'>
+            Hey <span className='bold'>{currUser?.username}</span>, no bookings yet? Why not <NavLink to={`/`}>take a look around</NavLink> and plan your next trip!
           </div>
         )}
       </div>
       <div>
-        {bookingsArr.length > 0 && bookingsArr?.map(booking => (
+        {trips.length > 0 && trips?.map(booking => (
           <div key={booking?.id} className='bookings-list-single-booking'>
             <div className='single-booking-preview-image'>
-              {booking?.Spot?.previewImage}
+              <img className='single-booking-image' src={booking?.Spot?.previewImage} />
             </div>
             <div className='single-booking-name'>
-              {booking?.Spot?.name}
+              {booking?.Spot?.name} - <span className='single-booking-price-info'>{booking?.Spot?.city}, {booking?.Spot?.state}</span>
             </div>
             <div className='single-booking-trip-days'>
-              From {dateFormatter(booking?.startDate)} To {dateFormatter(booking?.endDate)}
+              <span className='bold'>From</span>{dateFormatter(booking?.startDate)} <span className='bold'>To</span> {dateFormatter(booking?.endDate)}
             </div>
             <div className='single-booking-price-info'>
               <div className='single-booking-days'>
@@ -115,6 +141,34 @@ const BookingsList = () => {
                 )}
               </div>
             )}
+          </div>
+        ))}
+      </div>
+      <div>
+        {pastTrips.length > 0 && (
+          <div className='bookings-list-header'><span className='bold'>Your Past Trips:</span></div>
+        )}
+        {pastTrips && pastTrips.map(booking => (
+          <div>
+            <div key={booking?.id} className='bookings-list-single-booking'>
+              <div className='single-booking-preview-image'>
+                <img className='single-booking-image' src={booking?.Spot?.previewImage} />
+              </div>
+              <div className='single-booking-name'>
+                {booking?.Spot?.name} - <span className='single-booking-price-info'>{booking?.Spot?.city}, {booking?.Spot?.state}</span>
+              </div>
+              <div className='single-booking-trip-days'>
+                <span className='bold'>From</span>{dateFormatter(booking?.startDate)} <span className='bold'>To</span> {dateFormatter(booking?.endDate)}
+              </div>
+              <div className='single-booking-price-info'>
+                <div className='single-booking-days'>
+                  {tripTime(booking)} days for ${booking?.Spot?.price} a night
+                </div>
+                <div className='single-booking-total'>
+                  ${tripTime(booking) * booking?.Spot?.price} before ${Math.floor(Math.random() * 100) * 5} service fees
+                </div>
+              </div>
+            </div>
           </div>
         ))}
       </div>

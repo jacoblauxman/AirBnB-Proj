@@ -20,6 +20,7 @@ form label {
   height: 100%;
   border: 1px solid rgba(128, 128, 128, 0.478);
   padding: .3rem;
+  font-weight: 225;
 }
 
 .create-error-container {

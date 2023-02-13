@@ -22,9 +22,15 @@ function CreateBookingForm({ setShowModal, spotId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // if (!currUser) {
-    //   setErrors('You need to login to do that!')
-    // }
+
+    const now = new Date()
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+    if (now > start || now > end) {
+      setErrors([`You can't book a date in the past!!`])
+    } else if (start > end) {
+      setErrors([`Start Date cannot be after End Date (can't start after ending)!!`])
+    }
     if (errors.length > 0) return
 
     const newBooking = { startDate: startDate, endDate: endDate }
@@ -34,6 +40,12 @@ function CreateBookingForm({ setShowModal, spotId }) {
         const data = await res.json()
         if (data && data.errors) setErrors([data.errors])
       })
+  }
+
+  const handleCancel = (e) => {
+    e.preventDefault()
+
+    setShowModal(false)
   }
 
   const handleSetStart = (e) => {
@@ -46,17 +58,20 @@ function CreateBookingForm({ setShowModal, spotId }) {
   }
 
 
+  if (!currUser) history.push(`/spots/${spotId}`)
+
   return (
     <div className='spot-reviews-container'>
       <div className='spot-reviews-grid-container'>
         {bookingsArr?.length > 0 && (
           <div>Finalize your trip like {bookingsArr?.length} other folks planning to stay!</div>
-          )}
+        )}
         <div className='bookings-form-container'>
           <form onSubmit={handleSubmit}>
             <ul className='validation-error-list'>
               {errors?.length > 0 && errors.map((error, idx) => <li className='validation-error' key={idx}>{error}</li>)}
             </ul>
+            <label className='bookings-form-label'>Start Date</label>
             <input
               type='date'
               onChange={handleSetStart}
@@ -64,6 +79,7 @@ function CreateBookingForm({ setShowModal, spotId }) {
               required={true}
               name='start date'
             />
+            <label className='bookings-form-label'>End Date</label>
             <input
               type='date'
               onChange={handleSetEnd}
@@ -72,6 +88,7 @@ function CreateBookingForm({ setShowModal, spotId }) {
               name='end date'
             />
             <button type='submit'>Book Your Trip</button>
+            <button type='button' onClick={handleCancel}>Cancel</button>
           </form>
         </div>
       </div>

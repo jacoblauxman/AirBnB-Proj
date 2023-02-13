@@ -22,9 +22,14 @@ function EditBookingForm({ setShowModal, booking, spotId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // if (!currUser) {
-    //   setErrors('You need to login to do that!')
-    // }
+    const now = new Date()
+    const start = new Date(newStartDate)
+    const end = new Date(newEndDate)
+    if (now > start || now > end) {
+      setErrors([`You can't book a date in the past!!`])
+    } else if (start > end) {
+      setErrors([`Start Date cannot be after End Date (can't start after ending)!!`])
+    }
     if (errors.length > 0) return
 
     const updatedBooking = { ...booking, startDate: newStartDate, endDate: newEndDate }
@@ -37,6 +42,12 @@ function EditBookingForm({ setShowModal, booking, spotId }) {
         const data = await res.json()
         if (data && data.errors) setErrors([data.errors])
       })
+  }
+
+  const handleCancel = (e) => {
+    e.preventDefault()
+
+    setShowModal(false)
   }
 
   const handleSetStart = (e) => {
@@ -61,6 +72,7 @@ function EditBookingForm({ setShowModal, booking, spotId }) {
             <ul className='validation-error-list'>
               {errors?.length > 0 && errors.map((error, idx) => <li className='validation-error' key={idx}>{error}</li>)}
             </ul>
+            <label className='bookings-form-label'>Start Date</label>
             <input
               type='date'
               onChange={handleSetStart}
@@ -68,6 +80,7 @@ function EditBookingForm({ setShowModal, booking, spotId }) {
               required={true}
               name='start date'
             />
+            <label className='bookings-form-label'>End Date</label>
             <input
               type='date'
               onChange={handleSetEnd}
@@ -76,6 +89,7 @@ function EditBookingForm({ setShowModal, booking, spotId }) {
               name='end date'
             />
             <button type='submit'>Update Your Trip</button>
+            <button type='button' onClick={handleCancel}>Cancel</button>
           </form>
         </div>
       </div>
