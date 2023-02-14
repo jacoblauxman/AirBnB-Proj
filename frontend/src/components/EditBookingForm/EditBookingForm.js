@@ -62,36 +62,33 @@ function EditBookingForm({ setShowModal, booking, spotId }) {
   if (!currUser) history.push('/')
 
   return (
-    <div className='spot-reviews-container'>
-      <div className='spot-reviews-grid-container'>
-        {/* {bookingsArr?.length > 0 && (
-          <div>Finalize your trip like {bookingsArr?.length} other folks planning to stay!</div>
-        )} */}
-        <div className='bookings-form-container'>
-          <form onSubmit={handleSubmit}>
-            <ul className='validation-error-list'>
-              {errors?.length > 0 && errors.map((error, idx) => <li className='validation-error' key={idx}>{error}</li>)}
-            </ul>
-            <label className='bookings-form-label'>Start Date</label>
-            <input
-              type='date'
-              onChange={handleSetStart}
-              value={newStartDate}
-              required={true}
-              name='start date'
-            />
-            <label className='bookings-form-label'>End Date</label>
-            <input
-              type='date'
-              onChange={handleSetEnd}
-              value={newEndDate}
-              required={true}
-              name='end date'
-            />
-            <button type='submit'>Update Your Trip</button>
-            <button type='button' onClick={handleCancel}>Cancel</button>
-          </form>
-        </div>
+    <div className='edit-bookings-container'>
+      <div className='bookings-edit-form-container'>
+        <form onSubmit={handleSubmit}>
+          <ul className='validation-error-list'>
+            {errors?.length > 0 && errors.map((error, idx) => <li className='validation-error' key={idx}>{error}</li>)}
+          </ul>
+          <label className='bookings-form-label-in'>CHECK-IN</label>
+          <input
+            className='bookings-input'
+            type='date'
+            onChange={handleSetStart}
+            value={newStartDate}
+            required={true}
+            name='start date'
+          />
+          <label className='bookings-form-label-out'>CHECKOUT</label>
+          <input
+            className='bookings-input'
+            type='date'
+            onChange={handleSetEnd}
+            value={newEndDate}
+            required={true}
+            name='end date'
+          />
+          <button className='bookings-submit-button' type='submit'>Update Your Trip</button>
+          <button className='bookings-submit-button' type='button' onClick={handleCancel}>Cancel</button>
+        </form>
       </div>
     </div>
   )

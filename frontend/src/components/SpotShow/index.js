@@ -12,6 +12,7 @@ import './SpotShow.css'
 import noImage from './noImage.png'
 import BookingsList from '../Bookings';
 import CreateBookingFormModal from '../CreateBookingForm';
+import CreateBookingForm from '../CreateBookingForm/CreateBookingForm';
 
 
 
@@ -82,11 +83,31 @@ const SpotShow = () => {
               {Math.ceil(Math.random() * 3) * 2} guests · {Math.ceil(Math.random() * 3) * 2} bedrooms · {Math.ceil(Math.random() * 3) * 2} beds · {Math.ceil(Math.random() * 3) * 2} baths
             </div>
             <div className='spot-main-details'>
-              <div>
-                <span className='owner-medal'><i class="fa-solid fa-medal"></i></span> <span>{spot?.Owner?.firstName} is a Superhost</span>
+              <div className='spot-details'>
+
+                <div className='spot-owner-info'>
+                  <span className='owner-medal'><i class="fa-solid fa-medal"></i></span> <span>{spot?.Owner?.firstName} is a Superhost</span>
+                  <div className='owner-medal-info'>
+                    <span>Superhosts are experienced, highly rated hosts who are committed to great stays for great guests</span>
+                  </div>
+                </div>
+                <div className='spot-aircover-container'>
+                  <img className='aircover-banner' alt='air cover banner' src={`https://res.cloudinary.com/dixbzsdnm/image/upload/v1676395437/da-air-buh-n-buh/aircover-img.png`} />
+                  <div className='aircover-text'>
+                    Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.
+                  </div>
+                </div>
+                <div className='spot-amenities-container'>
+                  <div className='amenities-header'>What this place offers</div>
+                  <div className='amenity'><img className='amenity-svg' src={`https://res.cloudinary.com/dixbzsdnm/image/upload/v1676395037/da-air-buh-n-buh/paw-svg_pbvhvd.svg`} alt='Pets Allowed' /><span className='amenity-text'>Pets Allowed</span></div>
+                  <div className='amenity'><img className='amenity-svg' src={`https://res.cloudinary.com/dixbzsdnm/image/upload/v1676395037/da-air-buh-n-buh/essentials-svg_gnhyb7.svg`} alt='Essentials Provided' /><span className='amenity-text'>Essentials Provided</span></div>
+                  <div className='amenity'><img className='amenity-svg' src={`https://res.cloudinary.com/dixbzsdnm/image/upload/v1676395037/da-air-buh-n-buh/wifi-svg_sj1sri.svg`} alt='Wifi' /><span className='amenity-text'>Wifi</span></div>
+                  <div className='amenity'><img className='amenity-svg' src={`https://res.cloudinary.com/dixbzsdnm/image/upload/v1676395037/da-air-buh-n-buh/mountainview-svg_kchqaz.svg`} alt='Mountain View' /><span className='amenity-text'>Mountain View</span></div>
+                  <div className='amenity'><img className='amenity-svg' src={`https://res.cloudinary.com/dixbzsdnm/image/upload/v1676395037/da-air-buh-n-buh/parkview-svg_fedg62.svg`} alt='Park View' /><span className='amenity-text'>Park View</span></div>
+                </div>
               </div>
-              <div className='owner-medal-info'>
-                <span>Superhosts are experienced, highly rated hosts who are committed to great stays for great guests</span>
+              <div className='spot-bookings'>
+                <CreateBookingForm spotId={spot?.id} bookSpot={spot} />
               </div>
             </div>
           </div>
@@ -108,7 +129,7 @@ const SpotShow = () => {
             ))}
           {spot?.id && (<ReviewsList spotId={spot?.id} />)}
         </div >)}
-      {spot?.id && (<CreateBookingFormModal spotId={spot?.id} />)}
+      {/* {spot?.id && (<CreateBookingFormModal spotId={spot?.id} />)} */}
     </>
   )
 }

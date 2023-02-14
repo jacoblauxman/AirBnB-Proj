@@ -8,6 +8,7 @@ export const ADD_BOOKING = 'bookings/ADD_BOOKING'
 export const EDIT_BOOKING = 'bookings/EDIT_BOOKING'
 export const DELETE_BOOKING = 'bookings/DELETE_BOOKING'
 export const OWNER_DELETE = 'bookings/OWNER_DELETE'
+export const CLEAR_BOOKINGS = 'bookings/CLEAR_BOOKINGS'
 
 // --- ACTION CREATORS --- //
 
@@ -40,6 +41,10 @@ const deleteBooking = (bookingId) => ({
 const ownerDelete = (bookingId) => ({
   type: OWNER_DELETE,
   bookingId
+})
+
+const clearBookings = () => ({
+  type: CLEAR_BOOKINGS
 })
 
 // --- THUNKS --- //
@@ -126,6 +131,11 @@ export const ownerRemoveBooking = (bookingId) => async dispatch => {
   }
 }
 
+
+export const resetBookings = () => async dispatch => {
+  dispatch(clearBookings())
+}
+
 // --- INITIAL STATE --- //
 
 const initialState = { oneSpot: {}, user: {} }
@@ -182,6 +192,12 @@ const bookingsReducer = (state = initialState, action) => {
       delete ownerDeletedState.oneSpot[action.bookingId]
 
       return ownerDeletedState
+    }
+
+    case CLEAR_BOOKINGS: {
+      const clearedState = { oneSpot: {}, user: {} }
+
+      return clearedState
     }
 
     default:

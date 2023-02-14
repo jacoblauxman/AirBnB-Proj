@@ -100,12 +100,38 @@
   /* margin-left: 3rem; */
 }
 
+
 .spot-main-details {
-  font-weight: 475;
+  /* font-weight: 475;
   padding-bottom: 2rem;
   width: 100%;
   border-bottom: 1px solid rgba(144, 144, 144, 0.387);
+  margin-bottom: 1rem; */
+  display: flex;
+  flex-direction: row;
+}
+
+.spot-details {
+  display: flex;
+  flex-direction: column;
+  flex: 2 1 2;
+  font-weight: 475;
+  padding-bottom: 1rem;
+  width: 100%;
+  border-bottom: 1px solid rgba(144, 144, 144, 0.387);
   margin-bottom: 1rem;
+  margin-right: 1rem;
+}
+
+.spot-bookings {
+  display: flex;
+  width: 100%;
+  flex: 0 1;
+}
+
+.spot-owner-info {
+  border-bottom: 1px solid rgba(144, 144, 144, 0.387);
+  margin: 1.5rem 0;
 }
 
 .owner-medal {
@@ -114,11 +140,14 @@
   font-size: 1.5rem;
 }
 
+
+
 .owner-medal-info {
   margin-top: .4rem;
   padding-left: 3.8rem;
   font-weight: 250;
-  color: rgba(69, 69, 69, 0.653)
+  color: rgba(69, 69, 69, 0.653);
+  margin-bottom: 1.5rem;
 }
 
 .edit-spot-delete-spot-container {
@@ -155,4 +184,54 @@
 .delete-spot-button:hover {
   background-color: rgba(225, 225, 225, 0.404);
   cursor: pointer;
+}
+
+.spot-aircover-container {
+  border-bottom: 1px solid rgba(144, 144, 144, 0.387);
+
+}
+
+.aircover-banner {
+  width: 140px;
+  margin: 1.5rem 0;
+}
+
+.aircover-text {
+  font-weight: 333;
+  margin-bottom: 1.5rem;
+}
+
+.spot-amenities-container {
+  /* border-bottom: 1px solid rgba(144, 144, 144, 0.387); */
+  margin: 1.5rem 0;
+}
+
+.amenities-header {
+  font-size: 1.25rem;
+  font-weight: 475;
+  margin-bottom: 1.5rem;
+}
+
+.amenity {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.amenity-svg {
+  width: 25px;
+  height: 25px;
+}
+
+.amenity-text {
+  margin-left: 1rem;
+  font-weight: 333;
+}
+
+.spot-bookings {
+  position: relative;
+  display: flex;
+  /* height: 350px; */
+  /* max-width: 33%; */
+  /* position: sticky; */
 }

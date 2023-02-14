@@ -25,7 +25,7 @@
   overflow: auto;
   min-width: 40%;
   min-height: 40%;
-
+  flex-shrink: 2;
   display: inline-flex;
   flex-direction: column;
   max-width: 75%;
@@ -107,3 +107,25 @@
   padding: 0 0.1rem;
   margin: 0 0.3rem;
 }
+
+#modal-content .bookings-submit-button {
+  background-color: rgb(227, 28, 90);
+  color: white;
+  border: none;
+  padding: 15px;
+  width: 100%;
+  max-width: 320px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 333;
+  margin: 1rem 0;
+}
+
+#modal-content .edit-bookings-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 350px;
+}
+

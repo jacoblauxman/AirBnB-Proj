@@ -7,7 +7,7 @@ function CreateBookingFormModal({ spotId }) {
 
   return (
     <>
-      <button className='create-review-modal' onClick={() => setShowBookingModal(true)}>Book this Spot!</button>
+      <button className='create-review-modal' onClick={() => setShowBookingModal(true)}>Reserve</button>
       {showBookingModal && (
         <Modal onClose={() => setShowBookingModal(false)}>
           <CreateBookingForm setShowModal={setShowBookingModal} spotId={spotId} />

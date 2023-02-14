@@ -6,12 +6,13 @@ import { createBooking } from '../../store/bookings';
 import './CreateBookingForm.css'
 import { getOneSpot } from '../../store/spots';
 
-function CreateBookingForm({ setShowModal, spotId }) {
+function CreateBookingForm({ setShowModal, spotId, bookSpot }) {
   // const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch()
   const history = useHistory()
   const currUser = useSelector(getCurrUser)
   const spot = useSelector(getOneSpot)
+  console.log(bookSpot, 'BOOK SPOT')
 
   const [errors, setErrors] = useState([])
   const [startDate, setStartDate] = useState('')
@@ -22,6 +23,8 @@ function CreateBookingForm({ setShowModal, spotId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (!currUser) history.push(`/spots/${spotId}`)
 
     const now = new Date()
     const start = new Date(startDate)
@@ -61,36 +64,53 @@ function CreateBookingForm({ setShowModal, spotId }) {
   if (!currUser) history.push(`/spots/${spotId}`)
 
   return (
-    <div className='spot-reviews-container'>
-      <div className='spot-reviews-grid-container'>
-        {bookingsArr?.length > 0 && (
-          <div>Finalize your trip like {bookingsArr?.length} other folks planning to stay!</div>
-        )}
-        <div className='bookings-form-container'>
-          <form onSubmit={handleSubmit}>
-            <ul className='validation-error-list'>
-              {errors?.length > 0 && errors.map((error, idx) => <li className='validation-error' key={idx}>{error}</li>)}
-            </ul>
-            <label className='bookings-form-label'>Start Date</label>
-            <input
-              type='date'
-              onChange={handleSetStart}
-              value={startDate}
-              required={true}
-              name='start date'
-            />
-            <label className='bookings-form-label'>End Date</label>
-            <input
-              type='date'
-              onChange={handleSetEnd}
-              value={endDate}
-              required={true}
-              name='end date'
-            />
-            <button type='submit'>Book Your Trip</button>
-            <button type='button' onClick={handleCancel}>Cancel</button>
-          </form>
+    <div className='spot-bookings-container'>
+      <div className='bookings-header'>
+        <div className='header-items'>
+          ${spot.price} <span className='price-text'>night</span>
         </div>
+        <div className='header-items'>
+          <span className='avg-rating'>★ {bookSpot?.avgStarRating} · </span><span className='booking-review-text'> {bookSpot?.numReviews} Reviews</span>
+        </div>
+      </div>
+
+      <div className='bookings-form-container'>
+        <form className='bookings-form' onSubmit={handleSubmit}>
+          <ul className='validation-error-list'>
+            {errors?.length > 0 && errors.map((error, idx) => <li className='validation-error' key={idx}>{error}</li>)}
+          </ul>
+          <div className='dates-container'>
+            <div className='dates-in'>
+              <label htmlFor='start date' className='bookings-form-label-in'>CHECK-IN</label>
+              <input
+                title='CHECK-IN'
+                className='bookings-input'
+                type='date'
+                onChange={handleSetStart}
+                value={startDate}
+                required={true}
+                name='start date'
+              />
+            </div>
+            <div className='dates-out'>
+
+              <label htmlFor='end date' className='bookings-form-label-out'>CHECKOUT</label>
+              <input
+                title='CHECKOUT'
+                className='bookings-input'
+                type='date'
+                onChange={handleSetEnd}
+                value={endDate}
+                required={true}
+                name='end date'
+              />
+            </div>
+          </div>
+          <button
+            className='bookings-submit-button'
+            type='submit'>Reserve</button>
+          <div className='bookings-not-charged'>You won't be charged yet</div>
+        </form>
       </div>
     </div>
   )

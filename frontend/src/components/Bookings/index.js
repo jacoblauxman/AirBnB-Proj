@@ -97,7 +97,7 @@ const BookingsList = () => {
       <div>
         {bookingsArr?.length > 0 && (
           <div className='bookings-list-header'>
-            Hey <span className='bold'>{currUser?.username}</span>, here are all {bookingsArr?.length} of your booked dates at da Air Buh'n'Buh!
+            Hey <span className='bold'>{currUser?.username},</span>here are all {bookingsArr?.length} of your booked dates at da Air Buh'n'Buh!
           </div>
         )}
         {bookingsArr?.length === 0 && (

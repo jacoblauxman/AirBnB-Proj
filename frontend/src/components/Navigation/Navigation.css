@@ -233,6 +233,8 @@
    padding-left: .3rem;
    font-weight: 400;
    font-size: .95rem;
+   text-decoration: none;
+   color: black;
  }
 
  .user-email {
