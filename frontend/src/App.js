@@ -10,6 +10,7 @@ import SpotShow from "./components/SpotShow";
 import CreateSpotForm from "./components/CreateSpotForm";
 import CreateReviewForm from "./components/CreateReviewForm";
 import BookingsList from "./components/Bookings";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ function App() {
                 </div>
               </Route>
             </Switch>
+            <Footer />
           </>
         )}
       </div>

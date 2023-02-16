@@ -1,0 +1,36 @@
+.footer-container {
+  box-sizing: border-box;
+  display: flex;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  background-color: white;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(194, 194, 194, 0.567);
+}
+
+.footer-link {
+  color: black;
+  font-weight: 333;
+}
+
+
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  transition: all 0.15s ease-in-out;
+}
+
+a:hover {
+  color: red;
+}
+
+.fa-brands {
+  font-size: 1.5rem;
+}
