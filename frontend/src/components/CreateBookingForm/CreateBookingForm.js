@@ -2,23 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrUser } from '../../store/session';
-import { createBooking } from '../../store/bookings';
+import { createBooking, getBookings } from '../../store/bookings';
 import './CreateBookingForm.css'
 import { getOneSpot } from '../../store/spots';
 
-function CreateBookingForm({ setShowModal, spotId, bookSpot }) {
+function CreateBookingForm({ spotId, bookSpot }) {
   // const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch()
   const history = useHistory()
   const currUser = useSelector(getCurrUser)
   const spot = useSelector(getOneSpot)
-  console.log(bookSpot, 'BOOK SPOT')
 
+  const [isLoaded, setIsLoaded] = useState(false)
   const [errors, setErrors] = useState([])
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const bookings = useSelector(state => state.bookings?.oneSpot)
   const bookingsArr = Object?.values(bookings)
+
+  useEffect(() => {
+    dispatch(getBookings(spotId))
+      .then(() => setIsLoaded(true))
+  }, [dispatch, spotId])
 
 
   const handleSubmit = async (e) => {
@@ -45,12 +50,6 @@ function CreateBookingForm({ setShowModal, spotId, bookSpot }) {
       })
   }
 
-  const handleCancel = (e) => {
-    e.preventDefault()
-
-    setShowModal(false)
-  }
-
   const handleSetStart = (e) => {
     setErrors([])
     setStartDate(e.target.value)
@@ -61,7 +60,7 @@ function CreateBookingForm({ setShowModal, spotId, bookSpot }) {
   }
 
 
-  if (!currUser) history.push(`/spots/${spotId}`)
+  if (!spotId) return null
 
   return (
     <div className='spot-bookings-container'>

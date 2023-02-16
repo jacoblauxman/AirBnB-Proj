@@ -102,7 +102,7 @@ const BookingsList = () => {
         )}
         {bookingsArr?.length === 0 && (
           <div className='bookings-list-header'>
-            Hey <span className='bold'>{currUser?.username}</span>, no bookings yet? Why not <NavLink to={`/`}>take a look around</NavLink> and plan your next trip!
+            Hey <span className='bold'>{currUser?.username}</span>, no bookings yet? Why not <NavLink className='look-around' to={`/`}>take a look around</NavLink> and plan your next trip!
           </div>
         )}
       </div>

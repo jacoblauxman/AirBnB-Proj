@@ -69,3 +69,7 @@
   justify-content: space-around;
   width: 100%;
 }
+
+.look-around {
+  padding: 0 10px;
+}

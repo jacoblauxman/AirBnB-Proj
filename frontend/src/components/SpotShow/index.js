@@ -11,7 +11,6 @@ import EditSpotForm from '../EditSpotForm';
 import './SpotShow.css'
 import noImage from './noImage.png'
 import BookingsList from '../Bookings';
-import CreateBookingFormModal from '../CreateBookingForm';
 import CreateBookingForm from '../CreateBookingForm/CreateBookingForm';
 
 
