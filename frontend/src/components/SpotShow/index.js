@@ -61,6 +61,8 @@ const SpotShow = () => {
 
   if (errors?.length > 0) history.push('/404')
 
+  if (!isLoaded) return null
+
 
   return (
     <>
