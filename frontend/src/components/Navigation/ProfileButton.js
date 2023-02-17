@@ -31,10 +31,10 @@ function ProfileButton({ user, setLogin, setShowModal }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const logout = (e) => {
+  const logout = async (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout())
-    dispatch(resetBookings())
+
+    await dispatch(sessionActions.logout()).then(() => dispatch(resetBookings()))
   };
 
   return (
