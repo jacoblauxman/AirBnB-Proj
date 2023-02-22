@@ -1,5 +1,7 @@
 .spot-bookings-container {
   display: flex;
+  /* position: relative; */
+  height: 100%;
   flex-direction: column;
   border: .5px solid #DDDD;
   border-radius: 10px;
@@ -123,4 +125,3 @@
   font-weight: 225;
   font-size: .8rem;
 }
-
