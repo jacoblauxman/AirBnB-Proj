@@ -67,7 +67,10 @@ const ReviewsList = ({ spotId }) => {
                 <div className='reviewer-name'>
                   <span className='user-icon-container'>
                     <i className="fas fa-user-circle" />
-                  </span> <span>{review?.User?.firstName} {review?.User?.lastName}</span>
+                  </span> <span>
+                    {review?.User?.firstName} {review?.User?.lastName}
+                    {console.log(review?.User)}
+                  </span>
                 </div>
                 <div className='reviewer-review'>
                   "{review?.review}"
