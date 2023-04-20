@@ -56,7 +56,7 @@ const ReviewsList = ({ spotId }) => {
     <div className='spot-reviews-container'>
       {isLoaded &&
         <div className='spot-reviews-grid-container'>
-          <h2>★ {spot?.avgStarRating} · {reviewsArr?.length} Reviews</h2>
+          <h2>★ {spot?.avgStarRating ? spot.avgStarRating.toFixed(1) : 'New'} · {reviewsArr?.length} Reviews</h2>
           {errors.length > 0 && <div>Error !</div>}
           {errors.map(error => (
             <li key={error}>{error}</li>

@@ -1,6 +1,6 @@
 .spot-bookings-container {
   display: flex;
-  /* position: relative; */
+  /* position: ; */
   height: 100%;
   flex-direction: column;
   border: .5px solid #DDDD;
@@ -9,6 +9,7 @@
   padding: 1rem;
   max-height: 500px;
   height: 350px;
+  justify-content: start;
 }
 
 .bookings-form-container {

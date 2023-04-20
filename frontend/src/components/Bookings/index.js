@@ -78,14 +78,12 @@ const BookingsList = () => {
   const currentBookings = bookings => {
     let now = new Date()
     let res = bookings.filter(booking => new Date(booking.endDate) > now)
-    console.log(res, 'TESTING RES IN CURRENT TRIPS!!')
     return res
   }
 
   const pastBookings = bookings => {
     let now = new Date()
     let res = bookings.filter(booking => new Date(booking.endDate) < now)
-    console.log(res, 'RES IN TEST OF PAST TRIPS!!')
 
     return res
   }

@@ -32,7 +32,7 @@ const SpotsList = () => {
 
             <div className='spot-location-avgRating'>
               <span className='spot-location'>{spot.city}, {spot.state}</span>
-              <span className='spot-avgRating'><span className='spot-star'>★</span> {spot?.avgRating || 'New'}</span></div>
+              <span className='spot-avgRating'><span className='spot-star'>★</span> {spot?.avgRating ? spot?.avgRating?.toFixed(1) : 'New'}</span></div>
             <div className='spot-description'
             >Added {Math.ceil((Math.random() * 20))} weeks ago</div>
             <div className='spot-price' style={{ fontWeight: '475', color: 'black' }}> ${spot.price} <span style={{ fontWeight: '225', color: 'black' }}> night</span></div>

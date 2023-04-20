@@ -69,7 +69,7 @@ function CreateBookingForm({ spotId, bookSpot }) {
           ${spot.price} <span className='price-text'>night</span>
         </div>
         <div className='header-items'>
-          <span className='avg-rating'>★ {bookSpot?.avgStarRating} · </span><span className='booking-review-text'> {bookSpot?.numReviews} Reviews</span>
+          <span className='avg-rating'>★ {bookSpot?.avgStarRating ? bookSpot.avgStarRating.toFixed(1) : 'New'} · </span><span className='booking-review-text'> {bookSpot?.numReviews} Reviews</span>
         </div>
       </div>
 
