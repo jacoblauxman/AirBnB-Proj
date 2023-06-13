@@ -11,6 +11,7 @@ import CreateSpotForm from "./components/CreateSpotForm";
 import CreateReviewForm from "./components/CreateReviewForm";
 import BookingsList from "./components/Bookings";
 import Footer from "./components/Footer";
+import SpotStyleNav from "./components/SpotTypeNav";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function App() {
           <>
             <Switch>
               <Route exact path="/">
+              {/* <SpotStyleNav /> */}
                 <SpotsList />
                 <Footer />
               </Route>

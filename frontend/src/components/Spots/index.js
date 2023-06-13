@@ -5,6 +5,7 @@ import { fetchSpots, getAllSpots } from "../../store/spots"
 // import { Route }
 import SpotShow from '../SpotShow'
 import './index.css'
+import SpotStyleNav from '../SpotTypeNav'
 
 
 
@@ -26,7 +27,10 @@ const SpotsList = () => {
   if (!spots) return null
 
   return (
+    <section className='spots-and-tags-container'>
+    <SpotStyleNav />
     <main className='spots-container'>
+    {/* <SpotStyleNav /> */}
       <div className='spots-price-switch'>
         <span className='spots-price-switch-bold'>Display total Price</span>  <span className='spots-price-switch-gray'>| Includes all fees, before taxes</span>
         <label className='spots-price-label'
@@ -58,6 +62,7 @@ const SpotsList = () => {
         </Route>
       </div>
     </main >
+    </section>
   )
 }
 
