@@ -25,17 +25,24 @@ function Navigation({ isLoaded }) {
 
   return (
     <div className='navigation-container'>
-      <div>
-        <NavLink exact to="/" style={{ textDecoration: 'none' }}>
-          <div className='logo-container'>
-            <div className='da-icon'>
-              <img src={logo} className={'site-logo'} />
-            </div>
-            <div className='logo-name'>
-              buh'n'buh
-            </div>
+      {/* <div> */}
+      <NavLink exact to="/" style={{ textDecoration: 'none' }}>
+        <div className='logo-container'>
+          <div className='da-icon'>
+            <img src={logo} className={'site-logo'} />
           </div>
-        </NavLink >
+          <div className='logo-name'>
+            buh'n'buh
+          </div>
+        </div>
+      </NavLink >
+      {/* </div> */}
+      <div className='search-container'>
+        <NavLink exact to="/coming-soon" style={{ textDecoration: 'none', color: 'black' }}>
+          <div className='search-border'>
+            <span className='search-text'>Anywhere</span> | <span className='search-text'>Any week</span> | <span className='search-text-gray'>Add guests</span> <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+        </NavLink>
       </div>
       <div className='hosting-profile-container'>
         {

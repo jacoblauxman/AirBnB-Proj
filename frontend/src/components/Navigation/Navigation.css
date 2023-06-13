@@ -6,7 +6,8 @@
    top: 0;
    position: fixed;
    display: flex;
-   width: 100vw;
+   /* width: 100vw; */
+   width: 100%;
    height: 8vh;
    background-color: white;
    flex-direction: row;
@@ -21,8 +22,9 @@
    align-items: center;
    justify-content: left;
    padding-left: 2rem;
-   width: 50%;
+   /* width: 33%; */
    margin-left: 2rem;
+   /* flex: 1 1 auto; */
  }
 
  .site-logo {
@@ -41,12 +43,62 @@
    color: #ff385c
  }
 
+
+ .search-container {
+   display: flex;
+   justify-content: center;
+   /* width: 33%; */
+   flex: 1 1 auto;
+ }
+
+ .search-border {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border: 1px solid rgba(199, 197, 197, 0.564);
+   border-radius: 30px;
+   box-shadow: 0px 0px 1px 1px rgb(240, 240, 240);
+   transition: .25s ease-in-out;
+   padding: .4rem;
+   font-weight: 200;
+   font-size: 1.25rem;
+   cursor: pointer;
+ }
+
+ .search-border:hover {
+   box-shadow: 0px 1px 3px 2px rgb(230, 230, 230)
+ }
+
+ .search-text,
+ .search-text-gray {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: 0px .9rem;
+   font-size: .9rem;
+   font-weight: 450;
+ }
+
+ .search-text-gray {
+   font-weight: 200;
+ }
+
+
+ .fa-magnifying-glass {
+   color: white;
+   background-color: #FF385C;
+   display: flex;
+   padding: .5rem;
+   border-radius: 50%;
+ }
+
  .hosting-profile-container {
    display: flex;
    justify-content: right;
    align-items: center;
-   width: 50%;
+   /* width: 50%; */
    padding-right: 2rem;
+   /* flex: 1 1 auto; */
  }
 
  .hosting-container {

@@ -101,7 +101,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
                   <button
                     className='demo-user-button'
                     onClick={() => {
-                      dispatch(sessionActions.login({ credential: 'DemoUser', password: 'password' }))
+                      dispatch(sessionActions.login({ credential: 'demoUser', password: 'password' }))
                       setShowModal(false)
                     }}>
                     Demo User

@@ -3,15 +3,15 @@
   background-color: white;
   width: 8rem;
   height: 3rem;
-  font-size: 1rem;
-  font-weight: 333;
+  font-size: .9rem;
+  font-weight: 400;
   justify-content: center;
   border: none;
   margin-right: 1.5rem;
 }
 
 .create-spot-button:hover {
-  background-color: rgb(240, 239, 239)
+  background-color: rgb(245, 245, 239)
 }
 
 form label {

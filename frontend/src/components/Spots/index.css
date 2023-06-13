@@ -1,3 +1,112 @@
+/* .spots-grid-container {
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+  justify-content: center;
+  width: 100vw;
+  margin-top: 10vh;
+} */
+.spots-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 10vh;
+  align-items: center;
+}
+
+.spots-price-switch {
+  padding: 1.2rem;
+  border: 1px solid rgba(199, 197, 197, 0.564);
+  border-radius: 10px;
+  display: flex;
+  color: gray;
+  font-weight: 300;
+  margin: .5rem 0;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spots-price-switch-bold {
+  font-weight: 400;
+  margin-right: .5rem;
+  color: black;
+}
+
+.spots-price-switch-gray {
+  margin-right: 4rem;
+  font-weight: 300;
+  font-size: .95rem;
+}
+
+
+.spots-price-label {
+  width: 45px;
+  height: 30px;
+  position: relative;
+  margin-left: .5rem;
+  cursor: pointer;
+}
+
+.spots-price-checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+
+.spots-price-checkbox-span {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.3s;
+  border-radius: 30px;
+  background: #B0B0B0;
+  z-index: -1;
+}
+
+.spots-price-checkbox-span:hover {
+  background: #848484
+}
+
+.spots-price-checkbox-span:before {
+  position: absolute;
+  content: "";
+  height: 25px;
+  width: 25px;
+  left: 3px;
+  bottom: 2.6px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.spots-price-checkbox:checked+span {
+  background-color: #414141;
+}
+
+.spots-price-checkbox:checked+span:before {
+  transform: translateX(14px);
+}
+
+
+
+
+
+
+.spots-grid {
+  display: grid;
+  justify-content: space-evenly;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* margin-top: 10vh; */
+  width: 100%;
+  padding: .5rem;
+}
+
 @media screen and (min-width: 1128px) {
   .spots-grid {
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -12,22 +121,11 @@
   }
 }
 
-/* .spots-grid-container {
-  display: flex;
-  align-items: center;
-  align-content: space-between;
-  justify-content: center;
-  width: 100vw;
-  margin-top: 10vh;
-} */
-
-.spots-grid {
-  display: grid;
-  justify-content: space-evenly;
-  grid-template-columns: 1fr 1fr 1fr;
-  margin-top: 10vh;
-  width: 100%;
-  padding: .5rem;
+@media screen and (min-width: 1839px) {
+  .spots-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    width: 100%;
+  }
 }
 
 .spots-spot-item {

@@ -47,6 +47,11 @@ function App() {
               <Route exact path='/user'>
                 <BookingsList />
               </Route>
+              <Route exact path='/coming-soon'>
+              <div className='error-handler'>
+              Feature Coming Soon !
+              </div>
+              </Route>
               <Route>
                 <div className='error-handler'>
                   ¡ RESOÜRCE NOT FOÜND !
