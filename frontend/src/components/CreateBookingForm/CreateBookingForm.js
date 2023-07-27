@@ -13,10 +13,18 @@ function CreateBookingForm({ spotId, bookSpot }) {
   const currUser = useSelector(getCurrUser)
   const spot = useSelector(getOneSpot)
 
+  const currDate = new Date();
+  const minDate = currDate.toISOString().split("T")[0]
+  let startDefault = new Date(currDate)
+  startDefault.setDate(startDefault.getDate() + 3)
+  let endDefault = new Date(currDate)
+  endDefault.setDate(endDefault.getDate() + 5)
+
+
   const [isLoaded, setIsLoaded] = useState(false)
   const [errors, setErrors] = useState([])
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
+  const [startDate, setStartDate] = useState(startDefault)
+  const [endDate, setEndDate] = useState(endDefault)
   const bookings = useSelector(state => state.bookings?.oneSpot)
   const bookingsArr = Object?.values(bookings)
 
@@ -86,9 +94,10 @@ function CreateBookingForm({ spotId, bookSpot }) {
                 className='bookings-input'
                 type='date'
                 onChange={handleSetStart}
-                value={startDate}
+                value={startDate.toISOString().split("T")[0]}
                 required={true}
                 name='start date'
+                min={minDate}
               />
             </div>
             <div className='dates-out'>
@@ -99,9 +108,10 @@ function CreateBookingForm({ spotId, bookSpot }) {
                 className='bookings-input'
                 type='date'
                 onChange={handleSetEnd}
-                value={endDate}
+                value={endDate.toISOString().split("T")[0]}
                 required={true}
                 name='end date'
+                min={minDate}
               />
             </div>
           </div>
